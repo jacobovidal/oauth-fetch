@@ -1,6 +1,6 @@
 {
   "name": "oauth-fetch",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "author": "Jacobo Vidal",
   "license": "MIT",
@@ -32,6 +32,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jacobovidal/oauth-fetch.git"
+  },
   "publishConfig": {
     "access": "public"
   }
