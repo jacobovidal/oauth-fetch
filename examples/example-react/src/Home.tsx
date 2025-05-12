@@ -100,8 +100,9 @@ function Home() {
           </div>
           <div className="mx-auto mt-5 max-w-3xl text-center">
             <p className="text-muted-foreground text-xl max-w-150 mx-auto">
-              Explore public and protected resources with oauth-fetch and see
-              how easily you can handle Bearer and DPoP tokens.
+              Test public and protected APIs with oauth-fetch and see how it
+              dynamically manages authentication based on the token type, while
+              intelligently handling headers and parsing responses.
             </p>
           </div>
           <div className="mt-8 flex justify-center gap-3">
@@ -124,7 +125,7 @@ function Home() {
       <section className="py-12 px-6">
         <div className="mx-auto mt-5 max-w-2xl text-center">
           <h1 className="scroll-m-20 text-3xl font-extrabold tracking-tight">
-            Experiment with oauth-fetch
+            Use cases
           </h1>
           <div className="mx-auto mt-8 max-w-3xl text-left">
             <Tabs defaultValue="public">
