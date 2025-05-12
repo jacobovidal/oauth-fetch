@@ -1,0 +1,38 @@
+{
+  "name": "oauth-fetch",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Jacobo Vidal",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
+    "clean": "rm -rf ./dist",
+    "lint": "eslint \"./**/*.ts*\"",
+    "test": "vitest run",
+    "test:ci": "vitest --watch false --coverage"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@vitest/coverage-v8": "^3.0.6",
+    "eslint": "^9.20.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0",
+    "vitest": "^3.0.5"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
