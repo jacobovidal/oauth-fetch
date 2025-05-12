@@ -5,15 +5,13 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import {
-  publicClientSnippet,
-} from "@/utils/code-snippets";
+import { bearerClientSnippet } from "@/utils/code-snippets";
 import { Auth0TokenProvider } from "@/utils/auth0-token-provider";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 
 function BearerApiRequest() {
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated } = useAuth0();
   const auth0 = useAuth0();
 
@@ -44,11 +42,12 @@ function BearerApiRequest() {
   return (
     <Card>
       <CardContent>
-        <CodeBlock lang="javascript" code={publicClientSnippet} />
+        <CodeBlock lang="javascript" code={bearerClientSnippet} />
       </CardContent>
       <CardFooter>
         <Button onClick={handleRequest} disabled={isLoading}>
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Request
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Request
         </Button>
       </CardFooter>
     </Card>
