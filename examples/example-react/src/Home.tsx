@@ -1,76 +1,15 @@
-import { DPoPUtils, OAuthFetch } from "oauth-fetch";
 import { useAuth0 } from "@auth0/auth0-react";
-import { toast } from "sonner";
 
 import Logo from "@/assets/oauthlabs-logo.svg";
 import { Button } from "@/components/ui/button";
-import { Auth0TokenProvider } from "@/utils/auth0-token-provider";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import CodeBlock from "@/components/CodeBlock/CodeBlock";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { DuendeTokenProvider } from "@/utils/duende-token-provider";
 import { Separator } from "@/components/ui/separator";
-import {
-  publicClientSnippet,
-  bearerClientSnippet,
-  dpopClientSnippet,
-} from "@/utils/code-snippets";
-
-const dpopKeyPair = await DPoPUtils.generateKeyPair({
-  algorithm: "ECDSA",
-  curveOrModulus: "P-384",
-});
+import PublicApiRequest from "@/components/PublicApiRequest/PublicApiRequest";
+import BearerApiRequest from "@/components/BearerApiRequest/BearerApiRequest";
+import DpopApiRequest from "@/components/DpopApiRequest/DpopApiRequest";
 
 function Home() {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
-
-  const publicClient = new OAuthFetch({
-    baseUrl: "https://jsonplaceholder.typicode.com",
-    isProtected: false,
-  });
-
-  const bearerClient = new OAuthFetch({
-    baseUrl: "https://auth0.oauthlabs.com",
-    tokenProvider: new Auth0TokenProvider(useAuth0()),
-  });
-
-  const dpopClient = new OAuthFetch({
-    baseUrl: "https://dpoptestapi.azurewebsites.net",
-    tokenProvider: new DuendeTokenProvider(dpopKeyPair),
-    dpopKeyPair,
-  });
-
-  const handlePublicRequest = async () => {
-    try {
-      await publicClient.get("/posts/1");
-      toast.success("Public resource fetched successfully.");
-    } catch {
-      toast.error("Error fetching public resource");
-    }
-  };
-
-  const handleBearerRequest = async () => {
-    if (!isAuthenticated) {
-      toast.error("You need to authenticate to fetch this resource");
-      return;
-    }
-
-    try {
-      await bearerClient.get("/userinfo");
-      toast.success("Private resource (Bearer) fetched successfully.");
-    } catch {
-      toast.error("Error fetching private resource");
-    }
-  };
-
-  const handleDpopRequest = async () => {
-    try {
-      await dpopClient.get("/DPoP");
-      toast.success("Private resource (DPoP) fetched successfully.");
-    } catch {
-      toast.error("Error fetching private resource");
-    }
-  };
 
   const handleLogin = async () => {
     await loginWithRedirect();
@@ -139,34 +78,13 @@ function Home() {
                 </TabsTrigger>
               </TabsList>
               <TabsContent value="public" className="w-full mx-auto">
-                <Card>
-                  <CardContent>
-                    <CodeBlock lang="javascript" code={publicClientSnippet} />
-                  </CardContent>
-                  <CardFooter>
-                    <Button onClick={handlePublicRequest}>Request</Button>
-                  </CardFooter>
-                </Card>
+                <PublicApiRequest />
               </TabsContent>
               <TabsContent value="bearer" className="w-full mx-auto">
-                <Card>
-                  <CardContent>
-                    <CodeBlock lang="javascript" code={bearerClientSnippet} />
-                  </CardContent>
-                  <CardFooter>
-                    <Button onClick={handleBearerRequest}>Request</Button>
-                  </CardFooter>
-                </Card>
+                <BearerApiRequest />
               </TabsContent>
               <TabsContent value="dpop" className="w-full mx-auto">
-                <Card>
-                  <CardContent>
-                    <CodeBlock lang="javascript" code={dpopClientSnippet} />
-                  </CardContent>
-                  <CardFooter>
-                    <Button onClick={handleDpopRequest}>Request</Button>
-                  </CardFooter>
-                </Card>
+                <DpopApiRequest />
               </TabsContent>
             </Tabs>
           </div>
