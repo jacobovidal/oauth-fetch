@@ -1,5 +1,6 @@
 import { OAuthFetch } from "oauth-fetch";
 import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
@@ -9,8 +10,10 @@ import {
 } from "@/utils/code-snippets";
 import { Auth0TokenProvider } from "@/utils/auth0-token-provider";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useState } from "react";
 
 function BearerApiRequest() {
+  const [ isLoading, setIsLoading ] = useState(false);
   const { isAuthenticated } = useAuth0();
   const auth0 = useAuth0();
 
@@ -20,16 +23,21 @@ function BearerApiRequest() {
   });
 
   const handleRequest = async () => {
+    setIsLoading(true);
+
     if (!isAuthenticated) {
       toast.error("You need to authenticate to fetch this resource");
+      setIsLoading(false);
       return;
     }
 
     try {
       await client.get("/userinfo");
       toast.success("Private resource (Bearer) fetched successfully.");
+      setIsLoading(false);
     } catch {
       toast.error("Error fetching private resource");
+      setIsLoading(false);
     }
   };
 
@@ -39,7 +47,9 @@ function BearerApiRequest() {
         <CodeBlock lang="javascript" code={publicClientSnippet} />
       </CardContent>
       <CardFooter>
-        <Button onClick={handleRequest}>Request</Button>
+        <Button onClick={handleRequest} disabled={isLoading}>
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Request
+        </Button>
       </CardFooter>
     </Card>
   );
