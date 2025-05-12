@@ -66,7 +66,7 @@ export class Auth0TokenProvider extends AbstractTokenProvider {
 
 ### Public (No Authentication)
 
-This mode simply performs unauthenticated HTTP requests. isProtected is set to false, so no tokens are attached to the request.
+This mode simply performs unauthenticated HTTP requests. `isProtected` is set to `false`, so no tokens are attached to the request.
 
 ```typescript
 import { OAuthFetch } from 'oauth-fetch';
