@@ -11,7 +11,7 @@ Mono repo, containting `oauth-fetch` library and examples.
 
 The following examples can be found in the examples directory:
 
-- [React Web App Example](./examples/example-react/)
+- [React App Example](./examples/example-react/)
 
 Before running the examples, you need to install the dependencies for the monorepo and build all the packages.
 
@@ -20,7 +20,7 @@ Before running the examples, you need to install the dependencies for the monore
 $ npm install
 ```
 
-2. Build all packages
+1. Build all packages
 ```bash
 $ npm run build
 ```
