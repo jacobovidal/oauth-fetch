@@ -25,6 +25,7 @@ function DpopApiRequest() {
         tokenProvider: new DuendeTokenProvider(keyPair),
         dpopKeyPair: keyPair,
       });
+
       setClient(oauthClient);
     };
 
@@ -36,7 +37,7 @@ function DpopApiRequest() {
       toast.error("OAuthFetch client is not initialized");
       return;
     }
-  
+
     setIsLoading(true);
 
     try {
@@ -56,7 +57,8 @@ function DpopApiRequest() {
       </CardContent>
       <CardFooter>
         <Button onClick={handleRequest} disabled={isLoading}>
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}Request
+          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          Request
         </Button>
       </CardFooter>
     </Card>

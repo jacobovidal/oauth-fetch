@@ -25,16 +25,21 @@ function BearerApiRequest() {
 
     if (!isAuthenticated) {
       toast.error("You need to authenticate to fetch this resource");
+
       setIsLoading(false);
+
       return;
     }
 
     try {
       await client.get("/userinfo");
+
       toast.success("Private resource (Bearer) fetched successfully");
+
       setIsLoading(false);
     } catch {
       toast.error("Error fetching private resource");
+
       setIsLoading(false);
     }
   };
