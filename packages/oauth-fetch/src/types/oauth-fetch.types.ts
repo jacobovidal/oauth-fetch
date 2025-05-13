@@ -1,4 +1,4 @@
-import { AbstractTokenProvider } from "src/providers/abstract-token-provider.js";
+import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
 import { HttpContentType } from "./request.internal.types.js";
 import { DPoPKeyPair } from "./dpop.types.js";
 
