@@ -31,7 +31,7 @@ yarn add oauth-fetch
 
 ```html
 <script type="module">
-  import { OAuthFetch, DPoPUtils, PKCEUtils } from "https://esm.sh/oauth-fetch";
+  import { OAuthFetch, DPoPUtils, PKCEUtils, AbstractTokenProvider } from "https://esm.sh/oauth-fetch";
 </script>
 ```
 
@@ -41,16 +41,16 @@ The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This i
 
 ### Auth0 Example
 
-We create a custom `Auth0TokenProvider` using the `@auth0/auth0-spa-js` SDK, which retrieves access tokens from Auth0.
+First, we create a `Auth0TokenProvider` to use the `@auth0/auth0-spa-js` SDK.
 
 ```typescript
 // auth0-token-provider.ts
 
-import { Auth0Client, type GetTokenSilentlyOptions } from "@auth0/auth0-spa-js";
+import { type Auth0Client, type GetTokenSilentlyOptions } from "@auth0/auth0-spa-js";
 import { AbstractTokenProvider, type TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class Auth0TokenProvider extends AbstractTokenProvider {
-  private auth0: Auth0Client;
+  private auth0;
 
   constructor(auth0: Auth0Client) {
     super();
@@ -76,14 +76,23 @@ export class Auth0TokenProvider extends AbstractTokenProvider {
 }
 ```
 
-After creating your custom `Auth0TokenProvider`, you can initialize the `OAuthFetch` client and provide the `tokenProvider` to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `getTokenConfig` for fine-grained control over each request.
+After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the Auth0 client to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `getTokenConfig` for fine-grained control over each request.
 
 ```typescript
 // index.ts
 
 import { OAuthFetch } from 'oauth-fetch';
 import { Auth0Client } from "@auth0/auth0-spa-js";
+
 import { Auth0TokenProvider } from './auth0-token-provider';
+
+const auth0 = new Auth0Client({
+  domain: "auth0.oauthlabs.com",
+  clientId: "UapVm2tv...",
+  authorizationParams: {
+    redirect_uri: window.location.origin,
+  }
+});
 
 const oauthClient = new OAuthFetch({
   baseUrl: "https://api.example.com",
@@ -93,7 +102,7 @@ const oauthClient = new OAuthFetch({
 // Make a GET request
 await oauthClient.get("/me/profile");
 
-// Make a PATCH request with a body, and passes to `getTokenSilently()` the `scope` parameter
+// Make a PATCH request with a body passing `scope` property to `getToken()`
 await oauthClient.patch(
   "/me/profile",
   {
@@ -108,6 +117,72 @@ await oauthClient.patch(
     },
   }
 );
+```
+
+### Clerk example
+
+First, we create a `ClerkTokenProvider` to use the `@clerk/clerk-react` SDK.
+
+```typescript
+// clerk-token-provider.ts
+
+import { AbstractTokenProvider, type TokenProviderGetTokenResponse } from "oauth-fetch";
+import { type GetTokenOptions, type UseAuthReturn} from "@clerk/types";
+
+export class ClerkTokenProvider extends AbstractTokenProvider {
+  private clerk;
+
+  constructor(clerk: UseAuthReturn) {
+    super();
+    this.clerk = clerk;
+  }
+
+  async getToken(options?: GetTokenOptions): Promise<TokenProviderGetTokenResponse> {
+    try {
+      const accessToken = await this.clerk.getToken(options);
+
+      if (!accessToken) {
+        throw new Error("No access token found");
+      }
+
+      return {
+        access_token: accessToken,
+        token_type: "Bearer",
+      };
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to retrieve token: ${error.message}`);
+      }
+
+      throw new Error(`Failed to retrieve token: ${String(error)}`);
+    }
+  }
+}
+```
+
+After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the Clerk client to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `getTokenConfig` for fine-grained control over each request.
+
+```typescript
+// index.ts
+
+import { useAuth } from "@clerk/clerk-react";
+
+import { ClerkTokenProvider } from "./clerk-token-provider";
+
+const clerk = useAuth();
+
+const oauthClient = new OAuthFetch({
+  baseUrl: "https://api.example.com",
+  tokenProvider: new ClerkTokenProvider(clerk),
+});
+
+// Make a GET request
+await oauthClient.get("/me/profile");
+
+// Make a GET request passing to `organizationId` to `getToken()` 
+await oauthClient.get("/me/profile", {
+  organizationId: '...'
+});
 ```
 
 ## Getting Started

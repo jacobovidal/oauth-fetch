@@ -1,5 +1,5 @@
 import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
-import { HttpContentType } from "./request.internal.types.js";
+import { HttpContentType } from "./request.types.js";
 import { DPoPKeyPair } from "./dpop.types.js";
 
 /**
@@ -20,9 +20,14 @@ export type OAuthFetchPublicResourceConfig = {
 export type OAuthFetchPrivateResourceConfig = {
   /** Base URL for API requests (e.g., 'https://api.example.com') */
   baseUrl: string;
-  /** Content type for requests (defaults to JSON if not specified) */
+  /**
+   * Content type for requests (defaults to JSON if not specified)
+   * @default "json"
+   */
   contentType?: HttpContentType;
-  /** Whether the API requires authentication (defaults to true) */
+  /** Whether the API requires authentication (defaults to true)
+   * @default true
+  */
   isProtected?: true;
   /** Provider responsible for fetching OAuth tokens */
   tokenProvider: AbstractTokenProvider;

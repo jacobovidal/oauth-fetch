@@ -3,11 +3,11 @@ import { DPoPUtils } from "./utils/dpop-utils.js";
 import { formatRequestBody, parseResponseBody } from "./utils/request-utils.js";
 import {
   HTTP_CONTENT_TYPE,
-  HTTP_CONTENT_TYPE_HEADER,
   HTTP_METHOD,
   SUPPORTED_TOKEN_TYPES,
 } from "./constants/index.js";
-import { HttpContentType } from "./types/request.internal.types.js";
+import { HTTP_CONTENT_TYPE_HEADER } from "./constants/index.internal.js";
+import { HttpContentType } from "./types/request.types.js";
 import { DPoPKeyPair } from "./types/dpop.types.js";
 import { TokenProviderTokenType } from "./types/token-provider.types.js";
 import {

@@ -1,4 +1,3 @@
-import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
 import {
   createSignedJwt,
   extractPublicJwk,
@@ -14,6 +13,7 @@ import {
   DPoPSupportedCurveOrModulus,
 } from "../types/dpop.types.js";
 import { CryptoParamsResult } from "../types/dpop.internal.types.js";
+import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
 
 /**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.

@@ -1,6 +1,6 @@
-import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "src/constants/index.js";
 import { hashToBase64UrlSha256, encodeBase64Url } from "./crypto-utils.js";
 import { PKCECodeVerifierConfig } from "../types/pkce.types.js";
+import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "../constants/index.internal.js";
 
 /**
  * Utility class for PKCE (Proof Key for Code Exchange) operations.
@@ -62,7 +62,7 @@ export class PKCEUtils {
    * ```
    */
   static generateCodeVerifier(config?: PKCECodeVerifierConfig): string {
-    const length = config?.length || DEFAULT_PKCE_CODE_VERIFIER_LENGTH;
+    const length = config?.length ?? DEFAULT_PKCE_CODE_VERIFIER_LENGTH;
     
     // RFC 7636 requires code verifier to be between 43 and 128 characters
     if (length < 43 || length > 128) {

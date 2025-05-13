@@ -1,5 +1,5 @@
 import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
-import { HttpContentType, HttpMethod } from "./request.internal.types.js";
+import { HttpContentType, HttpMethod } from "./request.types.js";
 import { DPoPKeyPair } from "./dpop.types.js";
 import { RequestOptions, RequestBody } from "./oauth-fetch.types.js";
 
