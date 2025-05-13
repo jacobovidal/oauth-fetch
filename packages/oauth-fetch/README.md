@@ -15,8 +15,24 @@
 
 ## Installation
 
+### via npm
+
 ```bash
 npm install oauth-fetch
+```
+
+### via Yarn
+
+```bash
+yarn add oauth-fetch
+```
+
+### via CDN (Browser)
+
+```html
+<script type="module">
+  import { OAuthFetch, DPoPUtils, PKCEUtils } from "https://esm.sh/oauth-fetch";
+</script>
 ```
 
 ## Token Provider
