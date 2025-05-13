@@ -42,7 +42,7 @@ npm install oauth-fetch
 yarn add oauth-fetch
 ```
 
-### via CDN (Browser)
+### via CDN (Browser)
 
 ```html
 <script type="module">
