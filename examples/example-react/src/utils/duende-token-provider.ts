@@ -1,17 +1,13 @@
-import { AbstractTokenProvider, DPoPUtils, OAuthFetch } from "oauth-fetch";
-
-export interface TokenResponse {
-  access_token: string;
-  token_type: "Bearer" | "DPoP";
-}
-
-export interface DPoPKeyPair {
-  publicKey: CryptoKey;
-  privateKey: CryptoKey;
-}
+import {
+  AbstractTokenProvider,
+  DPoPUtils,
+  OAuthFetch,
+  type DPoPKeyPair,
+  type TokenProviderGetTokenResponse,
+} from "oauth-fetch";
 
 export class DuendeTokenProvider extends AbstractTokenProvider {
-  private tokenSet?: TokenResponse;
+  private tokenSet?: TokenProviderGetTokenResponse;
   private client: OAuthFetch;
   private dpopKeyPair: DPoPKeyPair;
 
@@ -25,7 +21,7 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
     });
   }
 
-  async getToken(): Promise<TokenResponse> {
+  async getToken(): Promise<TokenProviderGetTokenResponse> {
     if (this.tokenSet) {
       return this.tokenSet;
     }
@@ -50,7 +46,7 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
             DPoP: dpopProof,
           },
         }
-      )) as TokenResponse;
+      )) as TokenProviderGetTokenResponse;
 
       this.tokenSet = { access_token, token_type: "DPoP" };
 

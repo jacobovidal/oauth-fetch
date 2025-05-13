@@ -1,6 +1,6 @@
 import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "src/constants/index.js";
 import { hashToBase64UrlSha256, encodeBase64Url } from "./crypto-utils.js";
-import { PKCECodeVerifierConfig } from "src/types/pkce.types.js";
+import { PKCECodeVerifierConfig } from "../types/pkce.types.js";
 
 /**
  * Utility class for PKCE (Proof Key for Code Exchange) operations.

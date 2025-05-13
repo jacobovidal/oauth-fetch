@@ -1,9 +1,9 @@
 import {
   HTTP_CONTENT_TYPE,
   HTTP_CONTENT_TYPE_HEADER,
-  HttpContentType,
-  RequestBody,
 } from "../constants/index.js";
+import { HttpContentType } from "../types/request.internal.types.js";
+import { RequestBody } from "../types/oauth-fetch.types.js";
 
 /**
  * Parses an HTTP response based on its content type

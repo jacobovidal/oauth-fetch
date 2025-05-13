@@ -1,5 +1,5 @@
 import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
-import { HttpMethod } from "./request.types.js";
+import { HttpMethod } from "./request.internal.types.js";
 
 /**
  * Cryptographic key pair used for generating and verifying DPoP token proof-of-possession.
@@ -67,12 +67,3 @@ export type DPoPGenerateProofConfig = {
    */
   accessToken?: string;
 };
-
-/**
- * @internal
- * Internal type representing Web Crypto API parameters generated based on the selected cryptographic algorithm.
- */
-export type CryptoParamsResult =
-  | EcKeyGenParams
-  | RsaHashedKeyGenParams
-  | { name: "Ed25519" };

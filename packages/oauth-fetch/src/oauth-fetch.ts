@@ -7,16 +7,18 @@ import {
   HTTP_METHOD,
   SUPPORTED_TOKEN_TYPES,
 } from "./constants/index.js";
-import { HttpContentType } from "./types/request.types.js";
+import { HttpContentType } from "./types/request.internal.types.js";
 import { DPoPKeyPair } from "./types/dpop.types.js";
 import { TokenProviderTokenType } from "./types/token-provider.types.js";
 import {
-  ExecuteRequestOptions,
   OAuthFetchConfig,
   RequestBody,
-  RequestHeadersConfig,
   RequestOptions,
 } from "./types/oauth-fetch.types.js";
+import {
+  ExecuteRequestOptions,
+  RequestHeadersConfig,
+} from "./types/oauth-fetch.internal.types.js";
 
 /**
  * OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests.

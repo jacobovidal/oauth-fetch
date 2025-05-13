@@ -1,13 +1,4 @@
-import {
-  CryptoParamsResult,
-  DPoPGenerateProofConfig,
-  DPoPKeyGenConfig,
-  DPoPKeyPair,
-  DPoPSupportedAlgorithms,
-  DPoPSupportedCurveOrModulus,
-} from "../types/dpop.types.js";
 import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
-
 import {
   createSignedJwt,
   extractPublicJwk,
@@ -15,6 +6,14 @@ import {
   getJwsAlgorithm,
   hashToBase64UrlSha256,
 } from "./crypto-utils.js";
+import {
+  DPoPGenerateProofConfig,
+  DPoPKeyGenConfig,
+  DPoPKeyPair,
+  DPoPSupportedAlgorithms,
+  DPoPSupportedCurveOrModulus,
+} from "../types/dpop.types.js";
+import { CryptoParamsResult } from "../types/dpop.internal.types.js";
 
 /**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.

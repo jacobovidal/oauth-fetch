@@ -1,10 +1,5 @@
 import { type Auth0ContextInterface, type GetTokenSilentlyOptions } from "@auth0/auth0-react";
-import { AbstractTokenProvider } from "oauth-fetch";
-
-export interface TokenResponse {
-  access_token: string;
-  token_type: "Bearer" | "DPoP";
-}
+import { AbstractTokenProvider, type TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class Auth0TokenProvider extends AbstractTokenProvider {
   private auth0: Auth0ContextInterface;
@@ -14,7 +9,7 @@ export class Auth0TokenProvider extends AbstractTokenProvider {
     this.auth0 = auth0;
   }
 
-  async getToken(options?: GetTokenSilentlyOptions): Promise<TokenResponse> {
+  async getToken(options?: GetTokenSilentlyOptions): Promise<TokenProviderGetTokenResponse> {
     try {
       const accessToken = await this.auth0.getAccessTokenSilently(options);
 
