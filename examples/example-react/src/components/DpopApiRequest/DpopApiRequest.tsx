@@ -29,7 +29,7 @@ function DpopApiRequest() {
     };
 
     initOauthFetchClient();
-  }, []); // Only run once on mount
+  }, []);
 
   const handleRequest = async () => {
     if (!client) {
