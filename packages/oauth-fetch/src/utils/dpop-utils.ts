@@ -1,4 +1,13 @@
-import { DPoPKeyPair, HttpMethod } from "../oauth-fetch.js";
+import {
+  CryptoParamsResult,
+  DPoPGenerateProofConfig,
+  DPoPKeyGenConfig,
+  DPoPKeyPair,
+  DPoPSupportedAlgorithms,
+  DPoPSupportedCurveOrModulus,
+} from "../types/dpop.types.js";
+import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
+
 import {
   createSignedJwt,
   extractPublicJwk,
@@ -8,111 +17,36 @@ import {
 } from "./crypto-utils.js";
 
 /**
- * Mapping of supported cryptographic algorithms to their valid parameters.
- * - ECDSA: Supports curves P-256, P-384, and P-521
- * - RSA-PSS: Supports modulus lengths 2048, 3072, and 4096 bits
- * - EdDSA: Supports Ed25519 curve
- */
-export const SUPPORTED_ALGORITHMS = {
-  ECDSA: ["P-256", "P-384", "P-521"] as const,
-  "RSA-PSS": ["2048", "3072", "4096"] as const,
-  EdDSA: ["Ed25519"] as const,
-} as const;
-
-/** Supported cryptographic algorithms for DPoP proof generation */
-export type SupportedAlgorithms = keyof typeof SUPPORTED_ALGORITHMS;
-
-/** 
- * Supported curves (for ECDSA/EdDSA) or modulus lengths (for RSA)
- * for the specified algorithm
- */
-export type SupportedCurveOrModulus =
-  (typeof SUPPORTED_ALGORITHMS)[SupportedAlgorithms][number];
-
-/**
- * Options for generating a DPoP key pair.
- */
-export interface KeyGenOptions {
-  /** 
-   * The cryptographic algorithm to use.
-   * @default "ECDSA"
-   */
-  algorithm?: SupportedAlgorithms;
-  
-  /** 
-   * The curve (for ECDSA/EdDSA) or modulus length (for RSA) to use.
-   * @default "P-256" for ECDSA
-   */
-  curveOrModulus?: SupportedCurveOrModulus;
-}
-
-/**
- * Parameters required to generate a DPoP proof.
- */
-export interface GenerateProofParams {
-  /** The target URL for the HTTP request */
-  url: URL;
-  
-  /** The HTTP method for the request (GET, POST, etc.) */
-  method: HttpMethod;
-  
-  /** The DPoP key pair to use for signing the proof */
-  dpopKeyPair: DPoPKeyPair;
-  
-  /** 
-   * Optional server-provided nonce for replay protection.
-   * If the server returned a DPoP-Nonce header in a previous response,
-   * include it here.
-   */
-  nonce?: string;
-  
-  /** 
-   * Optional access token to bind to this proof.
-   * Include this when using the proof with an access token in the 
-   * Authorization: DPoP header.
-   */
-  accessToken?: string;
-}
-
-/**
- * Internal type for Web Crypto API parameters based on the selected algorithm.
- */
-type CryptoParams =
-  | EcKeyGenParams
-  | RsaHashedKeyGenParams
-  | { name: "Ed25519" };
-
-/**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.
- * 
+ *
  * DPoP is a security mechanism used in OAuth 2.0 that cryptographically binds access tokens
  * to a specific client by requiring the client to prove possession of a private key.
  * This prevents token theft and misuse, as the stolen token cannot be used without the
  * corresponding private key.
- * 
+ *
  * This class provides methods to:
  * - Generate DPoP key pairs for signing proofs
  * - Calculate JWK thumbprints for authorization requests
  * - Generate DPoP proofs for HTTP requests
- * 
+ *
  * @example
  * ```typescript
  * // Basic usage flow:
- * 
+ *
  * // 1. Generate a DPoP key pair (once per client session)
  * const keyPair = await DPoPUtils.generateKeyPair();
- * 
+ *
  * // 2. For authorization requests, calculate JWK thumbprint
  * const jkt = await DPoPUtils.calculateJwkThumbprint(keyPair.publicKey);
- * 
+ *
  * // 3. Generate a DPoP proof for an API request
  * const proof = await DPoPUtils.generateProof({
  *   url: new URL("https://api.example.com/resources"),
  *   method: "GET",
  *   dpopKeyPair: keyPair,
- *   accessToken: "eyJhbGciOiJSUzI1NiIsI..." // Optional 
+ *   accessToken: "eyJhbGciOiJSUzI1NiIsI..." // Optional
  * });
- * 
+ *
  * // 4. Use the proof in an HTTP request
  * fetch("https://api.example.com/resources", {
  *   headers: {
@@ -129,9 +63,9 @@ export class DPoPUtils {
    * @throws {Error} If the algorithm or curve/modulus combination is not supported
    */
   static #getCryptoParams(
-    algorithm: SupportedAlgorithms,
-    curveOrModulus: SupportedCurveOrModulus
-  ): CryptoParams {
+    algorithm: DPoPSupportedAlgorithms,
+    curveOrModulus: DPoPSupportedCurveOrModulus
+  ): CryptoParamsResult {
     switch (algorithm) {
       case "ECDSA":
         return { name: algorithm, namedCurve: curveOrModulus };
@@ -250,9 +184,9 @@ export class DPoPUtils {
   static async generateKeyPair({
     algorithm = "ECDSA",
     curveOrModulus = "P-256",
-  }: KeyGenOptions = {}): Promise<DPoPKeyPair> {
+  }: DPoPKeyGenConfig = {}): Promise<DPoPKeyPair> {
     // Validate the algorithm and curve/modulus combination
-    const validOptions = SUPPORTED_ALGORITHMS[algorithm];
+    const validOptions = DPOP_SUPPORTED_ALGORITHMS[algorithm];
     if (!validOptions.includes(curveOrModulus as never)) {
       throw new Error(
         `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${validOptions.join(
@@ -290,7 +224,7 @@ export class DPoPUtils {
    *   method: "POST",
    *   dpopKeyPair: keyPair
    * });
-   * 
+   *
    * // Use the proof in a request header
    * fetch("https://auth.example.com/oauth/token", {
    *   method: "POST",
@@ -324,7 +258,7 @@ export class DPoPUtils {
     dpopKeyPair,
     nonce,
     accessToken,
-  }: GenerateProofParams): Promise<string> {
+  }: DPoPGenerateProofConfig): Promise<string> {
     if (!dpopKeyPair?.publicKey || !dpopKeyPair?.privateKey) {
       throw new Error(
         "dpopKeyPair must be initialized with both public and private keys before creating proofs"

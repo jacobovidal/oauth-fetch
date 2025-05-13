@@ -1,26 +1,6 @@
+import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "src/constants/index.js";
 import { hashToBase64UrlSha256, encodeBase64Url } from "./crypto-utils.js";
-
-/**
- * Recommended length for PKCE code verifiers.
- * RFC 7636 recommends a minimum length of 43 characters and a maximum length of 128.
- * This default provides a good balance of security and practicality.
- * 
- * @see https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
- */
-export const DEFAULT_CODE_VERIFIER_LENGTH = 64;
-
-/**
- * Options for generating a PKCE code verifier.
- */
-export interface CodeVerifierOptions {
-  /**
-   * The length of the code verifier in bytes.
-   * Must be between 43 and 128 characters as per RFC 7636.
-   * 
-   * @default 64
-   */
-  length?: number;
-}
+import { PKCECodeVerifierConfig } from "src/types/pkce.types.js";
 
 /**
  * Utility class for PKCE (Proof Key for Code Exchange) operations.
@@ -81,8 +61,8 @@ export class PKCEUtils {
    * // Store the code verifier securely for later use in the token request
    * ```
    */
-  static generateCodeVerifier(options?: CodeVerifierOptions): string {
-    const length = options?.length || DEFAULT_CODE_VERIFIER_LENGTH;
+  static generateCodeVerifier(config?: PKCECodeVerifierConfig): string {
+    const length = config?.length || DEFAULT_PKCE_CODE_VERIFIER_LENGTH;
     
     // RFC 7636 requires code verifier to be between 43 and 128 characters
     if (length < 43 || length > 128) {

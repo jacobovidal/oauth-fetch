@@ -31,7 +31,7 @@ function BearerApiRequest() {
 
     try {
       await client.get("/userinfo");
-      toast.success("Private resource (Bearer) fetched successfully.");
+      toast.success("Private resource (Bearer) fetched successfully");
       setIsLoading(false);
     } catch {
       toast.error("Error fetching private resource");

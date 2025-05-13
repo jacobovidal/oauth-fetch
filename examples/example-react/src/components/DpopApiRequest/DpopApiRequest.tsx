@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { DPoPUtils, OAuthFetch } from "oauth-fetch";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -7,28 +8,40 @@ import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { dpopClientSnippet } from "@/utils/code-snippets";
 import { DuendeTokenProvider } from "@/utils/duende-token-provider";
-import { useState } from "react";
 
 function DpopApiRequest() {
   const [isLoading, setIsLoading] = useState(false);
+  const [client, setClient] = useState<OAuthFetch | null>(null);
+
+  useEffect(() => {
+    const initOauthFetchClient = async () => {
+      const keyPair = await DPoPUtils.generateKeyPair({
+        algorithm: "ECDSA",
+        curveOrModulus: "P-384",
+      });
+
+      const oauthClient = new OAuthFetch({
+        baseUrl: "https://dpoptestapi.azurewebsites.net",
+        tokenProvider: new DuendeTokenProvider(keyPair),
+        dpopKeyPair: keyPair,
+      });
+      setClient(oauthClient);
+    };
+
+    initOauthFetchClient();
+  }, []); // Only run once on mount
 
   const handleRequest = async () => {
+    if (!client) {
+      toast.error("OAuthFetch client is not initialized");
+      return;
+    }
+  
     setIsLoading(true);
-
-    const dpopKeyPair = await DPoPUtils.generateKeyPair({
-      algorithm: "ECDSA",
-      curveOrModulus: "P-384",
-    });
-
-    const client = new OAuthFetch({
-      baseUrl: "https://dpoptestapi.azurewebsites.net",
-      tokenProvider: new DuendeTokenProvider(dpopKeyPair),
-      dpopKeyPair,
-    });
 
     try {
       await client.get("/DPoP");
-      toast.success("Private resource (DPoP) fetched successfully.");
+      toast.success("Private resource (DPoP) fetched successfully");
       setIsLoading(false);
     } catch {
       toast.error("Error fetching private resource");

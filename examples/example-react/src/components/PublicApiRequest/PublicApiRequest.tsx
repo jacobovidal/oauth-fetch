@@ -23,7 +23,7 @@ function PublicApiRequest() {
 
     try {
       await client.get("/posts/1");
-      toast.success("Public resource fetched successfully.");
+      toast.success("Public resource fetched successfully");
       setIsLoading(false);
     } catch {
       toast.error("Error fetching public resource");

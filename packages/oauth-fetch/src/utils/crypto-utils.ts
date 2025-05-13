@@ -1,4 +1,4 @@
-import { DPoPKeyPair } from "../oauth-fetch.js";
+import { DPoPKeyPair } from "../types/dpop.types.js";
 
 /**
  * Encodes a Uint8Array to a base64url string (RFC 4648)
@@ -197,7 +197,7 @@ export function getSigningParams(
 export async function createSignedJwt(
   header: Record<string, unknown>,
   payload: Record<string, unknown>,
-  privateKey: DPoPKeyPair["privateKey"]
+  privateKey: DPoPKeyPair["privateKey"],
 ): Promise<string> {
   if (!privateKey.usages.includes("sign")) {
     throw new Error(

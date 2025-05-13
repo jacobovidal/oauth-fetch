@@ -1,22 +1,4 @@
-import { TokenType } from "./oauth-fetch.js";
-
-/**
- * Represents the response from a token acquisition operation.
- * Contains the access token and its type for use in API requests.
- */
-export interface TokenResponse {
-  /**
-   * The OAuth access token value used for API authorization.
-   * This token should be included in the Authorization header of API requests.
-   */
-  access_token: string;
-
-  /**
-   * The type of token returned, which determines how it should be used in requests.
-   * Common types include "Bearer" and "DPoP" (Demonstrating Proof-of-Possession).
-   */
-  token_type: TokenType;
-}
+import { TokenProviderGetTokenResponse } from "../types/token-provider.types.js";
 
 export abstract class AbstractTokenProvider {
   // Allow any property to be dynamically attached to the instance
@@ -68,5 +50,5 @@ export abstract class AbstractTokenProvider {
    * }
    * ```
    */
-  abstract getToken(options?: Record<string, unknown>): Promise<TokenResponse>;
+  abstract getToken(options?: Record<string, unknown>): Promise<TokenProviderGetTokenResponse>;
 }

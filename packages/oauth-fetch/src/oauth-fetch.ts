@@ -1,150 +1,22 @@
-import { AbstractTokenProvider } from "./abstract-token-provider.js";
+import { AbstractTokenProvider } from "./providers/abstract-token-provider.js";
 import { DPoPUtils } from "./utils/dpop-utils.js";
 import { formatRequestBody, parseResponseBody } from "./utils/request-utils.js";
-
-/**
- * HTTP content type constants
- */
-export const HTTP_CONTENT_TYPE = {
-  JSON: "json",
-  TEXT: "text",
-  FORM_DATA: "formData",
-  FORM_URL_ENCODED: "formUrlEncoded",
-} as const;
-
-/**
- * MIME types for HTTP content types
- */
-export const HTTP_CONTENT_TYPE_HEADER = {
-  [HTTP_CONTENT_TYPE.JSON]: "application/json",
-  [HTTP_CONTENT_TYPE.TEXT]: "text/plain",
-  [HTTP_CONTENT_TYPE.FORM_DATA]: "multipart/form-data",
-  [HTTP_CONTENT_TYPE.FORM_URL_ENCODED]: "application/x-www-form-urlencoded",
-} as const;
-
-/**
- * HTTP method constants
- */
-export const HTTP_METHOD = {
-  GET: "GET",
-  POST: "POST",
-  PATCH: "PATCH",
-  PUT: "PUT",
-  DELETE: "DELETE",
-} as const;
-
-/**
- * OAuth token type constants
- */
-export const TOKEN_TYPES = {
-  BEARER: "Bearer",
-  DPOP: "DPoP",
-} as const;
-
-export type HttpContentType =
-  (typeof HTTP_CONTENT_TYPE)[keyof typeof HTTP_CONTENT_TYPE];
-
-export type HttpContentTypeHeaders =
-  (typeof HTTP_CONTENT_TYPE_HEADER)[keyof typeof HTTP_CONTENT_TYPE_HEADER];
-
-export type HttpMethod = (typeof HTTP_METHOD)[keyof typeof HTTP_METHOD];
-
-export type TokenType = (typeof TOKEN_TYPES)[keyof typeof TOKEN_TYPES];
-
-/**
- * Configuration for public (non-authenticated) resources
- */
-export interface PublicResourceConfig {
-  /** Base URL for API requests (e.g., 'https://api.example.com') */
-  baseUrl: string;
-  /** Content type for requests (defaults to JSON if not specified) */
-  contentType?: HttpContentType;
-  /** Must be explicitly set to false for public resources */
-  isProtected: false;
-}
-
-/**
- * Configuration for protected (authenticated) resources
- */
-export interface PrivateResourceConfig {
-  /** Base URL for API requests (e.g., 'https://api.example.com') */
-  baseUrl: string;
-  /** Content type for requests (defaults to JSON if not specified) */
-  contentType?: HttpContentType;
-  /** Whether the API requires authentication (defaults to true) */
-  isProtected?: true;
-  /** Provider responsible for fetching OAuth tokens */
-  tokenProvider: AbstractTokenProvider;
-  /** Required for DPoP authentication flow */
-  dpopKeyPair?: DPoPKeyPair;
-}
-
-export type OAuthFetchConfig = PublicResourceConfig | PrivateResourceConfig;
-
-/**
- * Configuration for building request headers
- */
-export interface HeadersConfig {
-  /** Complete URL for the request including base URL and endpoint path */
-  url: URL;
-  /** HTTP method for the request */
-  method: HttpMethod;
-  /** Additional headers to include with the request */
-  extraHeaders?: RequestInit["headers"];
-  /** Token provider that can be overridden per request */
-  tokenProvider?: AbstractTokenProvider;
-  /** Optional configuration object for getToken method */
-  getTokenOptions?: Record<string, unknown>;
-  /** Whether this specific request requires authentication */
-  isProtected?: boolean;
-  /** Content type for the request body and headers */
-  contentType: HttpContentType;
-  /** DPoP nonce for replay protection */
-  nonce?: string;
-  /** Cryptographic key pair for DPoP proof generation */
-  dpopKeyPair?: DPoPKeyPair;
-}
-
-/**
- * Extended request options that support authentication overrides and all standard fetch options
- */
-export type CustomRequestInit = Omit<
-  RequestInit,
-  "method" | "body" | "headers"
-> & {
-  /** Additional headers to be included with the request */
-  extraHeaders?: RequestInit["headers"];
-  /** Override the default token provider for this specific request */
-  tokenProvider?: AbstractTokenProvider;
-  /** Override configuration object for getToken method */
-  getTokenOptions?: Record<string, unknown>;
-  /** Override the default protection setting for this specific request */
-  isProtected?: boolean;
-};
-
-export type RequestBody = Record<string, unknown> | string;
-
-/**
- * Options for making HTTP requests
- */
-export interface RequestOptions extends CustomRequestInit {
-  /** API endpoint path (relative to baseUrl) */
-  endpoint: string;
-  /** HTTP method (GET, POST, PUT, PATCH, DELETE) */
-  method: HttpMethod;
-  /** Additional headers to include with the request */
-  extraHeaders?: RequestInit["headers"];
-  /** Request body data */
-  body?: RequestBody;
-}
-
-/**
- * Cryptographic key pair for DPoP token proof-of-possession
- */
-export interface DPoPKeyPair {
-  privateKey: CryptoKey;
-  publicKey: CryptoKey;
-}
+import {
+  HTTP_CONTENT_TYPE,
+  HTTP_CONTENT_TYPE_HEADER,
+  HTTP_METHOD,
+  SUPPORTED_TOKEN_TYPES,
+} from "./constants/index.js";
+import { HttpContentType } from "./types/request.types.js";
+import { DPoPKeyPair } from "./types/dpop.types.js";
+import { TokenProviderTokenType } from "./types/token-provider.types.js";
+import {
+  ExecuteRequestOptions,
+  OAuthFetchConfig,
+  RequestBody,
+  RequestHeadersConfig,
+  RequestOptions,
+} from "./types/oauth-fetch.types.js";
 
 /**
  * OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests.
@@ -210,7 +82,7 @@ export class OAuthFetch {
    * @throws {Error} If `isProtected` is `true` and `tokenProvider` is missing
    * @throws {Error} If DPoP token is used without providing a `dpopKeyPair`
    */
-  async #createRequestHeaders(config: HeadersConfig): Promise<Headers> {
+  async #createRequestHeaders(config: RequestHeadersConfig): Promise<Headers> {
     const headers = new Headers();
 
     headers.set("Content-Type", HTTP_CONTENT_TYPE_HEADER[config.contentType]);
@@ -219,19 +91,29 @@ export class OAuthFetch {
     const isProtected = config.isProtected ?? this.#isProtected;
 
     if (isProtected) {
-      // Can be overridden per request, falls back to the instance configuration.
-      const tokenProvider = config.tokenProvider ?? this.#tokenProvider;
-
-      if (!tokenProvider) {
+      if (!config.tokenProvider) {
         throw new Error("tokenProvider is required for protected resources");
       }
 
       const { token_type: tokenType, access_token: accessToken } =
-        await tokenProvider.getToken(config.getTokenOptions);
+        await config.tokenProvider.getToken(config.getTokenConfig);
+
+      const isTokenTypeSupported = Object.values(SUPPORTED_TOKEN_TYPES).some(
+        (types: readonly TokenProviderTokenType[]) => types.includes(tokenType)
+      );
+
+      if (!isTokenTypeSupported) {
+        throw new Error(`Unsupported token type: "${tokenType}".`);
+      }
 
       headers.set("Authorization", `${tokenType} ${accessToken}`);
 
-      if (tokenType === TOKEN_TYPES.DPOP) {
+      const isDPoP = SUPPORTED_TOKEN_TYPES.DPOP.some(
+        (supportedType) =>
+          supportedType.toUpperCase() === tokenType.toUpperCase()
+      );
+
+      if (isDPoP) {
         if (!config.dpopKeyPair) {
           throw new Error("dpopKeyPair is required for protected resources");
         }
@@ -268,10 +150,12 @@ export class OAuthFetch {
     method,
     body,
     extraHeaders,
-    tokenProvider,
     isProtected,
+    getTokenConfig,
     ...options
-  }: RequestOptions): Promise<Response | string | FormData | unknown | null> {
+  }: ExecuteRequestOptions): Promise<
+    Response | string | FormData | unknown | null
+  > {
     const url = new URL(endpoint, this.#baseUrl);
 
     const fetchOptions = {
@@ -280,8 +164,9 @@ export class OAuthFetch {
         url,
         method,
         isProtected,
+        getTokenConfig,
         contentType: this.#contentType,
-        tokenProvider,
+        tokenProvider: this.#tokenProvider,
         dpopKeyPair: this.#dpopKeyPair,
         nonce: this.#cachedNonce,
         extraHeaders,
@@ -312,7 +197,7 @@ export class OAuthFetch {
   /**
    * Makes an HTTP GET request.
    */
-  async get(endpoint: string, options?: CustomRequestInit) {
+  async get(endpoint: string, options?: RequestOptions) {
     return await this.#executeRequest({
       endpoint,
       method: HTTP_METHOD.GET,
@@ -323,10 +208,11 @@ export class OAuthFetch {
   /**
    * Makes an HTTP DELETE request.
    */
-  async delete(endpoint: string, options?: CustomRequestInit) {
+  async delete(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
       endpoint,
       method: HTTP_METHOD.DELETE,
+      body,
       ...options,
     });
   }
@@ -334,11 +220,7 @@ export class OAuthFetch {
   /**
    * Makes an HTTP POST request.
    */
-  async post(
-    endpoint: string,
-    body?: RequestBody,
-    options?: CustomRequestInit
-  ) {
+  async post(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
       endpoint,
       method: HTTP_METHOD.POST,
@@ -350,11 +232,7 @@ export class OAuthFetch {
   /**
    * Makes an HTTP PATCH request.
    */
-  async patch(
-    endpoint: string,
-    body?: RequestBody,
-    options?: CustomRequestInit
-  ) {
+  async patch(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
       endpoint,
       method: HTTP_METHOD.PATCH,
@@ -366,7 +244,7 @@ export class OAuthFetch {
   /**
    * Makes an HTTP PUT request.
    */
-  async put(endpoint: string, body?: RequestBody, options?: CustomRequestInit) {
+  async put(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
       endpoint,
       method: HTTP_METHOD.PUT,

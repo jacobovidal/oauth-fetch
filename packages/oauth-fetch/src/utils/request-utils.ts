@@ -3,7 +3,7 @@ import {
   HTTP_CONTENT_TYPE_HEADER,
   HttpContentType,
   RequestBody,
-} from "../oauth-fetch.js";
+} from "../constants/index.js";
 
 /**
  * Parses an HTTP response based on its content type
