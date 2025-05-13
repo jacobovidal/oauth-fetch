@@ -39,5 +39,22 @@
   },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "keywords": [
+    "fetch",
+    "dpop",
+    "oauth",
+    "auth0",
+    "bearer",
+    "typescript",
+    "api",
+    "request",
+    "javascript",
+    "oidc",
+    "access token",
+    "auth",
+    "authentication",
+    "jwt",
+    "openid"
+  ]
 }
