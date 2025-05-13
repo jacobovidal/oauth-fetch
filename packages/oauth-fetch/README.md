@@ -2,6 +2,10 @@
 
 **oauth-fetch** is a lightweight HTTP client built on top of the native `fetch` API, designed to simplify making requests to both public and OAuth-protected resources. It features a flexible, identity-agnostic design that allows seamless integration with any OAuth-compliant provider and removes the typical boilerplate code required to handle requests and responses.
 
+![Release](https://img.shields.io/npm/v/oauth-fetch)
+![Downloads](https://img.shields.io/npm/dw/oauth-fetch)
+[![License](https://img.shields.io/:license-mit-blue.svg?style=flat)](https://opensource.org/licenses/MIT)
+
 ## Key Features
 
 - **🔗 Identity provider agnostic:** Integrate with any OAuth-compliant provider (e.g., Auth0) to manage the complete token lifecycle, from retrieval to refresh.
