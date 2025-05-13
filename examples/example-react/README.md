@@ -4,7 +4,7 @@ This example demonstrates how to use the `oauth-fech` package to make requests t
 
 ## 🚀 Live Demo
 
-👉 Check our live demo: [`oauth-fetch` Playground](https://oauth-fech.oauthlabs.com)
+👉 Check our live demo: [`oauth-fetch` Playground](https://oauth-fetch.oauthlabs.com/)
 
 ## 📦 Install Dependencies
 

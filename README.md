@@ -11,7 +11,7 @@ A monorepo containing the `oauth-fetch` library and example applications.
 
 The following example are available:
 
-- [React App Example](./examples/example-react/) — You can also check the live demo here: [`oauth-fetch` Playground](https://oauth-fech.oauthlabs.com)
+- [React App Example](./examples/example-react/) — You can also check the live demo here: [`oauth-fetch` Playground](https://oauth-fetch.oauthlabs.com/)
 
 Before running the examples, you need to install the dependencies for the monorepo and build all the packages.
 
