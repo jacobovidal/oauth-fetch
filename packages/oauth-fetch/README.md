@@ -13,6 +13,21 @@
 - **⚡ Ultra-lightweight**: The minified and gzipped bundle size is only **2.6KB**.
 - **💡 Written in TypeScript:** Offering strong types, inline documentation, and an intuitive API to streamline development and prevent common errors.
 
+## Table of Contents
+<!-- no toc -->
+- [Installation](#installation)
+- [Token Provider](#token-provider)
+  - [Auth0 Example](#auth0-example)
+  - [Clerk example](#clerk-example)
+- [Getting Started](#getting-started)
+  - [Public (No Authentication)](#public-no-authentication)
+  - [Bearer Authentication](#bearer-authentication)
+  - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop)
+- [Request Overrides](#request-overrides)
+- [Utilities](#utilities)
+  - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop-1)
+  - [Proof Key for Code Exchange (PKCE)](#proof-key-for-code-exchange-pkce)
+
 ## Installation
 
 ### via npm
