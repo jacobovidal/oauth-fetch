@@ -65,12 +65,8 @@ export class Auth0TokenProvider extends AbstractTokenProvider {
         access_token: accessToken,
         token_type: "Bearer",
       };
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to retrieve token: ${error.message}`);
-      }
-
-      throw new Error(`Failed to retrieve token: ${String(error)}`);
+    } catch {
+      throw new Error('Failed to retrieve access token.');
     }
   }
 }
@@ -142,19 +138,15 @@ export class ClerkTokenProvider extends AbstractTokenProvider {
       const accessToken = await this.clerk.getToken(options);
 
       if (!accessToken) {
-        throw new Error("No access token found");
+        throw new Error();
       }
 
       return {
         access_token: accessToken,
         token_type: "Bearer",
       };
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to retrieve token: ${error.message}`);
-      }
-
-      throw new Error(`Failed to retrieve token: ${String(error)}`);
+    } catch {
+      throw new Error('Failed to retrieve access token.');
     }
   }
 }
