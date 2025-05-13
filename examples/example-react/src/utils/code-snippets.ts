@@ -1,18 +1,27 @@
-export const publicClientSnippet = `const publicClient = new OAuthFetch({
+export const publicClientSnippet = `import { OAuthFetch } from "oauth-fetch";
+
+const publicClient = new OAuthFetch({
   baseUrl: "https://jsonplaceholder.typicode.com",
   isProtected: false,
 });
 
 await publicClient.get("/post/1");`;
 
-export const bearerClientSnippet = `const bearerClient = new OAuthFetch({
+export const bearerClientSnippet = `import { OAuthFetch } from "oauth-fetch";
+import { useAuth0 } from "@auth0/auth0-react";
+
+const auth0 = useAuth0();
+
+const bearerClient = new OAuthFetch({
   baseUrl: "https://auth0.oauthlabs.com",
   tokenProvider: new Auth0TokenProvider(useAuth0()),
 });
 
 await bearerClient.get("/userinfo");`;
 
-export const dpopClientSnippet = `const dpopKeyPair = await DPoPUtils.generateKeyPair({
+export const dpopClientSnippet = `import { OAuthFetch, DPoPUtils } from "oauth-fetch";
+
+const dpopKeyPair = await DPoPUtils.generateKeyPair({
   algorithm: "ECDSA",
   curveOrModulus: "P-384",
 });
