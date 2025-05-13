@@ -181,7 +181,9 @@ await oauthClient.get("/me/profile");
 
 // Make a GET request passing to `organizationId` to `getToken()` 
 await oauthClient.get("/me/profile", {
-  organizationId: '...'
+  getTokenConfig: {
+    organizationId: '...',
+  },
 });
 ```
 
