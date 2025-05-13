@@ -1,6 +1,6 @@
 # oauth-fetch
 
-**oauth-fetch** is a lightweight, flexible HTTP client built on top of the native `fetch` API to simplify making requests to both public and OAuth-protected resources. Its identity-provider-agnostic design enables seamless integration with any OAuth-compliant provider, while offering fine-grained control over authentication and request handling.
+**oauth-fetch** is a lightweight HTTP client built on top of the native `fetch` API, designed to simplify making requests to both public and OAuth-protected resources. It features a flexible, identity-agnostic design that allows seamless integration with any OAuth-compliant provider and removes the typical boilerplate code required to handle requests and responses.
 
 ## Key Features
 

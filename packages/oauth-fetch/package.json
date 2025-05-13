@@ -1,7 +1,7 @@
 {
   "name": "oauth-fetch",
   "version": "1.0.9",
-  "description": "Lightweight, flexible HTTP client built on top of the native fetch API to simplify making requests to both public and OAuth-protected resources",
+  "description": "A lightweight HTTP client built on top of the native fetch API, designed to simplify making requests to both public and OAuth-protected resources.",
   "author": "Jacobo Vidal",
   "license": "MIT",
   "type": "module",
