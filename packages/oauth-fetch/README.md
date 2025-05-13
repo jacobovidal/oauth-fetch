@@ -20,25 +20,29 @@ npm install oauth-fetch
 
 ## Token Provider
 
-The core of `oauth-fetch` is its identity-agnostic design. This abstract class defines a contract for token acquisition and refresh.
+The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This is an abstract class that defines the contract for managing the token lifecycle. By using a custom token provider, you can integrate with any OAuth-compliant identity provider.
 
 ### Auth0 Example
 
+We create a custom `Auth0TokenProvider` using the `@auth0/auth0-spa-js` SDK, which retrieves access tokens from Auth0.
+
 ```typescript
-import { type Auth0ContextInterface, type GetTokenSilentlyOptions } from "@auth0/auth0-react";
+// auth0-token-provider.ts
+
+import { Auth0Client, type GetTokenSilentlyOptions } from "@auth0/auth0-spa-js";
 import { AbstractTokenProvider, type TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class Auth0TokenProvider extends AbstractTokenProvider {
-  private auth0: Auth0ContextInterface;
+  private auth0: Auth0Client;
 
-  constructor(auth0: Auth0ContextInterface) {
+  constructor(auth0: Auth0Client) {
     super();
     this.auth0 = auth0;
   }
 
   async getToken(options?: GetTokenSilentlyOptions): Promise<TokenProviderGetTokenResponse> {
     try {
-      const accessToken = await this.auth0.getAccessTokenSilently(options);
+      const accessToken = await this.auth0.getTokenSilently(options);
 
       return {
         access_token: accessToken,
@@ -53,6 +57,40 @@ export class Auth0TokenProvider extends AbstractTokenProvider {
     }
   }
 }
+```
+
+After creating your custom `Auth0TokenProvider`, you can initialize the `OAuthFetch` client and provide the `tokenProvider` to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `getTokenConfig` for fine-grained control over each request.
+
+```typescript
+// index.ts
+
+import { OAuthFetch } from 'oauth-fetch';
+import { Auth0Client } from "@auth0/auth0-spa-js";
+import { Auth0TokenProvider } from './auth0-token-provider';
+
+const oauthClient = new OAuthFetch({
+  baseUrl: "https://api.example.com",
+  tokenProvider: new Auth0TokenProvider(auth0),
+});
+
+// Make a GET request
+await oauthClient.get("/me/profile");
+
+// Make a PATCH request with a body, and passes to `getTokenSilently()` the `scope` parameter
+await oauthClient.patch(
+  "/me/profile",
+  {
+    first_name: "Jacobo",
+    company_name: "Auth0",
+  },
+  {
+    getTokenConfig: {
+      authorizationParams: {
+        scope: "write:profile",
+      },
+    },
+  }
+);
 ```
 
 ## Getting Started
@@ -146,17 +184,43 @@ await bearerClient.patch(
   }
 );
 
-// Disable authentication
+// Disable authentication for the request
 await bearerClient.get("/posts/e1c43825-e1a8-416b-b968-f399138050e3", {
   isProtected: false,
 });
+
+
+// Include additional native fetch options
+await bearerClient.get("/posts/e1c43825-e1a8-416b-b968-f399138050e3", {
+  isProtected: false,
+  mode: 'cors',
+  credentials: 'include',
+});
+
+
+// Include additional config for the abstract `getToken()` function
+await oauthClient.post(
+  "/me/authentication-methods/enroll",
+  {
+    type: "passkey",
+  },
+  {
+    getTokenConfig: {
+      authorizationParams: {
+        scope: "write:authentication-methods",
+      },
+    },
+  }
+);
 ```
 
 ## Utilities
 
+We provide standalone OAuth utilities that you can use directly in your flows. These utilities, such as DPoP proof generation and PKCE handling, are available as separate classes, allowing you to implement OAuth features independently without needing to use `OAuthFetch`.
+
 ### Demonstrating Proof-of-Possession (DPoP)
 
-Generate a DPoP key pair and create proofs for secure token binding:
+Generate a DPoP key pair and create cryptographic proofs that can be used for both binding tokens and securely consuming protected APIs.
 
 ```typescript
 import { DPoPUtils } from 'oauth-fetch';
@@ -168,17 +232,31 @@ const keyPair = await DPoPUtils.generateKeyPair();
 const jkt = await DPoPUtils.calculateJwkThumbprint(keyPair.publicKey);
 
 // Generate a DPoP proof for a request
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5...';
+
 const proof = await DPoPUtils.generateProof({
-  url: new URL('https://api.example.com/resource'),
+  url: new URL('https://api.example.com/me/profile'),
   method: 'GET',
   dpopKeyPair: keyPair,
-  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5...'
+  accessToken,
+});
+
+// Include the DPoP proof in the request headers
+const response = await fetch('https://api.example.com/me/profile', {
+  method: 'GET',
+  headers: {
+    'Authorization': `DPoP ${accessToken}`,
+    'DPoP': proof,
+  },
 });
 ```
 
+> [!NOTE]
+> When using `OAuthFetch`, and if the `getToken` method returns a `DPoP` token type, we will automatically handle the generation of the DPoP proof and its inclusion in the headers.
+
 ### Proof Key for Code Exchange (PKCE)
 
-Generate code verifiers and challenges for secure authorization code flow:
+Generate code verifiers and challenges for securely performing the authorization code flow.
 
 ```typescript
 import { PKCEUtils } from 'oauth-fetch';
