@@ -23,6 +23,7 @@
 - [Token Provider](#token-provider)
   - [Auth0 Example](#auth0-example)
   - [Clerk example](#clerk-example)
+  - [WorkOS example](#workos-example)
 - [Getting Started](#getting-started)
   - [Public (No Authentication)](#public-no-authentication)
   - [Bearer Authentication](#bearer-authentication)
