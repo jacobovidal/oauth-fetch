@@ -64,7 +64,7 @@ The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This i
 >
 > Example using `AbstractTokenProvider<GetTokenSilentlyOptions>` with Auth0:
 > 
-> ![Example using Auth0](https://github.com/user-attachments/assets/8023c652-2e9b-4c5e-a211-b7a67fe49fab)
+> ![Example using Auth0](https://github.com/jacobovidal/oauth-fetch/blob/main/assets/token-provider-abstraction-typescript.gif?raw=true)
 
 
 ### Auth0 Example
