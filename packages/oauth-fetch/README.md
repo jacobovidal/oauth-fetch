@@ -210,6 +210,64 @@ await oauthClient.get("/me/profile", {
 });
 ```
 
+### WorkOS example
+
+First, we create a `WorkOSTokenProvider` to use the `@workos-inc/authkit-react` SDK.
+
+```typescript
+// workos-token-provider.ts
+
+import {
+  AbstractTokenProvider,
+  type TokenProviderGetTokenResponse,
+} from "oauth-fetch";
+import { useAuth } from "@workos-inc/authkit-react";
+
+export class WorkOSTokenProvider extends AbstractTokenProvider {
+  private workos;
+
+  constructor(workos: typeof useAuth) {
+    super();
+    this.workos = workos();
+  }
+
+  async getToken(): Promise<TokenProviderGetTokenResponse> {
+    try {
+      const accessToken = await this.workos.getAccessToken();
+
+      return {
+        access_token: accessToken,
+        token_type: "Bearer",
+      };
+    } catch {
+      throw new Error("Failed to retrieve access token.");
+    }
+  }
+}
+```
+
+After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the WorkOS client to manage the token lifecycle.
+
+```typescript
+// index.ts
+
+import { useAuth } from "@workos-inc/authkit-react";
+
+import { WorkOSTokenProvider } from "./workos-token-provider";
+
+// Note we don't call `useAuth()` directly here because it will be invoked within the class constructor to inherit its types. WorkOS does not expose types for `useAuth()`.
+const workos = useAuth;
+const tokenProvider = new WorkOSTokenProvider(workos);
+
+const oauthClient = new OAuthFetch({
+  baseUrl: "https://api.example.com",
+  tokenProvider,
+});
+
+// Make a GET request
+await oauthClient.get("/me/profile");
+```
+
 ## Getting Started
 
 ### Public (No Authentication)
