@@ -123,7 +123,7 @@ describe("OAuthFetch", () => {
         expect(client).toBeInstanceOf(OAuthFetch);
       });
 
-      test("should throw error if protected and without tokenProvider", () => {
+      test("should throw error if tokenProvider is not provided", () => {
         expect(() => {
           // @ts-expect-error - tokenProvider is not provided
           new OAuthFetch({
