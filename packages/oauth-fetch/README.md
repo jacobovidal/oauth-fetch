@@ -60,7 +60,8 @@ The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This i
 
 
 > [!NOTE]
-> When implementing your token provider, ensure you inject `AbstractTokenProvider<YourGetTokenOptionsType>` to fully benefit from TypeScript's type inference and autocompletion in `withGetTokenConfig()` overrides.
+> When implementing your token provider, ensure you inject `AbstractTokenProvider<YourGetTokenOptionsType>` to fully benefit from TypeScript's type inference and autocompletion in `withGetTokenConfig()` overrides:
+> 
 > ![Example using Auth0](https://github.com/user-attachments/assets/8023c652-2e9b-4c5e-a211-b7a67fe49fab)
 
 
