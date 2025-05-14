@@ -211,7 +211,7 @@ await oauthClient.get("/me/profile", {
 });
 ```
 
-### WorkOS example
+### WorkOS example
 
 First, we create a `WorkOSTokenProvider` to use the `@workos-inc/authkit-react` SDK.
 
