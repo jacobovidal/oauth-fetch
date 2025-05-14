@@ -16,8 +16,6 @@ export type RequestHeadersConfig = {
   extraHeaders?: RequestInit["headers"];
   /** Token provider that can be overridden per request */
   tokenProvider?: AbstractTokenProvider;
-  /** Optional configuration object for getToken method */
-  getTokenConfig?: Record<string, unknown>;
   /** Whether this specific request requires authentication */
   isProtected?: boolean;
   /** Content type for the request body and headers */

@@ -48,10 +48,10 @@ export type RequestOptions = Omit<
 > & {
   /** Additional headers to be included with the request */
   extraHeaders?: RequestInit["headers"];
-  /** Granular configuration object for getToken method */
-  getTokenConfig?: Record<string, unknown>;
   /** Override the default protection setting for this specific request */
   isProtected?: boolean;
+  /** Override the default provider responsible for fetching OAuth tokens */
+  tokenProvider?: AbstractTokenProvider;
 };
 
 export type RequestBody = Record<string, unknown> | string;

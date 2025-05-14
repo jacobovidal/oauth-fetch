@@ -93,12 +93,15 @@ export class OAuthFetch {
     const isProtected = config.isProtected ?? this.#isProtected;
 
     if (isProtected) {
-      if (!config.tokenProvider) {
+      // Can be overridden per request, falls back to the instance configuration.
+      const tokenProvider = config.tokenProvider ?? this.#tokenProvider;
+
+      if (!tokenProvider) {
         throw new Error("tokenProvider is required for protected resources");
       }
 
       const { token_type: tokenType, access_token: accessToken } =
-        await config.tokenProvider.getToken(config.getTokenConfig);
+        await tokenProvider.getToken();
 
       const isTokenTypeSupported = Object.values(SUPPORTED_TOKEN_TYPES).some(
         (types: readonly TokenProviderTokenType[]) => types.includes(tokenType)
@@ -153,7 +156,7 @@ export class OAuthFetch {
     body,
     extraHeaders,
     isProtected,
-    getTokenConfig,
+    tokenProvider,
     ...options
   }: ExecuteRequestOptions): Promise<
     Response | string | FormData | unknown | null
@@ -166,9 +169,8 @@ export class OAuthFetch {
         url,
         method,
         isProtected,
-        getTokenConfig,
+        tokenProvider,
         contentType: this.#contentType,
-        tokenProvider: this.#tokenProvider,
         dpopKeyPair: this.#dpopKeyPair,
         nonce: this.#cachedNonce,
         extraHeaders,

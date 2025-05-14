@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { bearerClientSnippet } from "@/utils/code-snippets";
-import { Auth0TokenProvider } from "@/utils/auth0-token-provider";
+import { Auth0TokenProvider } from "@/utils/auth0-react-token-provider";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useState } from "react";
 

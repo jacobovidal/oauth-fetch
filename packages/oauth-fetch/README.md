@@ -68,30 +68,30 @@ First, we create a `Auth0TokenProvider` to use the `@auth0/auth0-spa-js` SDK.
 import { type Auth0Client, type GetTokenSilentlyOptions } from "@auth0/auth0-spa-js";
 import { AbstractTokenProvider, type TokenProviderGetTokenResponse } from "oauth-fetch";
 
-export class Auth0TokenProvider extends AbstractTokenProvider {
-  private auth0;
+export class Auth0TokenProvider extends AbstractTokenProvider<GetTokenSilentlyOptions> {
+  private auth0: Auth0Client;
 
-  constructor(auth0: Auth0Client) {
-    super();
+  constructor(auth0: Auth0Client, config?: GetTokenSilentlyOptions) {
+    super(config);
     this.auth0 = auth0;
   }
 
-  async getToken(options?: GetTokenSilentlyOptions): Promise<TokenProviderGetTokenResponse> {
+  async getToken(): Promise<TokenProviderGetTokenResponse> {
     try {
-      const accessToken = await this.auth0.getTokenSilently(options);
+      const accessToken = await this.auth0.getTokenSilently(this.config);
 
       return {
         access_token: accessToken,
         token_type: "Bearer",
       };
     } catch {
-      throw new Error('Failed to retrieve access token.');
+      throw new Error("Failed to retrieve access token.");
     }
   }
 }
 ```
 
-After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the Auth0 client to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `getTokenConfig` for fine-grained control over each request.
+After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the Auth0 client to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `withGetTokenConfig` for fine-grained control over each request.
 
 ```typescript
 // index.ts
@@ -109,15 +109,17 @@ const auth0 = new Auth0Client({
   }
 });
 
+const tokenProvider = new Auth0TokenProvider(auth0);
+
 const oauthClient = new OAuthFetch({
   baseUrl: "https://api.example.com",
-  tokenProvider: new Auth0TokenProvider(auth0),
+  tokenProvider,
 });
 
 // Make a GET request
 await oauthClient.get("/me/profile");
 
-// Make a PATCH request with a body passing `scope` property to `getToken()`
+// Make a PATCH request with a body passing `authorizationParams.scope` for just this call
 await oauthClient.patch(
   "/me/profile",
   {
@@ -125,11 +127,11 @@ await oauthClient.patch(
     company_name: "Auth0",
   },
   {
-    getTokenConfig: {
+    tokenProvider: tokenProvider.withConfigOverrides({
       authorizationParams: {
         scope: "write:profile",
       },
-    },
+    }),
   }
 );
 ```
@@ -144,17 +146,17 @@ First, we create a `ClerkTokenProvider` to use the `@clerk/clerk-react` SDK.
 import { AbstractTokenProvider, type TokenProviderGetTokenResponse } from "oauth-fetch";
 import { type GetTokenOptions, type UseAuthReturn} from "@clerk/types";
 
-export class ClerkTokenProvider extends AbstractTokenProvider {
+export class ClerkTokenProvider extends AbstractTokenProvider<GetTokenOptions> {
   private clerk;
 
-  constructor(clerk: UseAuthReturn) {
-    super();
+  constructor(clerk: UseAuthReturn, config?: GetTokenSilentlyOptions) {
+    super(config);
     this.clerk = clerk;
   }
 
-  async getToken(options?: GetTokenOptions): Promise<TokenProviderGetTokenResponse> {
+  async getToken(): Promise<TokenProviderGetTokenResponse> {
     try {
-      const accessToken = await this.clerk.getToken(options);
+      const accessToken = await this.clerk.getToken(this.config);
 
       if (!accessToken) {
         throw new Error();
@@ -181,20 +183,21 @@ import { useAuth } from "@clerk/clerk-react";
 import { ClerkTokenProvider } from "./clerk-token-provider";
 
 const clerk = useAuth();
+const tokenProvider = new ClerkTokenProvider(clerk);
 
 const oauthClient = new OAuthFetch({
   baseUrl: "https://api.example.com",
-  tokenProvider: new ClerkTokenProvider(clerk),
+  tokenProvider,
 });
 
 // Make a GET request
 await oauthClient.get("/me/profile");
 
-// Make a GET request passing to `organizationId` to `getToken()` 
+// Make a GET request passing `organizationId` to `getToken()` 
 await oauthClient.get("/me/profile", {
-  getTokenConfig: {
-    organizationId: '...',
-  },
+  tokenProvider: tokenProvider.withConfigOverrides({
+    organizationId: "...",
+  }),
 });
 ```
 
@@ -303,18 +306,18 @@ await bearerClient.get("/posts/e1c43825-e1a8-416b-b968-f399138050e3", {
 });
 
 
-// Include additional config for the abstract `getToken()` function
+// Include additional config for the token provider just for this call
 await oauthClient.post(
   "/me/authentication-methods/enroll",
   {
     type: "passkey",
   },
   {
-    getTokenConfig: {
+    tokenProvider: tokenProvider.withConfigOverrides({
       authorizationParams: {
         scope: "write:authentication-methods",
       },
-    },
+    }),
   }
 );
 ```
