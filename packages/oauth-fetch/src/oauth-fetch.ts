@@ -69,12 +69,15 @@ export class OAuthFetch {
     this.#isProtected = config.isProtected ?? true;
 
     if (this.#isProtected) {
-      if ("tokenProvider" in config) {
-        this.#tokenProvider = config.tokenProvider;
+      if (
+        !("tokenProvider" in config) ||
+        !(config.tokenProvider instanceof AbstractTokenProvider)
+      ) {
+        throw new Error("tokenProvider is required for protected resources");
       }
-      if ("dpopKeyPair" in config) {
-        this.#dpopKeyPair = config.dpopKeyPair;
-      }
+
+      this.#tokenProvider = config.tokenProvider;
+      this.#dpopKeyPair = config.dpopKeyPair;
     }
   }
 
@@ -96,7 +99,7 @@ export class OAuthFetch {
       // Can be overridden per request, falls back to the instance configuration.
       const tokenProvider = config.tokenProvider ?? this.#tokenProvider;
 
-      if (!tokenProvider) {
+      if (!(tokenProvider instanceof AbstractTokenProvider)) {
         throw new Error("tokenProvider is required for protected resources");
       }
 
