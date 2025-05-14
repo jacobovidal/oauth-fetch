@@ -58,6 +58,12 @@ yarn add oauth-fetch
 
 The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This is an abstract class that defines the contract for managing the token lifecycle. By using a custom token provider, you can integrate with any OAuth-compliant identity provider.
 
+
+> [!NOTE]
+> When implementing your token provider, ensure you inject `AbstractTokenProvider<YourGetTokenOptionsType>` to fully benefit from TypeScript's type inference and autocompletion in `withGetTokenConfig()` overrides.
+> ![Example using Auth0](https://github.com/user-attachments/assets/8023c652-2e9b-4c5e-a211-b7a67fe49fab)
+
+
 ### Auth0 Example
 
 First, we create a `Auth0TokenProvider` to use the `@auth0/auth0-spa-js` SDK.
