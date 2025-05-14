@@ -186,6 +186,15 @@ export class DPoPUtils {
   }: DPoPKeyGenConfig = {}): Promise<DPoPKeyPair> {
     // Validate the algorithm and curve/modulus combination
     const validOptions = DPOP_SUPPORTED_ALGORITHMS[algorithm];
+
+    if (!validOptions) {
+      throw new Error(
+        `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
+          DPOP_SUPPORTED_ALGORITHMS
+        ).join(", ")}`
+      );
+    }
+
     if (!validOptions.includes(curveOrModulus as never)) {
       throw new Error(
         `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${validOptions.join(
