@@ -3,10 +3,7 @@ import { SUPPORTED_TOKEN_TYPES } from "../constants/index.js";
 export const OAUTH_FETCH_ERROR_CODES = {
   INVALID_CONFIGURATION: "invalid_configuration",
   TOKEN_PROVIDER_ERROR: "token_provider_error",
-  RESPONSE_ERROR: "response_error",
   RESPONSE_PARSE_ERROR: "response_parse_error",
-  REQUEST_ERROR: "request_error",
-  ABORT_ERROR: "abort_error",
 } as const;
 
 export type OAuthFetchErrorCode =
@@ -23,11 +20,6 @@ export const OAUTH_FETCH_ERROR_DESCRIPTIONS = {
       .flat()
       .join(", ")}`,
   FAILED_PARSING__BODY: "Failed to parse the response body",
-  REQUEST_ABORT_ERROR: "The fetch request was aborted",
-  REQUEST_TYPE_ERROR: "Network or request type error occurred during fetch",
-  REQUEST_UNKNOWN: "Fetch request failed with an unknown error",
-  NON_SUCCESSFUL_RESPONSE:
-    "Fetch request failed with a non-successful response",
 } as const;
 
 export class OAuthFetchError extends Error {
@@ -60,21 +52,6 @@ export class TokenProviderError extends OAuthFetchError {
   }
 }
 
-// Error thrown when there's an issue with the response
-export class ResponseError extends OAuthFetchError {
-  public readonly status?: number;
-  public readonly body?: unknown;
-
-  constructor(
-    message: string,
-    options?: { cause?: unknown; status?: number; body?: unknown },
-  ) {
-    super(OAUTH_FETCH_ERROR_CODES.RESPONSE_ERROR, message, options);
-    this.status = options?.status;
-    this.body = options?.body;
-  }
-}
-
 // Error thrown when there's an issue parsing the response
 export class ResponseParseError extends OAuthFetchError {
   public readonly rawData?: unknown;
@@ -85,19 +62,5 @@ export class ResponseParseError extends OAuthFetchError {
   ) {
     super(OAUTH_FETCH_ERROR_CODES.RESPONSE_PARSE_ERROR, message, options);
     this.rawData = options?.rawData;
-  }
-}
-
-// Error thrown when there's an issue with the request
-export class RequestError extends OAuthFetchError {
-  constructor(message: string, options?: { cause?: unknown }) {
-    super(OAUTH_FETCH_ERROR_CODES.REQUEST_ERROR, message, options);
-  }
-}
-
-// Error thrown when there's a network issue
-export class RequestAbortError extends OAuthFetchError {
-  constructor(message: string, options?: { cause?: unknown }) {
-    super(OAUTH_FETCH_ERROR_CODES.ABORT_ERROR, message, options);
   }
 }

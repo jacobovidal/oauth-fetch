@@ -4,52 +4,8 @@ import { RequestBody } from "../types/oauth-fetch.types.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
 import {
   OAUTH_FETCH_ERROR_DESCRIPTIONS,
-  RequestAbortError,
-  RequestError,
-  ResponseError,
   ResponseParseError,
 } from "../errors/oauth-fetch.errors.js";
-
-export async function _fetch(url: URL, options: RequestInit) {
-  try {
-    const response = await fetch(url, options);
-
-    if (!response.ok) {
-      throw new ResponseError(
-        OAUTH_FETCH_ERROR_DESCRIPTIONS.NON_SUCCESSFUL_RESPONSE,
-        {
-          cause: response,
-          status: response.status,
-          body: await parseResponseBody(response).catch(() => undefined),
-        },
-      );
-    }
-
-    return response;
-  } catch (e) {
-    if (e instanceof DOMException && e.name === "AbortError") {
-      throw new RequestAbortError(
-        OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUEST_ABORT_ERROR,
-        {
-          cause: e,
-        },
-      );
-    }
-
-    if (e instanceof TypeError) {
-      throw new RequestError(
-        OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUEST_TYPE_ERROR,
-        {
-          cause: e,
-        },
-      );
-    }
-
-    throw new RequestError(OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUEST_UNKNOWN, {
-      cause: e,
-    });
-  }
-}
 
 /**
  * Parses an HTTP response based on its content type
