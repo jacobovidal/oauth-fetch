@@ -16,7 +16,7 @@ import { CryptoParamsResult } from "../types/dpop.internal.types.js";
 import {
   validateDpopKeyPair,
   validateGenerateKeyPairAlgorithm,
-} from "src/validations/dpop-validations.js";
+} from "../validations/dpop-validations.js";
 
 /**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.

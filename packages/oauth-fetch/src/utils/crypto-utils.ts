@@ -1,3 +1,8 @@
+import {
+  DPOP_ERROR_CODES,
+  DPOP_ERROR_DESCRIPTIONS,
+  DPoPError,
+} from "src/errors/dpop.error.js";
 import { DPoPKeyPair } from "../types/dpop.types.js";
 
 /**
@@ -59,7 +64,10 @@ export function getRsaAlgorithm(key: CryptoKey): string {
     case "SHA-512":
       return "RS512";
     default:
-      throw new Error(`Unsupported RSA hash algorithm: ${hashName}`);
+      throw new DPoPError(
+        DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM(hashName),
+      );
   }
 }
 
@@ -77,7 +85,10 @@ export function getRsaPssAlgorithm(key: CryptoKey): string {
     case "SHA-512":
       return "PS512";
     default:
-      throw new Error(`Unsupported RSA-PSS hash algorithm: ${hashName}`);
+      throw new DPoPError(
+        DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_RSA_PSS_HASH_ALGORITHM(hashName),
+      );
   }
 }
 
@@ -95,7 +106,10 @@ export function getEcdsaAlgorithm(key: CryptoKey): string {
     case "P-521":
       return "ES512";
     default:
-      throw new Error(`Unsupported ECDSA curve: ${namedCurve}`);
+      throw new DPoPError(
+        DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_CRYPTO_ECDSA_CURVE(namedCurve),
+      );
   }
 }
 
@@ -114,7 +128,10 @@ export function getJwsAlgorithm(key: CryptoKey): string {
     case "EdDSA":
       return "Ed25519";
     default:
-      throw new Error(`Unsupported algorithm: ${key.algorithm.name}`);
+      throw new DPoPError(
+        DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(key.algorithm.name),
+      );
   }
 }
 
@@ -132,7 +149,10 @@ export function getEcdsaHashAlgorithm(key: CryptoKey): string {
     case "P-521":
       return "SHA-512";
     default:
-      throw new Error(`Unsupported ECDSA curve: ${namedCurve}`);
+      throw new DPoPError(
+        DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_CRYPTO_ECDSA_CURVE(namedCurve),
+      );
   }
 }
 
@@ -146,7 +166,10 @@ export function validateRsaKey(key: CryptoKey): void {
     typeof algorithm.modulusLength !== "number" ||
     algorithm.modulusLength < 2048
   ) {
-    throw new Error(`RSA key modulus length must be at least 2048 bits`);
+    throw new DPoPError(
+      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+      DPOP_ERROR_DESCRIPTIONS.INVALID_CRYPTO_RSA_MODULUS_LENGTH,
+    );
   }
 }
 
@@ -178,7 +201,12 @@ export function getSigningParams(
           } as RsaPssParams;
         }
         default:
-          throw new Error(`Unsupported RSA-PSS hash algorithm: ${hashName}`);
+          throw new DPoPError(
+            DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+            DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_RSA_PSS_HASH_ALGORITHM(
+              hashName,
+            ),
+          );
       }
     }
     case "RSASSA-PKCS1-v1_5":
@@ -187,7 +215,10 @@ export function getSigningParams(
     case "Ed25519":
       return key.algorithm.name;
     default:
-      throw new Error(`Unsupported algorithm: ${key.algorithm.name}`);
+      throw new DPoPError(
+        DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(key.algorithm.name),
+      );
   }
 }
 

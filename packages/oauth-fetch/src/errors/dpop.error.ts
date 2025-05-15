@@ -1,7 +1,15 @@
-import { DPOP_SUPPORTED_ALGORITHMS } from "src/constants/index.js";
+import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
 import { DPoPSupportedAlgorithms } from "../types/dpop.types.js";
 
-export class DPoPError extends Error {}
+export class DPoPError extends Error {
+  public code: string;
+
+  constructor(code: string, message: string) {
+    super(message);
+    this.name = "DPoPError";
+    this.code = code;
+  }
+}
 
 export const DPOP_ERROR_CODES = {
   INVALID_CONFIGURATION: "invalid_configuration",
@@ -24,4 +32,12 @@ export const DPOP_ERROR_DESCRIPTIONS = {
     `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[
       algorithm
     ].join(", ")}`,
+  UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM: (hashName: string) =>
+    `Unsupported RSA hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
+  INVALID_CRYPTO_RSA_MODULUS_LENGTH:
+    "RSA key modulus length must be at least 2048 bits",
+  UNSUPPORTED_CRYPTO_ECDSA_CURVE: (namedCurve: string) =>
+    `Unsupported ECDSA curve: ${namedCurve} . Supported curves are: P-256, P-384, P-521`,
+  UNSUPPORTED_RSA_PSS_HASH_ALGORITHM: (hashName: string) =>
+    `Unsupported RSA-PSS hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
 };
