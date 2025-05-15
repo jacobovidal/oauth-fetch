@@ -4,7 +4,7 @@ import {
   extractPublicJwk,
   hashToBase64UrlSha256,
 } from "../../utils/crypto-utils.js";
-import { DPOP_ERROR_DESCRIPTIONS } from "../errors/dpop.error.js";
+import { DPOP_ERROR_DESCRIPTIONS } from "../../errors/dpop.error.js";
 
 describe("DPoPUtils", () => {
   describe("generateKeyPair", () => {
