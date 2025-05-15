@@ -456,6 +456,7 @@ const response = await fetch('https://api.example.com/me/profile', {
 
 > [!NOTE]
 > When using `OAuthFetch`, and if the `getToken` method returns a `DPoP` token type, we will automatically handle the generation of the DPoP proof and its inclusion in the headers.
+> When using `OAuthFetch`, and if the `getToken()` method returns a `DPoP` token type, we will automatically handle the generation of the DPoP proof and its inclusion in the headers.
 
 ### Proof Key for Code Exchange (PKCE)
 
