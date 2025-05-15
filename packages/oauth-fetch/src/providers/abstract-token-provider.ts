@@ -1,7 +1,7 @@
 import { TokenProviderGetTokenResponse } from "../types/token-provider.types.js";
 
 export abstract class AbstractTokenProvider<
-  TokenProviderGetTokenConfig = unknown
+  TokenProviderGetTokenConfig = unknown,
 > {
   // Allow any property to be dynamically attached to the instance
   [key: string]: unknown;
@@ -77,7 +77,7 @@ export abstract class AbstractTokenProvider<
    * ```typescript
    * import { Auth0Client } from "@auth0/auth0-spa-js";
    * import { OAuthFetch } from "oauth-fetch";
-   * 
+   *
    * import { Auth0TokenProvider } from "./auth0-token-provider.js";
    *
    * // Instantiate your Auth0 client
@@ -124,7 +124,7 @@ export abstract class AbstractTokenProvider<
    */
   withConfigOverrides(overrides: Partial<TokenProviderGetTokenConfig>): this {
     const ProviderConstructor = this.constructor as new (
-      config: TokenProviderGetTokenConfig
+      config: TokenProviderGetTokenConfig,
     ) => this;
 
     const mergedConfig = {

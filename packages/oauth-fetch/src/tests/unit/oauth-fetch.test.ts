@@ -28,7 +28,7 @@ const statusTextMapping: Record<number, string> = {
 };
 
 function createMockFetchResponse(
-  options: MockFetchResponseOptions = {}
+  options: MockFetchResponseOptions = {},
 ): Promise<Response> {
   const {
     status = 200,
@@ -176,10 +176,10 @@ describe("OAuthFetch", () => {
             expect(options.method).toBe(method);
             expect(options.headers).toBeInstanceOf(Headers);
             expect(options.headers.get("Content-Type")).toBe(
-              HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.JSON]
+              HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.JSON],
             );
             expect(options.headers.get("X-Custom-Header")).toBe(
-              overrides.extraHeaders["X-Custom-Header"]
+              overrides.extraHeaders["X-Custom-Header"],
             );
 
             if (method === HTTP_METHOD.GET) {
@@ -231,10 +231,10 @@ describe("OAuthFetch", () => {
               expect(options.method).toBe(method);
               expect(options.headers).toBeInstanceOf(Headers);
               expect(options.headers.get("Authorization")).toBe(
-                `${tokenType} ${accessToken}`
+                `${tokenType} ${accessToken}`,
               );
               expect(options.headers.get("X-Custom-Header")).toBe(
-                overrides.extraHeaders["X-Custom-Header"]
+                overrides.extraHeaders["X-Custom-Header"],
               );
             });
 
@@ -279,7 +279,7 @@ describe("OAuthFetch", () => {
                 expect(options.headers).toBeInstanceOf(Headers);
                 expect(options.headers.get("Authorization")).toBeNull();
                 expect(options.headers.get("X-Custom-Header")).toBe(
-                  overrides.extraHeaders["X-Custom-Header"]
+                  overrides.extraHeaders["X-Custom-Header"],
                 );
               });
             });
@@ -326,10 +326,10 @@ describe("OAuthFetch", () => {
               expect(options.method).toBe(method);
               expect(options.headers).toBeInstanceOf(Headers);
               expect(options.headers.get("Authorization")).toBe(
-                `${tokenType} ${accessToken}`
+                `${tokenType} ${accessToken}`,
               );
               expect(options.headers.get("X-Custom-Header")).toBe(
-                overrides.extraHeaders["X-Custom-Header"]
+                overrides.extraHeaders["X-Custom-Header"],
               );
 
               const proof = options.headers.get("DPoP");
@@ -390,7 +390,7 @@ describe("OAuthFetch", () => {
                 expect(options.headers.get("Authorization")).toBeNull();
                 expect(options.headers.get("DPoP")).toBeNull();
                 expect(options.headers.get("X-Custom-Header")).toBe(
-                  overrides.extraHeaders["X-Custom-Header"]
+                  overrides.extraHeaders["X-Custom-Header"],
                 );
               });
             });
@@ -418,7 +418,7 @@ describe("OAuthFetch", () => {
           const [, options] = mockFetch.mock.calls[0]!;
 
           expect(options.headers.get("Content-Type")).toBe(
-            HTTP_CONTENT_TYPE_HEADER[contentType]
+            HTTP_CONTENT_TYPE_HEADER[contentType],
           );
         });
 

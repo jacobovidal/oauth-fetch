@@ -154,7 +154,7 @@ export function validateRsaKey(key: CryptoKey): void {
  * Converts a CryptoKey to the appropriate subtle crypto algorithm identifier for signing
  */
 export function getSigningParams(
-  key: CryptoKey
+  key: CryptoKey,
 ): AlgorithmIdentifier | RsaPssParams | EcdsaParams {
   switch (key.algorithm.name) {
     case "ECDSA":
@@ -197,7 +197,7 @@ export function getSigningParams(
 export async function createSignedJwt(
   header: Record<string, unknown>,
   payload: Record<string, unknown>,
-  privateKey: DPoPKeyPair["privateKey"]
+  privateKey: DPoPKeyPair["privateKey"],
 ): Promise<string> {
   const encodeObject = (data: Record<string, unknown>) =>
     encodeBase64Url(new TextEncoder().encode(JSON.stringify(data)));
@@ -209,7 +209,7 @@ export async function createSignedJwt(
   const signatureBuffer = await crypto.subtle.sign(
     getSigningParams(privateKey),
     privateKey,
-    new TextEncoder().encode(input)
+    new TextEncoder().encode(input),
   );
 
   const signature = encodeBase64Url(new Uint8Array(signatureBuffer));

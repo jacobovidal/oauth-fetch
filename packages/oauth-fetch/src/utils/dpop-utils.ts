@@ -66,7 +66,7 @@ export class DPoPUtils {
    */
   static #getCryptoParams(
     algorithm: DPoPSupportedAlgorithms,
-    curveOrModulus: DPoPSupportedCurveOrModulus
+    curveOrModulus: DPoPSupportedCurveOrModulus,
   ): CryptoParamsResult {
     switch (algorithm) {
       case "ECDSA":
@@ -82,7 +82,7 @@ export class DPoPUtils {
         return { name: "Ed25519" };
       default:
         throw new Error(
-          `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}"`
+          `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}"`,
         );
     }
   }
@@ -143,7 +143,7 @@ export class DPoPUtils {
     // Create JSON with sorted keys as required by RFC 7638
     const canonicalJson = JSON.stringify(
       canonicalJwk,
-      Object.keys(canonicalJwk).sort()
+      Object.keys(canonicalJwk).sort(),
     );
 
     return hashToBase64UrlSha256(canonicalJson);
@@ -195,7 +195,7 @@ export class DPoPUtils {
     const keyPair = (await crypto.subtle.generateKey(
       this.#getCryptoParams(algorithm, curveOrModulus),
       false, // Non-extractable keys for security
-      ["sign", "verify"]
+      ["sign", "verify"],
     )) as CryptoKeyPair;
 
     return {

@@ -18,7 +18,11 @@ import {
   ExecuteRequestOptions,
   RequestHeadersConfig,
 } from "./types/oauth-fetch.internal.types.js";
-import { validateProtectedResourceConfig, validateSupportedTokenType, validateTokenProvider } from "./validations/oauth-fetch-validations.js";
+import {
+  validateProtectedResourceConfig,
+  validateSupportedTokenType,
+  validateTokenProvider,
+} from "./validations/oauth-fetch-validations.js";
 import { validateDpopKeyPair } from "./validations/dpop-validations.js";
 
 /**
@@ -106,7 +110,7 @@ export class OAuthFetch {
 
       const isDPoP = SUPPORTED_TOKEN_TYPES.DPOP.some(
         (supportedType) =>
-          supportedType.toUpperCase() === tokenType.toUpperCase()
+          supportedType.toUpperCase() === tokenType.toUpperCase(),
       );
 
       if (isDPoP) {
@@ -120,7 +124,7 @@ export class OAuthFetch {
             dpopKeyPair: config.dpopKeyPair,
             nonce: config.nonce,
             accessToken: accessToken,
-          })
+          }),
         );
       }
     }

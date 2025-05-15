@@ -22,12 +22,12 @@ describe("DPoPUtils", () => {
 
       expect(keyPair.publicKey.algorithm.name).toBe(algorithm);
       expect((keyPair.publicKey.algorithm as EcKeyAlgorithm).namedCurve).toBe(
-        curveOrModulus
+        curveOrModulus,
       );
 
       expect(keyPair.privateKey.algorithm.name).toBe(algorithm);
       expect((keyPair.privateKey.algorithm as EcKeyAlgorithm).namedCurve).toBe(
-        curveOrModulus
+        curveOrModulus,
       );
       expect(keyPair.privateKey.extractable).toBeFalsy();
     });
@@ -42,8 +42,9 @@ describe("DPoPUtils", () => {
           algorithm,
           // @ts-expect-error - Invalid curveOrModulus
           curveOrModulus,
-        })
-      ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(algorithm)
+        }),
+      ).rejects.toThrowError(
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(algorithm),
       );
     });
 
@@ -58,8 +59,9 @@ describe("DPoPUtils", () => {
           algorithm,
           // @ts-expect-error - Invalid curveOrModulus
           curveOrModulus,
-        })
-      ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm)
+        }),
+      ).rejects.toThrowError(
+        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
       );
     });
   });
@@ -129,7 +131,7 @@ describe("DPoPUtils", () => {
         DPoPUtils.generateProof({
           url,
           method,
-        })
+        }),
       ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.REQUIRED_DPOP);
     });
   });
@@ -139,7 +141,7 @@ describe("DPoPUtils", () => {
 
     test("should generate a valid JWK thumbprint", async () => {
       const thumbprint = await DPoPUtils.calculateJwkThumbprint(
-        dpopKeyPair.publicKey
+        dpopKeyPair.publicKey,
       );
 
       const jwk = await extractPublicJwk(dpopKeyPair.publicKey);
@@ -153,12 +155,11 @@ describe("DPoPUtils", () => {
 
       const canonicalJson = JSON.stringify(
         canonicalJwk,
-        Object.keys(canonicalJwk).sort()
+        Object.keys(canonicalJwk).sort(),
       );
 
-      const expectedHashedAccessToken = await hashToBase64UrlSha256(
-        canonicalJson
-      );
+      const expectedHashedAccessToken =
+        await hashToBase64UrlSha256(canonicalJson);
 
       expect(thumbprint).toBe(expectedHashedAccessToken);
     });

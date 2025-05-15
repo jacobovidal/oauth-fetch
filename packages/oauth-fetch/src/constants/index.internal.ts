@@ -14,7 +14,7 @@ export const HTTP_CONTENT_TYPE_HEADER = {
 /**
  * Default PKCE code verifier length, recommended by RFC 7636.
  * It provides a good security balance with a length between 43 and 128 characters.
- * 
+ *
  * @see https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
  */
 export const DEFAULT_PKCE_CODE_VERIFIER_LENGTH = 64;

@@ -27,7 +27,7 @@ export type OAuthFetchPrivateResourceConfig = {
   contentType?: HttpContentType;
   /** Whether the API requires authentication (defaults to true)
    * @default true
-  */
+   */
   isProtected?: true;
   /** Provider responsible for fetching OAuth tokens */
   tokenProvider: AbstractTokenProvider;

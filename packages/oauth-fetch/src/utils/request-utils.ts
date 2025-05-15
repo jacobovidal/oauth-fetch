@@ -1,6 +1,4 @@
-import {
-  HTTP_CONTENT_TYPE,
-} from "../constants/index.js";
+import { HTTP_CONTENT_TYPE } from "../constants/index.js";
 import { HttpContentType } from "../types/request.types.js";
 import { RequestBody } from "../types/oauth-fetch.types.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
@@ -9,7 +7,7 @@ import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
  * Parses an HTTP response based on its content type
  */
 export async function parseResponseBody(
-  response: Response
+  response: Response,
 ): Promise<string | unknown | FormData | null> {
   const contentType = response.headers.get("Content-Type");
 
@@ -38,7 +36,7 @@ export async function parseResponseBody(
 
   if (
     contentType.includes(
-      HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.FORM_URL_ENCODED]
+      HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.FORM_URL_ENCODED],
     )
   ) {
     return await response.text();
@@ -53,7 +51,7 @@ export async function parseResponseBody(
  */
 export function formatRequestBody(
   contentType: HttpContentType,
-  body?: RequestBody
+  body?: RequestBody,
 ): BodyInit | undefined {
   if (!body) {
     return undefined;
@@ -84,7 +82,7 @@ export function formatRequestBody(
 
     default:
       console.warn(
-        `Unsupported Content-Type: ${contentType}. Using text format.`
+        `Unsupported Content-Type: ${contentType}. Using text format.`,
       );
       return String(body);
   }

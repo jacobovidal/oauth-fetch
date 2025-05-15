@@ -18,7 +18,7 @@ export const DPOP_ERROR_DESCRIPTIONS = {
     "dpopKeyPair.privateKey must include 'sign' usage permission",
   UNSUPPORTED_ALGORITHM: (algorithm: string) =>
     `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
-      DPOP_SUPPORTED_ALGORITHMS
+      DPOP_SUPPORTED_ALGORITHMS,
     ).join(", ")}`,
   UNSUPPORTED_ALGORITHM_CONFIGURATION: (algorithm: DPoPSupportedAlgorithms) =>
     `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[

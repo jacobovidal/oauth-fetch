@@ -1,6 +1,7 @@
 import { SUPPORTED_TOKEN_TYPES } from "../constants/index.js";
 
-export type TokenProviderTokenType = (typeof SUPPORTED_TOKEN_TYPES)[keyof typeof SUPPORTED_TOKEN_TYPES][number];
+export type TokenProviderTokenType =
+  (typeof SUPPORTED_TOKEN_TYPES)[keyof typeof SUPPORTED_TOKEN_TYPES][number];
 
 /**
  * Represents the response from a token acquisition operation.
@@ -18,4 +19,4 @@ export type TokenProviderGetTokenResponse = {
    * Common types include "Bearer" and "DPoP" (Demonstrating Proof-of-Possession).
    */
   token_type: TokenProviderTokenType;
-}
+};

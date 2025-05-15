@@ -7,7 +7,7 @@ import {
 } from "../types/dpop.types.js";
 
 export function validateDpopKeyPair(
-  dpopKeyPair: DPoPKeyPair | undefined
+  dpopKeyPair: DPoPKeyPair | undefined,
 ): asserts dpopKeyPair is DPoPKeyPair {
   if (!dpopKeyPair) {
     throw new Error(DPOP_ERROR_DESCRIPTIONS.REQUIRED_DPOP);
@@ -21,7 +21,7 @@ export function validateDpopKeyPair(
 
   if (privateKey.extractable) {
     throw new Error(
-      DPOP_ERROR_DESCRIPTIONS.REQUIRE_PRIVATE_KEY_TO_BE_NON_EXPORTABLE
+      DPOP_ERROR_DESCRIPTIONS.REQUIRE_PRIVATE_KEY_TO_BE_NON_EXPORTABLE,
     );
   }
 
@@ -45,7 +45,7 @@ export function validateGenerateKeyPairAlgorithm({
 
   if (!validOptions.includes(curveOrModulus as never)) {
     throw new Error(
-      DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm)
+      DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
     );
   }
 }

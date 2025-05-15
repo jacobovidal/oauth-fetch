@@ -23,7 +23,7 @@ export const OAUTH_FETCH_ERROR_DESCRIPTIONS = {
   REQUIRED_TOKEN_PROVIDER: "tokenProvider is required for protected resources",
   NOT_SUPPORTED_TOKEN_TYPE: (tokenType: string) =>
     `Unsupported token type: "${tokenType}". Supported types are: ${Object.keys(
-      SUPPORTED_TOKEN_TYPES
+      SUPPORTED_TOKEN_TYPES,
     )
       .flat()
       .join(", ")}`,

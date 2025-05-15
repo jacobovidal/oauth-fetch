@@ -1,6 +1,9 @@
 import { SUPPORTED_TOKEN_TYPES } from "../../constants/index.js";
 import { AbstractTokenProvider } from "../../providers/abstract-token-provider.js";
-import { TokenProviderGetTokenResponse, TokenProviderTokenType } from "../../types/token-provider.types.js";
+import {
+  TokenProviderGetTokenResponse,
+  TokenProviderTokenType,
+} from "../../types/token-provider.types.js";
 
 export class MockTokenProvider extends AbstractTokenProvider {
   private tokenType;
