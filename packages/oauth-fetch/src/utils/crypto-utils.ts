@@ -2,7 +2,7 @@ import {
   DPOP_ERROR_CODES,
   DPOP_ERROR_DESCRIPTIONS,
   DPoPError,
-} from "src/errors/dpop.error.js";
+} from "../errors/dpop.error.js";
 import { DPoPKeyPair } from "../types/dpop.types.js";
 
 /**

@@ -39,6 +39,8 @@ export const DPOP_ERROR_DESCRIPTIONS = {
     curveOrModulus: string,
   ) =>
     `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}".`,
+  UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM: (hashName: string) =>
+    `Unsupported RSA hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
   INVALID_CRYPTO_RSA_MODULUS_LENGTH:
     "RSA key modulus length must be at least 2048 bits",
   UNSUPPORTED_CRYPTO_ECDSA_CURVE: (namedCurve: string) =>

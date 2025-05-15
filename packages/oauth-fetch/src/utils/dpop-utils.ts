@@ -21,7 +21,7 @@ import {
   DPOP_ERROR_CODES,
   DPOP_ERROR_DESCRIPTIONS,
   DPoPError,
-} from "src/errors/dpop.error.js";
+} from "../errors/dpop.error.js";
 
 /**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.
