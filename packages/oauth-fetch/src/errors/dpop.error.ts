@@ -1,19 +1,12 @@
 import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
 import { DPoPSupportedAlgorithms } from "../types/dpop.types.js";
 
-export class DPoPError extends Error {
-  public code: string;
-
-  constructor(code: string, message: string) {
-    super(message);
-    this.name = "DPoPError";
-    this.code = code;
-  }
-}
-
 export const DPOP_ERROR_CODES = {
   INVALID_CONFIGURATION: "invalid_configuration",
-};
+} as const;
+
+export type DPoPErrorCode =
+  (typeof DPOP_ERROR_CODES)[keyof typeof DPOP_ERROR_CODES];
 
 export const DPOP_ERROR_DESCRIPTIONS = {
   REQUIRED_DPOP:
@@ -25,7 +18,7 @@ export const DPOP_ERROR_DESCRIPTIONS = {
   REQUIRE_PRIVATE_KEY_SIGN_USAGE:
     "dpopKeyPair.privateKey must include 'sign' usage permission",
   UNSUPPORTED_PUBLIC_KEY_TYPE: (publicKeyType: string) =>
-    `Unsupported public key type: "${publicKeyType}". Supported public key types are: "RSA", "EC", "OKP"`,
+    `Unsupported public key type: "${publicKeyType}". Supported public key types are: RSA, EC, OKP`,
   UNSUPPORTED_ALGORITHM: (algorithm: string) =>
     `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
       DPOP_SUPPORTED_ALGORITHMS,
@@ -47,4 +40,27 @@ export const DPOP_ERROR_DESCRIPTIONS = {
     `Unsupported ECDSA curve: ${namedCurve} . Supported curves are: P-256, P-384, P-521`,
   UNSUPPORTED_RSA_PSS_HASH_ALGORITHM: (hashName: string) =>
     `Unsupported RSA-PSS hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
-};
+} as const;
+
+export class DPoPError extends Error {
+  public readonly code: DPoPErrorCode;
+  public readonly cause?: unknown;
+
+  constructor(
+    code: DPoPErrorCode,
+    message: string,
+    options?: { cause?: unknown },
+  ) {
+    super(message, options);
+    this.name = this.constructor.name;
+    this.code = code;
+    this.cause = options?.cause;
+  }
+}
+
+// Error thrown when the configuration is invalid
+export class ConfigurationError extends DPoPError {
+  constructor(message: string, options?: { cause?: unknown }) {
+    super(DPOP_ERROR_CODES.INVALID_CONFIGURATION, message, options);
+  }
+}

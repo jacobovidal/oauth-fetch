@@ -18,9 +18,8 @@ import {
   validateGenerateKeyPairAlgorithm,
 } from "../validations/dpop-validations.js";
 import {
-  DPOP_ERROR_CODES,
   DPOP_ERROR_DESCRIPTIONS,
-  DPoPError,
+  ConfigurationError,
 } from "../errors/dpop.error.js";
 
 /**
@@ -86,8 +85,7 @@ export class DPoPUtils {
       case "EdDSA":
         return { name: "Ed25519" };
       default:
-        throw new DPoPError(
-          DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        throw new ConfigurationError(
           DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS(
             algorithm,
             curveOrModulus,
@@ -146,8 +144,7 @@ export class DPoPUtils {
         canonicalJwk.x = jwk.x;
         break;
       default:
-        throw new DPoPError(
-          DPOP_ERROR_CODES.INVALID_CONFIGURATION,
+        throw new ConfigurationError(
           DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_PUBLIC_KEY_TYPE(
             jwk.kty as string,
           ),

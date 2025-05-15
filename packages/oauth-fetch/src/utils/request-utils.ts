@@ -2,6 +2,54 @@ import { HTTP_CONTENT_TYPE } from "../constants/index.js";
 import { HttpContentType } from "../types/request.types.js";
 import { RequestBody } from "../types/oauth-fetch.types.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
+import {
+  OAUTH_FETCH_ERROR_DESCRIPTIONS,
+  RequestAbortError,
+  RequestError,
+  ResponseError,
+  ResponseParseError,
+} from "../errors/oauth-fetch.errors.js";
+
+export async function _fetch(url: URL, options: RequestInit) {
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new ResponseError(
+        OAUTH_FETCH_ERROR_DESCRIPTIONS.NON_SUCCESSFUL_RESPONSE,
+        {
+          cause: response,
+          status: response.status,
+          body: await parseResponseBody(response).catch(() => undefined),
+        },
+      );
+    }
+
+    return response;
+  } catch (e) {
+    if (e instanceof DOMException && e.name === "AbortError") {
+      throw new RequestAbortError(
+        OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUEST_ABORT_ERROR,
+        {
+          cause: e,
+        },
+      );
+    }
+
+    if (e instanceof TypeError) {
+      throw new RequestError(
+        OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUEST_TYPE_ERROR,
+        {
+          cause: e,
+        },
+      );
+    }
+
+    throw new RequestError(OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUEST_UNKNOWN, {
+      cause: e,
+    });
+  }
+}
 
 /**
  * Parses an HTTP response based on its content type
@@ -20,30 +68,51 @@ export async function parseResponseBody(
     return await response.text();
   }
 
-  if (contentType.includes(HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.JSON])) {
-    return await response.json();
-  }
+  try {
+    if (
+      contentType.includes(HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.JSON])
+    ) {
+      return await response.json();
+    }
 
-  if (contentType.includes(HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.TEXT])) {
+    if (
+      contentType.includes(HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.TEXT])
+    ) {
+      return await response.text();
+    }
+
+    if (
+      contentType.includes(
+        HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.FORM_DATA],
+      )
+    ) {
+      return await response.formData();
+    }
+
+    if (
+      contentType.includes(
+        HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.FORM_URL_ENCODED],
+      )
+    ) {
+      return await response.text();
+    }
+
+    console.warn(
+      `Unsupported Content-Type: ${contentType}. Returning as text.`,
+    );
     return await response.text();
+  } catch (e) {
+    throw new ResponseParseError(
+      OAUTH_FETCH_ERROR_DESCRIPTIONS.FAILED_PARSING__BODY,
+      {
+        cause: e,
+        rawData: await response
+          .clone()
+          .text()
+          .catch(() => undefined),
+      },
+    );
   }
-
-  if (
-    contentType.includes(HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.FORM_DATA])
-  ) {
-    return await response.formData();
-  }
-
-  if (
-    contentType.includes(
-      HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.FORM_URL_ENCODED],
-    )
-  ) {
-    return await response.text();
-  }
-
-  console.warn(`Unsupported Content-Type: ${contentType}. Returning as text.`);
-  return await response.text();
 }
 
 /**

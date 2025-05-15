@@ -1,6 +1,10 @@
 import { AbstractTokenProvider } from "./providers/abstract-token-provider.js";
 import { DPoPUtils } from "./utils/dpop-utils.js";
-import { formatRequestBody, parseResponseBody } from "./utils/request-utils.js";
+import {
+  _fetch,
+  formatRequestBody,
+  parseResponseBody,
+} from "./utils/request-utils.js";
 import {
   HTTP_CONTENT_TYPE,
   HTTP_METHOD,
@@ -20,8 +24,8 @@ import {
 } from "./types/oauth-fetch.internal.types.js";
 import {
   validateProtectedResourceConfig,
-  validateSupportedTokenType,
   validateTokenProvider,
+  validateTokenProviderResponse,
 } from "./validations/oauth-fetch-validations.js";
 import { validateDpopKeyPair } from "./validations/dpop-validations.js";
 
@@ -101,10 +105,12 @@ export class OAuthFetch {
 
       validateTokenProvider(tokenProvider);
 
-      const { token_type: tokenType, access_token: accessToken } =
-        await tokenProvider.getToken();
+      const tokenResponse = await tokenProvider.getToken();
 
-      validateSupportedTokenType(tokenType);
+      validateTokenProviderResponse(tokenResponse);
+
+      const { token_type: tokenType, access_token: accessToken } =
+        tokenResponse;
 
       headers.set("Authorization", `${tokenType} ${accessToken}`);
 
@@ -172,15 +178,16 @@ export class OAuthFetch {
       ...options,
     };
 
-    let response = await fetch(url, fetchOptions);
+    let response = await _fetch(url, fetchOptions);
 
     const nonce = response.headers.get("dpop-nonce");
+    const wwwAuthenticateHeader = response.headers.get("www-authenticate");
 
     if (nonce) {
       this.#cachedNonce = nonce;
 
-      if (!response.ok) {
-        response = await fetch(url, fetchOptions);
+      if (wwwAuthenticateHeader?.includes("use_dpop_nonce")) {
+        response = await _fetch(url, fetchOptions);
       }
     }
 

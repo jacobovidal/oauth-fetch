@@ -2,9 +2,8 @@ import { hashToBase64UrlSha256, encodeBase64Url } from "./crypto-utils.js";
 import { PKCECodeVerifierConfig } from "../types/pkce.types.js";
 import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "../constants/index.internal.js";
 import {
-  PKCE_ERROR_CODES,
   PKCE_ERROR_DESCRIPTIONS,
-  PKCEError,
+  ConfigurationError,
 } from "../errors/pkce.errors.js";
 
 /**
@@ -71,8 +70,7 @@ export class PKCEUtils {
 
     // RFC 7636 requires code verifier to be between 43 and 128 characters
     if (length < 43 || length > 128) {
-      throw new PKCEError(
-        PKCE_ERROR_CODES.INVALID_CONFIGURATION,
+      throw new ConfigurationError(
         PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER_LENGTH,
       );
     }
@@ -109,8 +107,7 @@ export class PKCEUtils {
    */
   static async generateCodeChallenge(codeVerifier: string): Promise<string> {
     if (!codeVerifier) {
-      throw new PKCEError(
-        PKCE_ERROR_CODES.INVALID_CONFIGURATION,
+      throw new ConfigurationError(
         PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER,
       );
     }
