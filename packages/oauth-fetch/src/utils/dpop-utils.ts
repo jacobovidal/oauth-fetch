@@ -13,7 +13,10 @@ import {
   DPoPSupportedCurveOrModulus,
 } from "../types/dpop.types.js";
 import { CryptoParamsResult } from "../types/dpop.internal.types.js";
-import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
+import {
+  validateDpopKeyPair,
+  validateGenerateKeyPairAlgorithm,
+} from "src/validations/dpop-validations.js";
 
 /**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.
@@ -184,24 +187,10 @@ export class DPoPUtils {
     algorithm = "ECDSA",
     curveOrModulus = "P-256",
   }: DPoPKeyGenConfig = {}): Promise<DPoPKeyPair> {
-    // Validate the algorithm and curve/modulus combination
-    const validOptions = DPOP_SUPPORTED_ALGORITHMS[algorithm];
-
-    if (!validOptions) {
-      throw new Error(
-        `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
-          DPOP_SUPPORTED_ALGORITHMS
-        ).join(", ")}`
-      );
-    }
-
-    if (!validOptions.includes(curveOrModulus as never)) {
-      throw new Error(
-        `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${validOptions.join(
-          ", "
-        )}`
-      );
-    }
+    validateGenerateKeyPairAlgorithm({
+      algorithm,
+      curveOrModulus,
+    });
 
     const keyPair = (await crypto.subtle.generateKey(
       this.#getCryptoParams(algorithm, curveOrModulus),
@@ -267,11 +256,7 @@ export class DPoPUtils {
     nonce,
     accessToken,
   }: DPoPGenerateProofConfig): Promise<string> {
-    if (!dpopKeyPair?.publicKey || !dpopKeyPair?.privateKey) {
-      throw new Error(
-        "dpopKeyPair must be initialized with both public and private keys before creating proofs"
-      );
-    }
+    validateDpopKeyPair(dpopKeyPair);
 
     // Create the JWT header with the public key
     const header = {

@@ -1,10 +1,10 @@
 import { describe, test, expect } from "vitest";
 import { DPoPUtils } from "../../utils/dpop-utils.js";
-import { DPOP_SUPPORTED_ALGORITHMS } from "../../constants/index.js";
 import {
   extractPublicJwk,
   hashToBase64UrlSha256,
 } from "../../utils/crypto-utils.js";
+import { DPOP_ERROR_DESCRIPTIONS } from "src/errors/dpop.error.js";
 
 describe("DPoPUtils", () => {
   describe("generateKeyPair", () => {
@@ -43,10 +43,7 @@ describe("DPoPUtils", () => {
           // @ts-expect-error - Invalid curveOrModulus
           curveOrModulus,
         })
-      ).rejects.toThrowError(
-        `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
-          DPOP_SUPPORTED_ALGORITHMS
-        ).join(", ")}`
+      ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(algorithm)
       );
     });
 
@@ -54,16 +51,15 @@ describe("DPoPUtils", () => {
       const algorithm = "ECDSA";
       const curveOrModulus = "P-999";
 
+      DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm);
+
       await expect(
         DPoPUtils.generateKeyPair({
           algorithm,
           // @ts-expect-error - Invalid curveOrModulus
           curveOrModulus,
         })
-      ).rejects.toThrowError(
-        `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[
-          algorithm
-        ].join(", ")}`
+      ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm)
       );
     });
   });
@@ -128,27 +124,13 @@ describe("DPoPUtils", () => {
     });
 
     test("should throw an error if dpopKeyPair is not provided", async () => {
-      const proof = await DPoPUtils.generateProof({
-        url,
-        method,
-        dpopKeyPair,
-        nonce,
-      });
-
-      const [, payloadB64] = proof.split(".");
-      const payload = JSON.parse(atob(payloadB64 as string));
-
-      expect(payload.nonce).toBe(nonce);
-
       await expect(
         // @ts-expect-error - dpopKeyPair is not provided
         DPoPUtils.generateProof({
           url,
           method,
         })
-      ).rejects.toThrowError(
-        "dpopKeyPair must be initialized with both public and private keys before creating proofs"
-      );
+      ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.REQUIRED_DPOP);
     });
   });
 

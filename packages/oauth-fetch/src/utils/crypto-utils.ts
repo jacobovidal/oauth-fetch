@@ -197,14 +197,8 @@ export function getSigningParams(
 export async function createSignedJwt(
   header: Record<string, unknown>,
   payload: Record<string, unknown>,
-  privateKey: DPoPKeyPair["privateKey"],
+  privateKey: DPoPKeyPair["privateKey"]
 ): Promise<string> {
-  if (!privateKey.usages.includes("sign")) {
-    throw new Error(
-      'dpopKeyPair.privateKey must include "sign" usage permission'
-    );
-  }
-
   const encodeObject = (data: Record<string, unknown>) =>
     encodeBase64Url(new TextEncoder().encode(JSON.stringify(data)));
 

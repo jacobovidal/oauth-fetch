@@ -9,7 +9,6 @@ import {
 import { HTTP_CONTENT_TYPE_HEADER } from "./constants/index.internal.js";
 import { HttpContentType } from "./types/request.types.js";
 import { DPoPKeyPair } from "./types/dpop.types.js";
-import { TokenProviderTokenType } from "./types/token-provider.types.js";
 import {
   OAuthFetchConfig,
   RequestBody,
@@ -19,6 +18,8 @@ import {
   ExecuteRequestOptions,
   RequestHeadersConfig,
 } from "./types/oauth-fetch.internal.types.js";
+import { validateProtectedResourceConfig, validateSupportedTokenType, validateTokenProvider } from "./validations/oauth-fetch-validations.js";
+import { validateDpopKeyPair } from "./validations/dpop-validations.js";
 
 /**
  * OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests.
@@ -69,12 +70,7 @@ export class OAuthFetch {
     this.#isProtected = config.isProtected ?? true;
 
     if (this.#isProtected) {
-      if (
-        !("tokenProvider" in config) ||
-        !(config.tokenProvider instanceof AbstractTokenProvider)
-      ) {
-        throw new Error("tokenProvider is required for protected resources");
-      }
+      validateProtectedResourceConfig(config);
 
       this.#tokenProvider = config.tokenProvider;
       this.#dpopKeyPair = config.dpopKeyPair;
@@ -99,20 +95,12 @@ export class OAuthFetch {
       // Can be overridden per request, falls back to the instance configuration.
       const tokenProvider = config.tokenProvider ?? this.#tokenProvider;
 
-      if (!(tokenProvider instanceof AbstractTokenProvider)) {
-        throw new Error("tokenProvider is required for protected resources");
-      }
+      validateTokenProvider(tokenProvider);
 
       const { token_type: tokenType, access_token: accessToken } =
         await tokenProvider.getToken();
 
-      const isTokenTypeSupported = Object.values(SUPPORTED_TOKEN_TYPES).some(
-        (types: readonly TokenProviderTokenType[]) => types.includes(tokenType)
-      );
-
-      if (!isTokenTypeSupported) {
-        throw new Error(`Unsupported token type: "${tokenType}".`);
-      }
+      validateSupportedTokenType(tokenType);
 
       headers.set("Authorization", `${tokenType} ${accessToken}`);
 
@@ -122,9 +110,7 @@ export class OAuthFetch {
       );
 
       if (isDPoP) {
-        if (!config.dpopKeyPair) {
-          throw new Error("dpopKeyPair is required for protected resources");
-        }
+        validateDpopKeyPair(config.dpopKeyPair);
 
         headers.set(
           "DPoP",

@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { dpopClientSnippet } from "@/utils/code-snippets";
-import { DuendeTokenProvider } from "@/utils/duende-token-provider";
+import { DuendeTokenProvider } from "@/token-providers/duende-token-provider";
 
 function DpopApiRequest() {
   const [isLoading, setIsLoading] = useState(false);

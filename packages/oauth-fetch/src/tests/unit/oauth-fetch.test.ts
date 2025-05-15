@@ -7,6 +7,7 @@ import {
   SUPPORTED_TOKEN_TYPES,
 } from "../../index.js";
 import { MockTokenProvider } from "../mocks/token-provider.mock.js";
+import { OAUTH_FETCH_ERROR_DESCRIPTIONS } from "../../errors/oauth-fetch.errors.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "../../constants/index.internal.js";
 
 type MockFetchResponseOptions = {
@@ -129,7 +130,7 @@ describe("OAuthFetch", () => {
           new OAuthFetch({
             baseUrl: "https://api.example.com",
           });
-        }).toThrow("tokenProvider is required for protected resource");
+        }).toThrowError(OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUIRED_TOKEN_PROVIDER);
       });
     });
   });
