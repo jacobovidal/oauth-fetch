@@ -22,9 +22,6 @@
 - [Installation](#installation)
 - [Token Provider](#token-provider)
   - [Examples](#examples)
-    - [Auth0](#auth0)
-    - [Clerk](#clerk)
-    - [WorkOS](#workos)
   - [Configuration Overriders](#configuration-overrides)
 - [Getting Started](#getting-started)
   - [Public (No Authentication)](#public-no-authentication)
@@ -61,9 +58,10 @@ yarn add oauth-fetch
 
 The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This is an abstract class that defines the contract for managing the token lifecycle. By using a custom token provider, you can integrate with any OAuth-compliant identity provider.
 
-### Examples
+### Examples
 
-#### Auth0
+<details>
+  <summary>Auth0</summary>
 
 First, we create a `Auth0TokenProvider` to use the `@auth0/auth0-spa-js` SDK.
 
@@ -140,8 +138,10 @@ await oauthClient.patch(
   }
 );
 ```
+</details>
 
-#### Clerk
+<details>
+  <summary>Clerk</summary>
 
 First, we create a `ClerkTokenProvider` to use the `@clerk/clerk-react` SDK.
 
@@ -205,8 +205,10 @@ await oauthClient.get("/me/profile", {
   }),
 });
 ```
+</details>
 
-#### WorkOS
+<details>
+  <summary>WorkOS</summary>
 
 First, we create a `WorkOSTokenProvider` to use the `@workos-inc/authkit-react` SDK.
 
@@ -263,6 +265,7 @@ const oauthClient = new OAuthFetch({
 // Make a GET request
 await oauthClient.get("/me/profile");
 ```
+</details>
 
 ### Configuration Overrides
 
