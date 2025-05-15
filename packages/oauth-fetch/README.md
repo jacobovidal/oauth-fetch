@@ -60,6 +60,8 @@ The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This i
 
 ### Examples
 
+Below there are practical implementations of custom token providers integrating popular identity providers like Auth0, Clerk, and WorkOS.
+
 <details>
   <summary>Auth0</summary>
 
