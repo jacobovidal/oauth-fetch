@@ -24,6 +24,8 @@ export const DPOP_ERROR_DESCRIPTIONS = {
     "dpopKeyPair.privateKey should not be exportable for security reasons",
   REQUIRE_PRIVATE_KEY_SIGN_USAGE:
     "dpopKeyPair.privateKey must include 'sign' usage permission",
+  UNSUPPORTED_PUBLIC_KEY_TYPE: (publicKeyType: string) =>
+    `Unsupported public key type: "${publicKeyType}". Supported public key types are: "RSA", "EC", "OKP"`,
   UNSUPPORTED_ALGORITHM: (algorithm: string) =>
     `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
       DPOP_SUPPORTED_ALGORITHMS,
@@ -32,8 +34,11 @@ export const DPOP_ERROR_DESCRIPTIONS = {
     `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[
       algorithm
     ].join(", ")}`,
-  UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM: (hashName: string) =>
-    `Unsupported RSA hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
+  UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS: (
+    algorithm: string,
+    curveOrModulus: string,
+  ) =>
+    `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}".`,
   INVALID_CRYPTO_RSA_MODULUS_LENGTH:
     "RSA key modulus length must be at least 2048 bits",
   UNSUPPORTED_CRYPTO_ECDSA_CURVE: (namedCurve: string) =>

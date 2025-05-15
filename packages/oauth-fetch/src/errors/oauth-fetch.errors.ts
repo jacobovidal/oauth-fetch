@@ -1,6 +1,14 @@
 import { SUPPORTED_TOKEN_TYPES } from "../constants/index.js";
 
-export class OAuthFetchError extends Error {}
+export class OAuthFetchError extends Error {
+  public code: string;
+
+  constructor(code: string, message: string) {
+    super(message);
+    this.name = "OAuthFetchError";
+    this.code = code;
+  }
+}
 
 export class ConfigurationError extends OAuthFetchError {}
 

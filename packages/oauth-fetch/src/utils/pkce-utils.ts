@@ -73,7 +73,7 @@ export class PKCEUtils {
     if (length < 43 || length > 128) {
       throw new PKCEError(
         PKCE_ERROR_CODES.INVALID_CONFIGURATION,
-        PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER_LENGTH
+        PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER_LENGTH,
       );
     }
 
@@ -111,7 +111,7 @@ export class PKCEUtils {
     if (!codeVerifier) {
       throw new PKCEError(
         PKCE_ERROR_CODES.INVALID_CONFIGURATION,
-        PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER
+        PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER,
       );
     }
 
