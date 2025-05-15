@@ -21,9 +21,11 @@
 <!-- no toc -->
 - [Installation](#installation)
 - [Token Provider](#token-provider)
-  - [Auth0 Example](#auth0-example)
-  - [Clerk example](#clerk-example)
-  - [WorkOS example](#workos-example)
+  - [Examples](#examples)
+    - [Auth0](#auth0)
+    - [Clerk](#clerk)
+    - [WorkOS](#workos)
+  - [Configuration Overriders](#configuration-overrides)
 - [Getting Started](#getting-started)
   - [Public (No Authentication)](#public-no-authentication)
   - [Bearer Authentication](#bearer-authentication)
@@ -59,16 +61,9 @@ yarn add oauth-fetch
 
 The core of `oauth-fetch`'s flexibility is the concept of Token Provider. This is an abstract class that defines the contract for managing the token lifecycle. By using a custom token provider, you can integrate with any OAuth-compliant identity provider.
 
+### Examples
 
-> [!TIP]
-> When implementing your token provider, ensure you inject `AbstractTokenProvider<YourGetTokenOptionsType>` to fully benefit from TypeScript's type inference and autocompletion in `withGetTokenConfig()` overrides.
->
-> Example using `AbstractTokenProvider<GetTokenSilentlyOptions>` with Auth0:
-> 
-> ![Example using Auth0](https://github.com/jacobovidal/oauth-fetch/blob/main/assets/token-provider-abstraction-typescript.gif?raw=true)
-
-
-### Auth0 Example
+#### Auth0
 
 First, we create a `Auth0TokenProvider` to use the `@auth0/auth0-spa-js` SDK.
 
@@ -101,7 +96,7 @@ export class Auth0TokenProvider extends AbstractTokenProvider<GetTokenSilentlyOp
 }
 ```
 
-After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the Auth0 client to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `withGetTokenConfig` for fine-grained control over each request.
+After creating your token provider, you can initialize the `OAuthFetch` client and configure the `tokenProvider` with the Auth0 client to manage the token lifecycle. Additionally, you can pass extra configuration to the `getToken()` method using `withConfigOverrides` for fine-grained control over each request.
 
 ```typescript
 // index.ts
@@ -146,7 +141,7 @@ await oauthClient.patch(
 );
 ```
 
-### Clerk example
+#### Clerk
 
 First, we create a `ClerkTokenProvider` to use the `@clerk/clerk-react` SDK.
 
@@ -211,7 +206,7 @@ await oauthClient.get("/me/profile", {
 });
 ```
 
-### WorkOS example
+#### WorkOS
 
 First, we create a `WorkOSTokenProvider` to use the `@workos-inc/authkit-react` SDK.
 
@@ -268,6 +263,33 @@ const oauthClient = new OAuthFetch({
 // Make a GET request
 await oauthClient.get("/me/profile");
 ```
+
+### Configuration Overrides
+
+The `AbstractTokenProvider` class includes a feature to customize token acquisition on a per-request basis using configuration overrides. This allows you to create a new instance of your token provider with modified `getToken()` options without affecting the global instance or other requests.
+
+This is particularly useful when you need to adjust parameters like scopes, audiences, or other provider-specific options dynamically for individual API calls.
+
+```typescript
+const profileTokenProvider = tokenProvider.withConfigOverrides({
+  authorizationParams: {
+    scope: "read:profile",
+    audience: "https://api.example.com",
+  },
+});
+
+await oauthClient.get("/me/profile", {
+  tokenProvider: profileTokenProvider,
+});
+```
+
+> [!TIP]
+> When implementing your token provider, ensure you inject `AbstractTokenProvider<YourGetTokenOptionsType>` to fully benefit from TypeScript's type inference and autocompletion in `withGetTokenConfig()` overrides.
+>
+> Example using `AbstractTokenProvider<GetTokenSilentlyOptions>` with Auth0:
+> 
+> ![Example using Auth0](https://github.com/jacobovidal/oauth-fetch/blob/main/assets/token-provider-abstraction-typescript.gif?raw=true)
+
 
 ## Getting Started
 
