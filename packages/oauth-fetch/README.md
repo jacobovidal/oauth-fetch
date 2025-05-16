@@ -31,7 +31,7 @@
 - [Utilities](#utilities)
   - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop-1)
   - [Proof Key for Code Exchange (PKCE)](#proof-key-for-code-exchange-pkce)
-- [API Reference](docs/README.md)
+- [API Reference]([docs/README.md](https://github.com/jacobovidal/oauth-fetch/blob/main/packages/oauth-fetch/docs/README.md))
 
 ## Installation
 
