@@ -1,4 +1,4 @@
-import { TokenProviderGetTokenResponse } from "../types/token-provider.types.js";
+import type { TokenProviderGetTokenResponse } from "../types/token-provider.types.js";
 
 /**
  * Abstract class representing a Token Provider responsible for managing the

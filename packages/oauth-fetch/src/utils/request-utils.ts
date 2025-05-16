@@ -1,6 +1,6 @@
 import { HTTP_CONTENT_TYPE } from "../constants/index.js";
-import { HttpContentType } from "../types/request.types.js";
-import { RequestBody } from "../types/oauth-fetch.types.js";
+import type { HttpContentType } from "../types/request.types.js";
+import type { RequestBody } from "../types/oauth-fetch.types.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
 import {
   OAUTH_FETCH_ERROR_DESCRIPTIONS,

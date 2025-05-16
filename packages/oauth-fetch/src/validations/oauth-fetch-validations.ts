@@ -1,10 +1,10 @@
 import { SUPPORTED_TOKEN_TYPES } from "../constants/index.js";
 import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
-import {
+import type {
   OAuthFetchConfig,
   OAuthFetchPrivateResourceConfig,
 } from "../types/oauth-fetch.types.js";
-import {
+import type {
   TokenProviderGetTokenResponse,
   TokenProviderTokenType,
 } from "../types/token-provider.types.js";

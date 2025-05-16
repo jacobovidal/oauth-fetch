@@ -1,4 +1,4 @@
-import { HTTP_CONTENT_TYPE, HTTP_METHOD } from "../constants/index.js";
+import type { HTTP_CONTENT_TYPE, HTTP_METHOD } from "../constants/index.js";
 
 /**
  * Type representing the available HTTP content types defined in the `HTTP_CONTENT_TYPE` constant.

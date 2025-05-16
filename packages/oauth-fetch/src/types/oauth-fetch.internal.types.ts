@@ -1,7 +1,7 @@
-import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
-import { HttpContentType, HttpMethod } from "./request.types.js";
-import { DPoPKeyPair } from "./dpop.types.js";
-import { RequestOptions, RequestBody } from "./oauth-fetch.types.js";
+import type { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
+import type { HttpContentType, HttpMethod } from "./request.types.js";
+import type { DPoPKeyPair } from "./dpop.types.js";
+import type { RequestOptions, RequestBody } from "./oauth-fetch.types.js";
 
 /**
  * Configuration for building request headers

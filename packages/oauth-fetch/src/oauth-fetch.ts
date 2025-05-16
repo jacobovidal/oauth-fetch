@@ -7,14 +7,14 @@ import {
   SUPPORTED_TOKEN_TYPES,
 } from "./constants/index.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "./constants/index.internal.js";
-import { HttpContentType } from "./types/request.types.js";
-import { DPoPKeyPair } from "./types/dpop.types.js";
-import {
+import type { HttpContentType } from "./types/request.types.js";
+import type { DPoPKeyPair } from "./types/dpop.types.js";
+import type {
   OAuthFetchConfig,
   RequestBody,
   RequestOptions,
 } from "./types/oauth-fetch.types.js";
-import {
+import type {
   ExecuteRequestOptions,
   RequestHeadersConfig,
 } from "./types/oauth-fetch.internal.types.js";

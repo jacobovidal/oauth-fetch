@@ -1,6 +1,6 @@
-import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
-import { HttpContentType } from "./request.types.js";
-import { DPoPKeyPair } from "./dpop.types.js";
+import type { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
+import type { HttpContentType } from "./request.types.js";
+import type { DPoPKeyPair } from "./dpop.types.js";
 
 /**
  * Configuration for public (non-authenticated) resources

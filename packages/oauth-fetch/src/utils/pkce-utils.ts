@@ -1,5 +1,5 @@
 import { hashToBase64UrlSha256, encodeBase64Url } from "./crypto-utils.js";
-import { PKCECodeVerifierConfig } from "../types/pkce.types.js";
+import type { PKCECodeVerifierConfig } from "../types/pkce.types.js";
 import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "../constants/index.internal.js";
 import {
   PKCE_ERROR_DESCRIPTIONS,

@@ -1,5 +1,5 @@
 import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
-import { HttpMethod } from "./request.types.js";
+import type { HttpMethod } from "./request.types.js";
 
 /**
  * Cryptographic key pair used for generating and verifying DPoP token proof-of-possession.

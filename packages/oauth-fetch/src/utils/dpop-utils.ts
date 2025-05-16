@@ -5,14 +5,14 @@ import {
   getJwsAlgorithm,
   hashToBase64UrlSha256,
 } from "./crypto-utils.js";
-import {
+import type {
   DPoPGenerateProofConfig,
   DPoPKeyGenConfig,
   DPoPKeyPair,
   DPoPSupportedAlgorithms,
   DPoPSupportedCurveOrModulus,
 } from "../types/dpop.types.js";
-import { CryptoParamsResult } from "../types/dpop.internal.types.js";
+import type { CryptoParamsResult } from "../types/dpop.internal.types.js";
 import {
   validateDpopKeyPair,
   validateGenerateKeyPairAlgorithm,

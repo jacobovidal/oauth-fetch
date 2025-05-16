@@ -4,7 +4,7 @@ import {
   DPoPError,
 } from "../errors/dpop.error.js";
 import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
-import {
+import type {
   DPoPKeyPair,
   DPoPSupportedAlgorithms,
   DPoPSupportedCurveOrModulus,

@@ -10,5 +10,7 @@ export default defineConfig([
     sourcemap: true,
     minify: true,
     clean: true,
+    treeshake: true,
+    target: "esnext",
   },
 ]);

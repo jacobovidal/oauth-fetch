@@ -1,4 +1,4 @@
-import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
+import type { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
 
 /**
  * Type representing the corresponding MIME types for the HTTP content types, as defined in the `HTTP_CONTENT_TYPE_HEADER` constant.
