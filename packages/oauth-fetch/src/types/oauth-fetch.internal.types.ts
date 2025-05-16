@@ -4,7 +4,6 @@ import { DPoPKeyPair } from "./dpop.types.js";
 import { RequestOptions, RequestBody } from "./oauth-fetch.types.js";
 
 /**
- * @internal
  * Configuration for building request headers
  */
 export type RequestHeadersConfig = {
@@ -27,7 +26,6 @@ export type RequestHeadersConfig = {
 };
 
 /**
- * @internal
  * Options for making HTTP requests
  */
 export type ExecuteRequestOptions = RequestOptions & {

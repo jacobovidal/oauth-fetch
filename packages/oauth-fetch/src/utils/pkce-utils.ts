@@ -45,6 +45,8 @@ import {
  * ```
  */
 export class PKCEUtils {
+  private constructor() {}
+
   /**
    * Generates a cryptographically secure random code verifier for PKCE.
    *

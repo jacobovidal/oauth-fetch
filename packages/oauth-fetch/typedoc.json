@@ -1,0 +1,17 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "plugin": ["typedoc-plugin-markdown"],
+  "parametersFormat": "table",
+  "hidePageHeader": true,
+  "hideBreadcrumbs": true,
+  "hideGenerator": true,
+  "gitRevision": "main",
+  "disableSources": true,
+  "out": "docs",
+  "readme": "none",
+  "indexFormat": "table",
+  "textContentMappings": {
+    "title.indexPage": "{projectName} API Reference"
+  },
+}

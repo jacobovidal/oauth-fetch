@@ -63,6 +63,8 @@ import {
  * ```
  */
 export class DPoPUtils {
+  private constructor() {}
+
   /**
    * Generates appropriate Web Crypto API parameters based on the selected algorithm and curve/modulus.
    *
@@ -123,7 +125,6 @@ export class DPoPUtils {
   static async calculateJwkThumbprint(publicKey: CryptoKey): Promise<string> {
     const jwk = await extractPublicJwk(publicKey);
 
-    // Create canonical representation according to RFC 7638
     const canonicalJwk: Record<string, unknown> = {};
 
     switch (jwk.kty) {
@@ -151,11 +152,7 @@ export class DPoPUtils {
         );
     }
 
-    // Create JSON with sorted keys as required by RFC 7638
-    const canonicalJson = JSON.stringify(
-      canonicalJwk,
-      Object.keys(canonicalJwk).sort(),
-    );
+    const canonicalJson = JSON.stringify(canonicalJwk);
 
     return hashToBase64UrlSha256(canonicalJson);
   }
