@@ -342,7 +342,7 @@ describe("OAuthFetch", () => {
               expect(header.alg).toBeDefined();
               expect(header.jwk).toBeDefined();
 
-              expect(payload.htm).toBe(method.toLowerCase());
+              expect(payload.htm).toBe(method);
               expect(payload.htu).toBe(url.origin + url.pathname);
               expect(payload.jti).toBeDefined();
               expect(payload.iat).toBeDefined();
