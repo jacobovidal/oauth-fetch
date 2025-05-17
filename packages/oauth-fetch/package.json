@@ -9,7 +9,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup --metafile",
+    "build": "tsup",
     "build:watch": "tsup --watch",
     "clean": "rm -rf ./dist",
     "docs": "typedoc",

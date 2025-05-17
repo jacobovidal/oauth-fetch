@@ -278,8 +278,8 @@ export class DPoPUtils {
       iat: Math.floor(Date.now() / 1000),
       // Unique JWT ID to prevent replay attacks
       jti: generateRandomStateOrNonce(),
-      // HTTP method (lowercase as per spec)
-      htm: method.toLowerCase(),
+      // HTTP method
+      htm: method,
       // HTTP URL (origin + path, without query or fragment)
       htu: url.origin + url.pathname,
       // Include nonce if provided by server
