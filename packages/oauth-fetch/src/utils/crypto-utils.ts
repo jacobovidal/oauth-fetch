@@ -61,7 +61,7 @@ export function getRsaAlgorithm(key: CryptoKey): string {
       return "RS512";
     default:
       throw new ConfigurationError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM(hashName),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_RSA_HASH_ALGORITHM,
       );
   }
 }
@@ -81,7 +81,7 @@ export function getRsaPssAlgorithm(key: CryptoKey): string {
       return "PS512";
     default:
       throw new ConfigurationError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_RSA_PSS_HASH_ALGORITHM(hashName),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_RSA_PSS_HASH_ALGORITHM,
       );
   }
 }
@@ -101,7 +101,7 @@ export function getEcdsaAlgorithm(key: CryptoKey): string {
       return "ES512";
     default:
       throw new ConfigurationError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_CRYPTO_ECDSA_CURVE(namedCurve),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ECDSA_CURVE,
       );
   }
 }
@@ -122,7 +122,7 @@ export function getJwsAlgorithm(key: CryptoKey): string {
       return "Ed25519";
     default:
       throw new ConfigurationError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM(key.algorithm.name),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM,
       );
   }
 }
@@ -142,7 +142,7 @@ export function getEcdsaHashAlgorithm(key: CryptoKey): string {
       return "SHA-512";
     default:
       throw new ConfigurationError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_CRYPTO_ECDSA_CURVE(namedCurve),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ECDSA_CURVE,
       );
   }
 }
@@ -158,7 +158,7 @@ export function validateRsaKey(key: CryptoKey): void {
     algorithm.modulusLength < 2048
   ) {
     throw new ConfigurationError(
-      ERR_DESCRIPTION.CRYPTO.INVALID_CRYPTO_RSA_MODULUS_LENGTH,
+      ERR_DESCRIPTION.CRYPTO.INVALID_RSA_MODULUS_LENGTH,
     );
   }
 }
@@ -192,7 +192,7 @@ export function getSigningParams(
         }
         default:
           throw new ConfigurationError(
-            ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_RSA_PSS_HASH_ALGORITHM(hashName),
+            ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_RSA_PSS_HASH_ALGORITHM,
           );
       }
     }
@@ -203,7 +203,7 @@ export function getSigningParams(
       return key.algorithm.name;
     default:
       throw new ConfigurationError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM(key.algorithm.name),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM,
       );
   }
 }

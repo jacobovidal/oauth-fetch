@@ -56,7 +56,7 @@ export function validateTokenProviderResponse(
 
   if (!isTokenTypeSupported) {
     throw new TokenProviderError(
-      ERR_DESCRIPTION.TOKEN_PROVIDER.UNSUPPORTED_TOKEN_TYPE(tokenType),
+      ERR_DESCRIPTION.TOKEN_PROVIDER.UNSUPPORTED_TOKEN_TYPE,
     );
   }
 }

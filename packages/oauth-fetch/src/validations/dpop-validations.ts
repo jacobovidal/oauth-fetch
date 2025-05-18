@@ -40,14 +40,12 @@ export function validateGenerateKeyPairAlgorithm({
   const validOptions = DPOP_SUPPORTED_ALGORITHMS[algorithm];
 
   if (!validOptions) {
-    throw new ConfigurationError(
-      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM(algorithm),
-    );
+    throw new ConfigurationError(ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM);
   }
 
   if (!validOptions.includes(curveOrModulus as never)) {
     throw new ConfigurationError(
-      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
+      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION,
     );
   }
 }

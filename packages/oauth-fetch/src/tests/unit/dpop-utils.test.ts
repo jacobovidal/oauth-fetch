@@ -43,16 +43,12 @@ describe("DPoPUtils", () => {
           // @ts-expect-error - Invalid curveOrModulus
           curveOrModulus,
         }),
-      ).rejects.toThrowError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM(algorithm),
-      );
+      ).rejects.toThrowError(ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM);
     });
 
     test("should throw an error for supported algorithm but invalid curve", async () => {
       const algorithm = "ECDSA";
       const curveOrModulus = "P-999";
-
-      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm);
 
       await expect(
         DPoPUtils.generateKeyPair({
@@ -61,7 +57,7 @@ describe("DPoPUtils", () => {
           curveOrModulus,
         }),
       ).rejects.toThrowError(
-        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION,
       );
     });
   });

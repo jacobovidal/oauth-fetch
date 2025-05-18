@@ -85,10 +85,7 @@ export class DPoPUtils {
         return { name: "Ed25519" };
       default:
         throw new ConfigurationError(
-          ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS(
-            algorithm,
-            curveOrModulus,
-          ),
+          ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION,
         );
     }
   }
@@ -143,7 +140,7 @@ export class DPoPUtils {
         break;
       default:
         throw new ConfigurationError(
-          ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_PUBLIC_KEY_TYPE(jwk.kty as string),
+          ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_PUBLIC_KEY_TYPE,
         );
     }
 

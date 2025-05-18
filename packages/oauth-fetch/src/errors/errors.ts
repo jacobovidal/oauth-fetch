@@ -1,20 +1,9 @@
-import { DPoPSupportedAlgorithms } from "../types/dpop.types.js";
-import {
-  DPOP_SUPPORTED_ALGORITHMS,
-  SUPPORTED_TOKEN_TYPES,
-} from "../constants/index.js";
-
 export const ERR_DESCRIPTION = {
   TOKEN_PROVIDER: {
     REQUIRED: "tokenProvider is required for protected resources",
     MISSING_ACCESS_TOKEN: "Token provider didn't return an access_token",
     MISSING_TOKEN_TYPE: "Token provider didn't return a token_type",
-    UNSUPPORTED_TOKEN_TYPE: (tokenType: string): string =>
-      `Token provider returned an unsupported token type: "${tokenType}". Supported types are: ${Object.keys(
-        SUPPORTED_TOKEN_TYPES,
-      )
-        .flat()
-        .join(", ")}`,
+    UNSUPPORTED_TOKEN_TYPE: `Token provider returned an unsupported token type. Supported types are: DPoP, Bearer`,
   },
   RESPONSE: {
     BODY_PARSING_ERROR: "Failed to parse the response body",
@@ -41,29 +30,19 @@ export const ERR_DESCRIPTION = {
     INVALID_CODE_VERIFIER: "Code verifier must be a non-empty string",
   },
   CRYPTO: {
-    UNSUPPORTED_PUBLIC_KEY_TYPE: (publicKeyType: string) =>
-      `Unsupported public key type: "${publicKeyType}". Supported public key types are: RSA, EC, OKP`,
-    UNSUPPORTED_ALGORITHM: (algorithm: string) =>
-      `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
-        DPOP_SUPPORTED_ALGORITHMS,
-      ).join(", ")}`,
-    UNSUPPORTED_ALGORITHM_CONFIGURATION: (algorithm: DPoPSupportedAlgorithms) =>
-      `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[
-        algorithm
-      ].join(", ")}`,
-    UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS: (
-      algorithm: string,
-      curveOrModulus: string,
-    ) =>
-      `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}".`,
-    UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM: (hashName: string) =>
-      `Unsupported RSA hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
-    INVALID_CRYPTO_RSA_MODULUS_LENGTH:
+    UNSUPPORTED_PUBLIC_KEY_TYPE:
+      "Unsupported public key type. Supported public key types are: RSA, EC, OKP",
+    UNSUPPORTED_ALGORITHM: "Unsupported algorithm",
+    UNSUPPORTED_ALGORITHM_CONFIGURATION:
+      "Unsupported configuration for this algorith",
+    UNSUPPORTED_RSA_HASH_ALGORITHM:
+      "Unsupported RSA hash algorithm. Supported algorithms are: SHA-256, SHA-384, SHA-512",
+    INVALID_RSA_MODULUS_LENGTH:
       "RSA key modulus length must be at least 2048 bits",
-    UNSUPPORTED_CRYPTO_ECDSA_CURVE: (namedCurve: string) =>
-      `Unsupported ECDSA curve: ${namedCurve}. Supported curves are: P-256, P-384, P-521`,
-    UNSUPPORTED_RSA_PSS_HASH_ALGORITHM: (hashName: string) =>
-      `Unsupported RSA-PSS hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
+    UNSUPPORTED_ECDSA_CURVE:
+      "Unsupported ECDSA curve. Supported curves are: P-256, P-384, P-521",
+    UNSUPPORTED_RSA_PSS_HASH_ALGORITHM:
+      "Unsupported RSA-PSS hash algorithm. Supported algorithms are: SHA-256, SHA-384, SHA-512",
   },
 };
 

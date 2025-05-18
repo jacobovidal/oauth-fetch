@@ -6,154 +6,79 @@
 
 ### CRYPTO
 
-> `readonly` **CRYPTO**: `object`
+> **CRYPTO**: `object`
 
-#### CRYPTO.INVALID\_CRYPTO\_RSA\_MODULUS\_LENGTH
+#### CRYPTO.INVALID\_RSA\_MODULUS\_LENGTH
 
-> `readonly` **INVALID\_CRYPTO\_RSA\_MODULUS\_LENGTH**: `"RSA key modulus length must be at least 2048 bits"` = `"RSA key modulus length must be at least 2048 bits"`
+> **INVALID\_RSA\_MODULUS\_LENGTH**: `string` = `"RSA key modulus length must be at least 2048 bits"`
 
-#### CRYPTO.UNSUPPORTED\_ALGORITHM()
+#### CRYPTO.UNSUPPORTED\_ALGORITHM
 
-> `readonly` **UNSUPPORTED\_ALGORITHM**: (`algorithm`) => `string`
+> **UNSUPPORTED\_ALGORITHM**: `string` = `"Unsupported algorithm"`
 
-##### Parameters
+#### CRYPTO.UNSUPPORTED\_ALGORITHM\_CONFIGURATION
 
-| Parameter | Type |
-| ------ | ------ |
-| `algorithm` | `string` |
+> **UNSUPPORTED\_ALGORITHM\_CONFIGURATION**: `string` = `"Unsupported configuration for this algorith"`
 
-##### Returns
+#### CRYPTO.UNSUPPORTED\_ECDSA\_CURVE
 
-`string`
+> **UNSUPPORTED\_ECDSA\_CURVE**: `string` = `"Unsupported ECDSA curve. Supported curves are: P-256, P-384, P-521"`
 
-#### CRYPTO.UNSUPPORTED\_ALGORITHM\_CONFIGURATION()
+#### CRYPTO.UNSUPPORTED\_PUBLIC\_KEY\_TYPE
 
-> `readonly` **UNSUPPORTED\_ALGORITHM\_CONFIGURATION**: (`algorithm`) => `string`
+> **UNSUPPORTED\_PUBLIC\_KEY\_TYPE**: `string` = `"Unsupported public key type. Supported public key types are: RSA, EC, OKP"`
 
-##### Parameters
+#### CRYPTO.UNSUPPORTED\_RSA\_HASH\_ALGORITHM
 
-| Parameter | Type |
-| ------ | ------ |
-| `algorithm` | `"ECDSA"` \| `"RSA-PSS"` \| `"EdDSA"` |
+> **UNSUPPORTED\_RSA\_HASH\_ALGORITHM**: `string` = `"Unsupported RSA hash algorithm. Supported algorithms are: SHA-256, SHA-384, SHA-512"`
 
-##### Returns
+#### CRYPTO.UNSUPPORTED\_RSA\_PSS\_HASH\_ALGORITHM
 
-`string`
-
-#### CRYPTO.UNSUPPORTED\_ALGORITHM\_WITH\_CURVE\_OR\_MODULUS()
-
-> `readonly` **UNSUPPORTED\_ALGORITHM\_WITH\_CURVE\_OR\_MODULUS**: (`algorithm`, `curveOrModulus`) => `string`
-
-##### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `algorithm` | `string` |
-| `curveOrModulus` | `string` |
-
-##### Returns
-
-`string`
-
-#### CRYPTO.UNSUPPORTED\_CRYPTO\_ECDSA\_CURVE()
-
-> `readonly` **UNSUPPORTED\_CRYPTO\_ECDSA\_CURVE**: (`namedCurve`) => `string`
-
-##### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `namedCurve` | `string` |
-
-##### Returns
-
-`string`
-
-#### CRYPTO.UNSUPPORTED\_CRYPTO\_RSA\_HASH\_ALGORITHM()
-
-> `readonly` **UNSUPPORTED\_CRYPTO\_RSA\_HASH\_ALGORITHM**: (`hashName`) => `string`
-
-##### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `hashName` | `string` |
-
-##### Returns
-
-`string`
-
-#### CRYPTO.UNSUPPORTED\_PUBLIC\_KEY\_TYPE()
-
-> `readonly` **UNSUPPORTED\_PUBLIC\_KEY\_TYPE**: (`publicKeyType`) => `string`
-
-##### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `publicKeyType` | `string` |
-
-##### Returns
-
-`string`
-
-#### CRYPTO.UNSUPPORTED\_RSA\_PSS\_HASH\_ALGORITHM()
-
-> `readonly` **UNSUPPORTED\_RSA\_PSS\_HASH\_ALGORITHM**: (`hashName`) => `string`
-
-##### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `hashName` | `string` |
-
-##### Returns
-
-`string`
+> **UNSUPPORTED\_RSA\_PSS\_HASH\_ALGORITHM**: `string` = `"Unsupported RSA-PSS hash algorithm. Supported algorithms are: SHA-256, SHA-384, SHA-512"`
 
 ### DPOP
 
-> `readonly` **DPOP**: `object`
+> **DPOP**: `object`
 
 #### DPOP.INVALID\_INSTANCE
 
-> `readonly` **INVALID\_INSTANCE**: `"dpopKeyPair must contain valid CryptoKey instances for both public and private keys"` = `"dpopKeyPair must contain valid CryptoKey instances for both public and private keys"`
+> **INVALID\_INSTANCE**: `string` = `"dpopKeyPair must contain valid CryptoKey instances for both public and private keys"`
 
 #### DPOP.PRIVATE\_KEY\_NON\_EXPORTABLE
 
-> `readonly` **PRIVATE\_KEY\_NON\_EXPORTABLE**: `"dpopKeyPair.privateKey should not be exportable for security reasons"` = `"dpopKeyPair.privateKey should not be exportable for security reasons"`
+> **PRIVATE\_KEY\_NON\_EXPORTABLE**: `string` = `"dpopKeyPair.privateKey should not be exportable for security reasons"`
 
 #### DPOP.PRIVATE\_KEY\_SIGN\_USAGE
 
-> `readonly` **PRIVATE\_KEY\_SIGN\_USAGE**: `"dpopKeyPair.privateKey must include 'sign' usage permission"` = `"dpopKeyPair.privateKey must include 'sign' usage permission"`
+> **PRIVATE\_KEY\_SIGN\_USAGE**: `string` = `"dpopKeyPair.privateKey must include 'sign' usage permission"`
 
 #### DPOP.REQUIRED
 
-> `readonly` **REQUIRED**: `"dpopKeyPair is required for protected resources with DPoP token type"` = `"dpopKeyPair is required for protected resources with DPoP token type"`
+> **REQUIRED**: `string` = `"dpopKeyPair is required for protected resources with DPoP token type"`
 
 ### PKCE
 
-> `readonly` **PKCE**: `object`
+> **PKCE**: `object`
 
 #### PKCE.INVALID\_CODE\_VERIFIER
 
-> `readonly` **INVALID\_CODE\_VERIFIER**: `"Code verifier must be a non-empty string"` = `"Code verifier must be a non-empty string"`
+> **INVALID\_CODE\_VERIFIER**: `string` = `"Code verifier must be a non-empty string"`
 
 #### PKCE.INVALID\_CODE\_VERIFIER\_LENGTH
 
-> `readonly` **INVALID\_CODE\_VERIFIER\_LENGTH**: `"Code verifier length must be between 43 and 128 characters as per RFC 7636"` = `"Code verifier length must be between 43 and 128 characters as per RFC 7636"`
+> **INVALID\_CODE\_VERIFIER\_LENGTH**: `string` = `"Code verifier length must be between 43 and 128 characters as per RFC 7636"`
 
 ### RESPONSE
 
-> `readonly` **RESPONSE**: `object`
+> **RESPONSE**: `object`
 
 #### RESPONSE.BODY\_PARSING\_ERROR
 
-> `readonly` **BODY\_PARSING\_ERROR**: `"Failed to parse the response body"` = `"Failed to parse the response body"`
+> **BODY\_PARSING\_ERROR**: `string` = `"Failed to parse the response body"`
 
 #### RESPONSE.NON\_SUCCESSFUL()
 
-> `readonly` **NON\_SUCCESSFUL**: (`url`, `method`, `response`) => `string`
+> **NON\_SUCCESSFUL**: (`url`, `method`, `response`) => `string`
 
 ##### Parameters
 
@@ -169,30 +94,20 @@
 
 ### TOKEN\_PROVIDER
 
-> `readonly` **TOKEN\_PROVIDER**: `object`
+> **TOKEN\_PROVIDER**: `object`
 
 #### TOKEN\_PROVIDER.MISSING\_ACCESS\_TOKEN
 
-> `readonly` **MISSING\_ACCESS\_TOKEN**: `"Token provider didn't return an access_token"` = `"Token provider didn't return an access_token"`
+> **MISSING\_ACCESS\_TOKEN**: `string` = `"Token provider didn't return an access_token"`
 
 #### TOKEN\_PROVIDER.MISSING\_TOKEN\_TYPE
 
-> `readonly` **MISSING\_TOKEN\_TYPE**: `"Token provider didn't return a token_type"` = `"Token provider didn't return a token_type"`
+> **MISSING\_TOKEN\_TYPE**: `string` = `"Token provider didn't return a token_type"`
 
 #### TOKEN\_PROVIDER.REQUIRED
 
-> `readonly` **REQUIRED**: `"tokenProvider is required for protected resources"` = `"tokenProvider is required for protected resources"`
+> **REQUIRED**: `string` = `"tokenProvider is required for protected resources"`
 
-#### TOKEN\_PROVIDER.UNSUPPORTED\_TOKEN\_TYPE()
+#### TOKEN\_PROVIDER.UNSUPPORTED\_TOKEN\_TYPE
 
-> `readonly` **UNSUPPORTED\_TOKEN\_TYPE**: (`tokenType`) => `string`
-
-##### Parameters
-
-| Parameter | Type |
-| ------ | ------ |
-| `tokenType` | `string` |
-
-##### Returns
-
-`string`
+> **UNSUPPORTED\_TOKEN\_TYPE**: `string`
