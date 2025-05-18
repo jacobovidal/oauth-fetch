@@ -24,11 +24,7 @@ import {
   validateTokenProviderResponse,
 } from "./validations/oauth-fetch-validations.js";
 import { validateDpopKeyPair } from "./validations/dpop-validations.js";
-import {
-  ERR_DESCRIPTION,
-  ApiResponseError,
-  ConfigurationError,
-} from "./errors/errors.js";
+import { ERR_DESCRIPTION, ApiResponseError } from "./errors/errors.js";
 
 /**
  * OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests.
