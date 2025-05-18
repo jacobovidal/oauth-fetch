@@ -14,7 +14,7 @@
 - **🎯 Granular request control**: Override global configurations per request with additional headers, query parameters, or different token providers.
 - **🛠️ OAuth utilities**: Provides built-in utilities for DPoP and PKCE.
 - **📦 Zero dependencies**: Built entirely on the native `fetch` API, ensuring minimal bundle size and maximum compatibility.
-- **⚡ Ultra-lightweight**: The minified and gzipped bundle size is only **3.6KB**.
+- **⚡ Ultra-lightweight**: The minified and gzipped bundle size is only ![Bundle size](https://deno.bundlejs.com/badge?q=oauth-fetch).
 - **💡 Written in TypeScript:** Offering strong types, inline documentation, and an intuitive API to streamline development and prevent common errors.
 
 ## Table of Contents
