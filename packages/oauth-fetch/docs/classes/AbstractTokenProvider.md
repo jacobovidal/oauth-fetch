@@ -69,16 +69,6 @@ Initializes a new instance of the `AbstractTokenProvider`.
 
 `AbstractTokenProvider`\<`TokenProviderGetTokenConfig`\>
 
-## Properties
-
-### config?
-
-> `protected` `optional` **config**: `TokenProviderGetTokenConfig`
-
-Configuration for the token provider's `getToken()` method.
-This can include options for token acquisition, caching, and other settings
-that the provider supports.
-
 ## Methods
 
 ### getToken()

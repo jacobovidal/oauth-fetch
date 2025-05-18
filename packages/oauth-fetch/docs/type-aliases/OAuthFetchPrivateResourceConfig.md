@@ -14,6 +14,14 @@ Base URL for API requests (e.g., 'https://api.example.com')
 
 ***
 
+### tokenProvider
+
+> **tokenProvider**: [`AbstractTokenProvider`](../classes/AbstractTokenProvider.md)
+
+Provider responsible for fetching OAuth tokens
+
+***
+
 ### contentType?
 
 > `optional` **contentType**: [`HttpContentType`](HttpContentType.md)
@@ -47,11 +55,3 @@ Whether the API requires authentication (defaults to true)
 ```ts
 true
 ```
-
-***
-
-### tokenProvider
-
-> **tokenProvider**: [`AbstractTokenProvider`](../classes/AbstractTokenProvider.md)
-
-Provider responsible for fetching OAuth tokens

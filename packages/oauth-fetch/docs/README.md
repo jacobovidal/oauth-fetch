@@ -9,6 +9,15 @@
 | [OAuthFetch](classes/OAuthFetch.md) | OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests. |
 | [PKCEUtils](classes/PKCEUtils.md) | Utility class for PKCE (Proof Key for Code Exchange) operations. |
 
+## Errors
+
+| Class | Description |
+| ------ | ------ |
+| [ConfigurationError](classes/ConfigurationError.md) | Error thrown when the configuration is invalid. |
+| [ResponseApiError](classes/ResponseApiError.md) | Error thrown when non-successful API response is returned. |
+| [ResponseParseError](classes/ResponseParseError.md) | Error thrown when there's an issue parsing the API response. |
+| [TokenProviderError](classes/TokenProviderError.md) | Error thrown when there's an issue with the token provider. |
+
 ## Type Aliases
 
 | Type Alias | Description |
@@ -34,6 +43,7 @@
 | Variable | Description |
 | ------ | ------ |
 | [DPOP\_SUPPORTED\_ALGORITHMS](variables/DPOP_SUPPORTED_ALGORITHMS.md) | Supported cryptographic algorithms for DPoP, along with their valid parameters. - ECDSA: P-256, P-384, P-521 curves - RSA-PSS: 2048, 3072, 4096 bit modulus lengths - EdDSA: Ed25519 curve |
+| [ERR\_DESCRIPTION](variables/ERR_DESCRIPTION.md) | - |
 | [HTTP\_CONTENT\_TYPE](variables/HTTP_CONTENT_TYPE.md) | HTTP content type constants, representing common content types used in requests and responses. |
 | [HTTP\_METHOD](variables/HTTP_METHOD.md) | Constants for HTTP methods (GET, POST, PATCH, PUT, DELETE). |
 | [SUPPORTED\_TOKEN\_TYPES](variables/SUPPORTED_TOKEN_TYPES.md) | Supported OAuth token types, including case-insensitive variations for each type. |

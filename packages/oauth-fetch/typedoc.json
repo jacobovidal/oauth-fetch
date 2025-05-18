@@ -8,10 +8,20 @@
   "hideGenerator": true,
   "gitRevision": "main",
   "disableSources": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
   "out": "docs",
   "readme": "none",
   "indexFormat": "table",
   "textContentMappings": {
     "title.indexPage": "{projectName} API Reference"
   },
+  "groupOrder": [
+    "Classes",
+    "Errors",
+    "*",
+  ],
+  "sort": ["static-first", "required-first", "alphabetical"]
 }

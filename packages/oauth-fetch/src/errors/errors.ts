@@ -11,7 +11,7 @@ export const ERR_DESCRIPTION = {
     MISSING_TOKEN_TYPE: "Token provider didn't return a token_type",
     UNSUPPORTED_TOKEN_TYPE: (tokenType: string): string =>
       `Token provider returned an unsupported token type: "${tokenType}". Supported types are: ${Object.keys(
-        SUPPORTED_TOKEN_TYPES,
+        SUPPORTED_TOKEN_TYPES
       )
         .flat()
         .join(", ")}`,
@@ -21,7 +21,7 @@ export const ERR_DESCRIPTION = {
     NON_SUCCESSFUL: (
       url: URL,
       method: RequestInit["method"],
-      response: Response,
+      response: Response
     ) =>
       `[${method}] request to [${url.href}] returned ${response.status} status code (${response.statusText})`,
   },
@@ -45,7 +45,7 @@ export const ERR_DESCRIPTION = {
       `Unsupported public key type: "${publicKeyType}". Supported public key types are: RSA, EC, OKP`,
     UNSUPPORTED_ALGORITHM: (algorithm: string) =>
       `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
-        DPOP_SUPPORTED_ALGORITHMS,
+        DPOP_SUPPORTED_ALGORITHMS
       ).join(", ")}`,
     UNSUPPORTED_ALGORITHM_CONFIGURATION: (algorithm: DPoPSupportedAlgorithms) =>
       `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[
@@ -53,7 +53,7 @@ export const ERR_DESCRIPTION = {
       ].join(", ")}`,
     UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS: (
       algorithm: string,
-      curveOrModulus: string,
+      curveOrModulus: string
     ) =>
       `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}".`,
     UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM: (hashName: string) =>
@@ -67,10 +67,17 @@ export const ERR_DESCRIPTION = {
   },
 } as const;
 
+/**
+ * @internal
+ * Base error class.
+ */
 export class BaseError extends Error {
   public readonly code: string;
   public readonly cause?: unknown;
 
+  /**
+   * @internal
+   */
   constructor(code: string, message: string, cause?: unknown) {
     super(message);
     this.name = "BaseError";
@@ -79,29 +86,51 @@ export class BaseError extends Error {
   }
 }
 
-// Error thrown when the configuration is invalid
+/**
+ * Error thrown when the configuration is invalid.
+ *
+ * @group Errors
+ */
 export class ConfigurationError extends BaseError {
+  /**
+   * @noInheritDoc
+   * @internal
+   */
   constructor(message: string, cause?: unknown) {
     super("invalid_configuration", message, cause);
     this.name = "ConfigurationError";
   }
 }
 
-// Error thrown when there's an issue with the token provider
+/**
+ * Error thrown when there's an issue with the token provider.
+ *
+ * @group Errors
+ */
 export class TokenProviderError extends BaseError {
+  /**
+   * @internal
+   */
   constructor(message: string, cause?: unknown) {
     super("token_provider_error", message, cause);
     this.name = "TokenProviderError";
   }
 }
 
-// Error thrown when non-successful API response
+/**
+ * Error thrown when non-successful API response is returned.
+ *
+ * @group Errors
+ */
 export class ResponseApiError extends Error {
   public readonly response: Response;
   public readonly status: number;
   public readonly statusText: string;
   public readonly body?: unknown;
 
+  /**
+   * @internal
+   */
   constructor(message: string, response: Response, body?: unknown) {
     super(message);
     this.name = "ResponseApiError";
@@ -112,15 +141,22 @@ export class ResponseApiError extends Error {
   }
 }
 
-// Error thrown when there's an issue parsing the API response
+/**
+ * Error thrown when there's an issue parsing the API response.
+ *
+ * @group Errors
+ */
 export class ResponseParseError extends ResponseApiError {
   public readonly parseError: unknown;
 
+  /**
+   * @internal
+   */
   constructor(
     message: string,
     response: Response,
     parseError: unknown,
-    body?: unknown,
+    body?: unknown
   ) {
     super(message, response, body);
     this.name = "ResponseParseError";
