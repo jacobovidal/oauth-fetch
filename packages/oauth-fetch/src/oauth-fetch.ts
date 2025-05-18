@@ -77,7 +77,7 @@ export class OAuthFetch {
     this.#baseUrl = config.baseUrl;
     this.#contentType = config.contentType ?? HTTP_CONTENT_TYPE.JSON;
     this.#isProtected = config.isProtected ?? true;
-    this.#customFetch = config.customFetch ?? fetch;
+    this.#customFetch = config.customFetch ?? globalThis.fetch.bind(globalThis);
 
     if (this.#isProtected) {
       validateProtectedResourceConfig(config);
