@@ -1,16 +1,10 @@
 # Type Alias: RequestOptions
 
-> **RequestOptions** = `Omit`\<`RequestInit`, `"method"` \| `"body"` \| `"headers"`\> & `object`
+> **RequestOptions** = `Omit`\<`RequestInit`, `"method"` \| `"body"`\> & `object`
 
 Extended request options that support authentication overrides and all standard fetch options
 
 ## Type declaration
-
-### extraHeaders?
-
-> `optional` **extraHeaders**: `RequestInit`\[`"headers"`\]
-
-Additional headers to be included with the request
 
 ### isProtected?
 

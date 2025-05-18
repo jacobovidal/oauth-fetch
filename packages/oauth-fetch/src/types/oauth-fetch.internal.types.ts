@@ -12,7 +12,7 @@ export type RequestHeadersConfig = {
   /** HTTP method for the request */
   method: HttpMethod;
   /** Additional headers to include with the request */
-  extraHeaders?: RequestInit["headers"];
+  headers?: RequestInit["headers"];
   /** Token provider that can be overridden per request */
   tokenProvider?: AbstractTokenProvider;
   /** Whether this specific request requires authentication */
@@ -34,7 +34,7 @@ export type ExecuteRequestOptions = RequestOptions & {
   /** HTTP method (GET, POST, PUT, PATCH, DELETE) */
   method: HttpMethod;
   /** Additional headers to include with the request */
-  extraHeaders?: RequestInit["headers"];
+  headers?: RequestInit["headers"];
   /** Request body data */
   body?: RequestBody;
 };

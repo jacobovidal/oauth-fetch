@@ -137,8 +137,8 @@ export class OAuthFetch {
       }
     }
 
-    if (config.extraHeaders) {
-      const parsedExtraHeaders = new Headers(config.extraHeaders);
+    if (config.headers) {
+      const parsedExtraHeaders = new Headers(config.headers);
       parsedExtraHeaders.forEach((value, key) => {
         headers.set(key, value);
       });
@@ -155,7 +155,7 @@ export class OAuthFetch {
     endpoint,
     method,
     body,
-    extraHeaders,
+    headers,
     isProtected,
     tokenProvider,
     ...options
@@ -175,7 +175,7 @@ export class OAuthFetch {
           contentType: this.#contentType,
           dpopKeyPair: this.#dpopKeyPair,
           nonce: nonce ?? this.#cachedNonce,
-          extraHeaders,
+          headers,
         }),
         body: formatRequestBody(this.#contentType, body),
         ...options,

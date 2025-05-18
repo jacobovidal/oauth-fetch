@@ -42,7 +42,7 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
           grant_type: "client_credentials",
         },
         {
-          extraHeaders: {
+          headers: {
             DPoP: dpopProof,
           },
         }

@@ -71,12 +71,7 @@ export type OAuthFetchPrivateResourceConfig = {
 /**
  * Extended request options that support authentication overrides and all standard fetch options
  */
-export type RequestOptions = Omit<
-  RequestInit,
-  "method" | "body" | "headers"
-> & {
-  /** Additional headers to be included with the request */
-  extraHeaders?: RequestInit["headers"];
+export type RequestOptions = Omit<RequestInit, "method" | "body"> & {
   /** Override the default protection setting for this specific request */
   isProtected?: boolean;
   /** Override the default provider responsible for fetching OAuth tokens */

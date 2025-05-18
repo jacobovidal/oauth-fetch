@@ -425,7 +425,7 @@ await bearerClient.patch(
     company_name: "Auth0",
   },
   {
-    extraHeaders: {
+    headers: {
       "Correlation-ID": "bfd3c24e-e755-45c3-af09-e00b55d80dd8",
     },
   }

@@ -143,7 +143,7 @@ describe("OAuthFetch", () => {
             const baseUrl = "https://api.example.com";
             const endpoint = "/posts/1";
             const overrides = {
-              extraHeaders: {
+              headers: {
                 "X-Custom-Header": "CustomValue",
               },
             };
@@ -179,7 +179,7 @@ describe("OAuthFetch", () => {
               HTTP_CONTENT_TYPE_HEADER[HTTP_CONTENT_TYPE.JSON],
             );
             expect(options.headers.get("X-Custom-Header")).toBe(
-              overrides.extraHeaders["X-Custom-Header"],
+              overrides.headers["X-Custom-Header"],
             );
 
             if (method === HTTP_METHOD.GET) {
@@ -198,7 +198,7 @@ describe("OAuthFetch", () => {
               const accessToken = "my-mock-access-token";
               const tokenType = SUPPORTED_TOKEN_TYPES.BEARER[0];
               const overrides = {
-                extraHeaders: {
+                headers: {
                   "X-Custom-Header": "CustomValue",
                 },
               };
@@ -234,7 +234,7 @@ describe("OAuthFetch", () => {
                 `${tokenType} ${accessToken}`,
               );
               expect(options.headers.get("X-Custom-Header")).toBe(
-                overrides.extraHeaders["X-Custom-Header"],
+                overrides.headers["X-Custom-Header"],
               );
             });
 
@@ -246,7 +246,7 @@ describe("OAuthFetch", () => {
                 const tokenType = SUPPORTED_TOKEN_TYPES.BEARER[0];
                 const overrides = {
                   isProtected: false,
-                  extraHeaders: {
+                  headers: {
                     "X-Custom-Header": "CustomValue",
                   },
                 };
@@ -279,7 +279,7 @@ describe("OAuthFetch", () => {
                 expect(options.headers).toBeInstanceOf(Headers);
                 expect(options.headers.get("Authorization")).toBeNull();
                 expect(options.headers.get("X-Custom-Header")).toBe(
-                  overrides.extraHeaders["X-Custom-Header"],
+                  overrides.headers["X-Custom-Header"],
                 );
               });
             });
@@ -292,7 +292,7 @@ describe("OAuthFetch", () => {
               const accessToken = "my-mock-access-token";
               const tokenType = SUPPORTED_TOKEN_TYPES.DPOP[0];
               const overrides = {
-                extraHeaders: {
+                headers: {
                   "X-Custom-Header": "CustomValue",
                 },
               };
@@ -329,7 +329,7 @@ describe("OAuthFetch", () => {
                 `${tokenType} ${accessToken}`,
               );
               expect(options.headers.get("X-Custom-Header")).toBe(
-                overrides.extraHeaders["X-Custom-Header"],
+                overrides.headers["X-Custom-Header"],
               );
 
               const proof = options.headers.get("DPoP");
@@ -356,7 +356,7 @@ describe("OAuthFetch", () => {
                 const tokenType = SUPPORTED_TOKEN_TYPES.DPOP[0];
                 const overrides = {
                   isProtected: false,
-                  extraHeaders: {
+                  headers: {
                     "X-Custom-Header": "CustomValue",
                   },
                 };
@@ -390,7 +390,7 @@ describe("OAuthFetch", () => {
                 expect(options.headers.get("Authorization")).toBeNull();
                 expect(options.headers.get("DPoP")).toBeNull();
                 expect(options.headers.get("X-Custom-Header")).toBe(
-                  overrides.extraHeaders["X-Custom-Header"],
+                  overrides.headers["X-Custom-Header"],
                 );
               });
             });
