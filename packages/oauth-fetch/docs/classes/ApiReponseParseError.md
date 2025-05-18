@@ -1,10 +1,10 @@
-# Class: ResponseParseError
+# Class: ApiReponseParseError
 
 Error thrown when there's an issue parsing the API response.
 
 ## Extends
 
-- [`ResponseApiError`](ResponseApiError.md)
+- [`ApiResponseError`](ApiResponseError.md)
 
 ## Properties
 
@@ -20,7 +20,7 @@ Error thrown when there's an issue parsing the API response.
 
 #### Inherited from
 
-[`ResponseApiError`](ResponseApiError.md).[`response`](ResponseApiError.md#response)
+[`ApiResponseError`](ApiResponseError.md).[`response`](ApiResponseError.md#response)
 
 ***
 
@@ -30,7 +30,7 @@ Error thrown when there's an issue parsing the API response.
 
 #### Inherited from
 
-[`ResponseApiError`](ResponseApiError.md).[`status`](ResponseApiError.md#status)
+[`ApiResponseError`](ApiResponseError.md).[`status`](ApiResponseError.md#status)
 
 ***
 
@@ -40,7 +40,7 @@ Error thrown when there's an issue parsing the API response.
 
 #### Inherited from
 
-[`ResponseApiError`](ResponseApiError.md).[`statusText`](ResponseApiError.md#statustext)
+[`ApiResponseError`](ApiResponseError.md).[`statusText`](ApiResponseError.md#statustext)
 
 ***
 
@@ -50,4 +50,4 @@ Error thrown when there's an issue parsing the API response.
 
 #### Inherited from
 
-[`ResponseApiError`](ResponseApiError.md).[`body`](ResponseApiError.md#body)
+[`ApiResponseError`](ApiResponseError.md).[`body`](ApiResponseError.md#body)

@@ -1,14 +1,10 @@
-# Class: ResponseApiError
+# Class: ApiResponseError
 
 Error thrown when non-successful API response is returned.
 
-## Extends
-
-- `Error`
-
 ## Extended by
 
-- [`ResponseParseError`](ResponseParseError.md)
+- [`ApiReponseParseError`](ApiReponseParseError.md)
 
 ## Properties
 

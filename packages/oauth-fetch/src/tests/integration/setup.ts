@@ -1,6 +1,6 @@
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
-import { SUPPORTED_TOKEN_TYPES } from "src/constants/index.js";
+import { SUPPORTED_TOKEN_TYPES } from "../../constants/index.js";
 
 export const BASE_URL = "http://oauth-fetch.localhost";
 

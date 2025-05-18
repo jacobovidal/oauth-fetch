@@ -11,7 +11,7 @@ export const ERR_DESCRIPTION = {
     MISSING_TOKEN_TYPE: "Token provider didn't return a token_type",
     UNSUPPORTED_TOKEN_TYPE: (tokenType: string): string =>
       `Token provider returned an unsupported token type: "${tokenType}". Supported types are: ${Object.keys(
-        SUPPORTED_TOKEN_TYPES
+        SUPPORTED_TOKEN_TYPES,
       )
         .flat()
         .join(", ")}`,
@@ -21,7 +21,7 @@ export const ERR_DESCRIPTION = {
     NON_SUCCESSFUL: (
       url: URL,
       method: RequestInit["method"],
-      response: Response
+      response: Response,
     ) =>
       `[${method}] request to [${url.href}] returned ${response.status} status code (${response.statusText})`,
   },
@@ -45,7 +45,7 @@ export const ERR_DESCRIPTION = {
       `Unsupported public key type: "${publicKeyType}". Supported public key types are: RSA, EC, OKP`,
     UNSUPPORTED_ALGORITHM: (algorithm: string) =>
       `Unsupported algorithm "${algorithm}". Supported algorithms are: ${Object.keys(
-        DPOP_SUPPORTED_ALGORITHMS
+        DPOP_SUPPORTED_ALGORITHMS,
       ).join(", ")}`,
     UNSUPPORTED_ALGORITHM_CONFIGURATION: (algorithm: DPoPSupportedAlgorithms) =>
       `Unsupported configuration. For algorithm "${algorithm}", valid options are: ${DPOP_SUPPORTED_ALGORITHMS[
@@ -53,7 +53,7 @@ export const ERR_DESCRIPTION = {
       ].join(", ")}`,
     UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS: (
       algorithm: string,
-      curveOrModulus: string
+      curveOrModulus: string,
     ) =>
       `Unsupported algorithm "${algorithm}" with curve/modulus "${curveOrModulus}".`,
     UNSUPPORTED_CRYPTO_RSA_HASH_ALGORITHM: (hashName: string) =>
@@ -72,17 +72,12 @@ export const ERR_DESCRIPTION = {
  * Base error class.
  */
 export class BaseError extends Error {
-  public readonly code: string;
-  public readonly cause?: unknown;
-
   /**
    * @internal
    */
-  constructor(code: string, message: string, cause?: unknown) {
+  constructor(message: string) {
     super(message);
     this.name = "BaseError";
-    this.code = code;
-    this.cause = cause;
   }
 }
 
@@ -93,11 +88,10 @@ export class BaseError extends Error {
  */
 export class ConfigurationError extends BaseError {
   /**
-   * @noInheritDoc
    * @internal
    */
-  constructor(message: string, cause?: unknown) {
-    super("invalid_configuration", message, cause);
+  constructor(message: string) {
+    super(message);
     this.name = "ConfigurationError";
   }
 }
@@ -111,8 +105,8 @@ export class TokenProviderError extends BaseError {
   /**
    * @internal
    */
-  constructor(message: string, cause?: unknown) {
-    super("token_provider_error", message, cause);
+  constructor(message: string) {
+    super(message);
     this.name = "TokenProviderError";
   }
 }
@@ -122,7 +116,7 @@ export class TokenProviderError extends BaseError {
  *
  * @group Errors
  */
-export class ResponseApiError extends Error {
+export class ApiResponseError extends BaseError {
   public readonly response: Response;
   public readonly status: number;
   public readonly statusText: string;
@@ -133,7 +127,7 @@ export class ResponseApiError extends Error {
    */
   constructor(message: string, response: Response, body?: unknown) {
     super(message);
-    this.name = "ResponseApiError";
+    this.name = "ApiResponseError";
     this.status = response.status;
     this.statusText = response.statusText;
     this.response = response;
@@ -146,7 +140,7 @@ export class ResponseApiError extends Error {
  *
  * @group Errors
  */
-export class ResponseParseError extends ResponseApiError {
+export class ApiReponseParseError extends ApiResponseError {
   public readonly parseError: unknown;
 
   /**
@@ -156,10 +150,10 @@ export class ResponseParseError extends ResponseApiError {
     message: string,
     response: Response,
     parseError: unknown,
-    body?: unknown
+    body?: unknown,
   ) {
     super(message, response, body);
-    this.name = "ResponseParseError";
+    this.name = "ApiResponseParseError";
     this.parseError = parseError;
   }
 }
