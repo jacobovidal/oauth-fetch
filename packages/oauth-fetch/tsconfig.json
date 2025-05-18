@@ -20,7 +20,7 @@
       "strict": true,
       "target": "ES2022",
       "outDir": "dist",
-      "baseUrl": "."
+      "baseUrl": ".",
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

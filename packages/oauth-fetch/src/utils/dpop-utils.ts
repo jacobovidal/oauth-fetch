@@ -65,7 +65,7 @@ export class DPoPUtils {
   /**
    * Generates appropriate Web Crypto API parameters based on the selected algorithm and curve/modulus.
    *
-   * @throws {Error} If the algorithm or curve/modulus combination is not supported
+   * @throws {ConfigurationError} If the algorithm or curve/modulus combination is not supported
    */
   static #getCryptoParams(
     algorithm: DPoPSupportedAlgorithms,
@@ -98,7 +98,7 @@ export class DPoPUtils {
    * This can be used to bind an authorization code to a DPoP key pair by including
    * it as the `dpop_jkt` parameter in authorization requests.
    *
-   * @throws {Error} If the key cannot be exported or the JWK thumbprint cannot be calculated
+   * @throws {ConfigurationError} If the key cannot be exported or the JWK thumbprint cannot be calculated
    *
    * @example
    * ```typescript
@@ -157,7 +157,7 @@ export class DPoPUtils {
    * Typically, you should generate a key pair once per client session and reuse it
    * for all DPoP proofs in that session.
    *
-   * @throws {Error} If the requested algorithm/curve combination is not supported
+   * @throws {ConfigurationError} If the requested algorithm/curve combination is not supported
    *
    * @example
    * ```typescript
@@ -211,7 +211,7 @@ export class DPoPUtils {
    * It proves possession of the private key corresponding to the public key included in the JWT header.
    * Each proof has a unique JTI (JWT ID) and a timestamp to prevent replay attacks.
    *
-   * @throws {Error} If the DPoP key pair is not properly initialized
+   * @throws {ConfigurationError} If the DPoP key pair is not properly initialized
    *
    * @example
    * ```typescript

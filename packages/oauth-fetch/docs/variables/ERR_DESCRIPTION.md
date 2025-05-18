@@ -18,7 +18,7 @@
 
 #### CRYPTO.UNSUPPORTED\_ALGORITHM\_CONFIGURATION
 
-> **UNSUPPORTED\_ALGORITHM\_CONFIGURATION**: `string` = `"Unsupported configuration for this algorith"`
+> **UNSUPPORTED\_ALGORITHM\_CONFIGURATION**: `string` = `"Unsupported algorithm or curve/modulus combination"`
 
 #### CRYPTO.UNSUPPORTED\_ECDSA\_CURVE
 

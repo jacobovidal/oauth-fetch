@@ -67,7 +67,7 @@ export class OAuthFetch {
   /**
    * Initializes a new `OAuthFetch` instance with the provided configuration.
    *
-   * @throws {Error} If `isProtected` is `true` and `tokenProvider` is not provided
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is not provided
    */
   constructor(config: OAuthFetchConfig) {
     this.#baseUrl = config.baseUrl;
@@ -85,8 +85,8 @@ export class OAuthFetch {
   /**
    * Constructs the necessary HTTP headers for an authenticated request.
    *
-   * @throws {Error} If `isProtected` is `true` and `tokenProvider` is missing
-   * @throws {Error} If DPoP token is used without providing a `dpopKeyPair`
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is missing
+   * @throws {ConfigurationError} If DPoP token is used without providing a `dpopKeyPair`
    */
   async #createRequestHeaders(config: RequestHeadersConfig): Promise<Headers> {
     const headers = new Headers();

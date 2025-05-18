@@ -34,7 +34,7 @@ export const ERR_DESCRIPTION = {
       "Unsupported public key type. Supported public key types are: RSA, EC, OKP",
     UNSUPPORTED_ALGORITHM: "Unsupported algorithm",
     UNSUPPORTED_ALGORITHM_CONFIGURATION:
-      "Unsupported configuration for this algorith",
+      "Unsupported algorithm or curve/modulus combination",
     UNSUPPORTED_RSA_HASH_ALGORITHM:
       "Unsupported RSA hash algorithm. Supported algorithms are: SHA-256, SHA-384, SHA-512",
     INVALID_RSA_MODULUS_LENGTH:

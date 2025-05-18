@@ -51,7 +51,7 @@ export class PKCEUtils {
    * to derive a code challenge. It must be kept confidential until the token request.
    * This method creates a verifier that meets all RFC 7636 requirements.
    *
-   * @throws {Error} If the requested length is outside the allowed range (43-128)
+   * @throws {ConfigurationError} If the requested length is outside the allowed range (43-128)
    *
    * @example
    * ```typescript
@@ -86,7 +86,7 @@ export class PKCEUtils {
    * in base64url format as specified in RFC 7636. This is the recommended and most
    * secure challenge method for PKCE.
    *
-   * @throws {Error} If the input code verifier is invalid
+   * @throws {ConfigurationError} If the input code verifier is invalid
    *
    * @example
    * ```typescript
