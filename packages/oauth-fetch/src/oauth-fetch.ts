@@ -63,6 +63,7 @@ export class OAuthFetch {
   #cachedNonce: string | undefined;
   #tokenProvider?: AbstractTokenProvider;
   #dpopKeyPair?: DPoPKeyPair;
+  #customFetch: typeof fetch;
 
   /**
    * Initializes a new `OAuthFetch` instance with the provided configuration.
@@ -73,6 +74,7 @@ export class OAuthFetch {
     this.#baseUrl = config.baseUrl;
     this.#contentType = config.contentType ?? HTTP_CONTENT_TYPE.JSON;
     this.#isProtected = config.isProtected ?? true;
+    this.#customFetch = config.customFetch ?? fetch;
 
     if (this.#isProtected) {
       validateProtectedResourceConfig(config);
@@ -179,7 +181,7 @@ export class OAuthFetch {
 
     const fetchOptions = await buildFetchOptions();
 
-    let response = await fetch(url, fetchOptions);
+    let response = await this.#customFetch(url, fetchOptions);
 
     const nonce = response.headers.get("dpop-nonce");
     const wwwAuthenticateHeader = response.headers.get("www-authenticate");
@@ -189,7 +191,7 @@ export class OAuthFetch {
 
       if (wwwAuthenticateHeader?.includes("use_dpop_nonce")) {
         const fetchOptionsWithNonce = await buildFetchOptions(nonce);
-        response = await fetch(url, fetchOptionsWithNonce);
+        response = await this.#customFetch(url, fetchOptionsWithNonce);
       }
     }
 

@@ -12,6 +12,20 @@ export type OAuthFetchPublicResourceConfig = {
   contentType?: HttpContentType;
   /** Must be explicitly set to false for public resources */
   isProtected: false;
+  /** 
+   * Custom fetch implementation
+   * 
+   * @example
+   * // Example using a custom fetch implementation
+   * const client = new OAuthFetch({
+   *   baseUrl: 'https://api.example.com',
+   *   isProtected: false,
+   *   customFetch: async (url, options) => {
+   *     // Custom fetch logic
+   *   }
+   * });
+   */
+  customFetch?: typeof fetch;
 };
 
 /**
@@ -33,6 +47,20 @@ export type OAuthFetchPrivateResourceConfig = {
   tokenProvider: AbstractTokenProvider;
   /** Required for DPoP authentication flow */
   dpopKeyPair?: DPoPKeyPair;
+  /** 
+   * Custom fetch implementation
+   * 
+   * @example
+   * // Example using a custom fetch implementation
+   * const client = new OAuthFetch({
+   *   baseUrl: 'https://api.example.com',
+   *   isProtected: false,
+   *   customFetch: async (url, options) => {
+   *     // Custom fetch logic
+   *   }
+   * });
+   */
+  customFetch?: typeof fetch;
 };
 
 export type OAuthFetchConfig =
