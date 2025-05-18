@@ -14,7 +14,6 @@
 | Class | Description |
 | ------ | ------ |
 | [ApiResponseError](classes/ApiResponseError.md) | Error thrown when non-successful API response is returned. |
-| [ApiResponseParseError](classes/ApiResponseParseError.md) | Error thrown when there's an issue parsing the API response. |
 | [ConfigurationError](classes/ConfigurationError.md) | Error thrown when the configuration is invalid. |
 | [TokenProviderError](classes/TokenProviderError.md) | Error thrown when there's an issue with the token provider. |
 

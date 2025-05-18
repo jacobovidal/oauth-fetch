@@ -193,8 +193,10 @@ export class OAuthFetch {
       }
     }
 
+    const parsedBody = await parseResponseBody(response).catch(() => undefined);
+
     if (response.ok) {
-      return await parseResponseBody(response);
+      return parsedBody;
     }
 
     throw new ApiResponseError(
@@ -204,7 +206,7 @@ export class OAuthFetch {
         response,
       ),
       response,
-      await parseResponseBody(response).catch(() => undefined),
+      parsedBody,
     );
   }
 

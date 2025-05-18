@@ -2,10 +2,6 @@
 
 Error thrown when non-successful API response is returned.
 
-## Extended by
-
-- [`ApiResponseParseError`](ApiResponseParseError.md)
-
 ## Properties
 
 ### response

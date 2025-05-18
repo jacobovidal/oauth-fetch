@@ -134,26 +134,3 @@ export class ApiResponseError extends BaseError {
     this.body = body;
   }
 }
-
-/**
- * Error thrown when there's an issue parsing the API response.
- *
- * @group Errors
- */
-export class ApiResponseParseError extends ApiResponseError {
-  public readonly parseError: unknown;
-
-  /**
-   * @internal
-   */
-  constructor(
-    message: string,
-    response: Response,
-    parseError: unknown,
-    body?: unknown,
-  ) {
-    super(message, response, body);
-    this.name = "ApiResponseParseError";
-    this.parseError = parseError;
-  }
-}
