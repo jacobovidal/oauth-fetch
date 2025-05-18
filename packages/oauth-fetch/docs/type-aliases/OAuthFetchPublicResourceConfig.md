@@ -27,3 +27,24 @@ Must be explicitly set to false for public resources
 > `optional` **contentType**: [`HttpContentType`](HttpContentType.md)
 
 Content type for requests (defaults to JSON if not specified)
+
+***
+
+### customFetch?
+
+> `optional` **customFetch**: *typeof* `fetch`
+
+Custom fetch implementation
+
+#### Example
+
+```ts
+// Example using a custom fetch implementation
+const client = new OAuthFetch({
+  baseUrl: 'https://api.example.com',
+  isProtected: false,
+  customFetch: async (url, options) => {
+    // Custom fetch logic
+  }
+});
+```
