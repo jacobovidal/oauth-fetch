@@ -413,7 +413,7 @@ try {
 }
 ```
 
-### Overrides
+### Overrides
 You can override authentication and request settings per request:
 
 ```typescript
