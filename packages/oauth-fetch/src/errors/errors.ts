@@ -140,7 +140,7 @@ export class ApiResponseError extends BaseError {
  *
  * @group Errors
  */
-export class ApiReponseParseError extends ApiResponseError {
+export class ApiResponseParseError extends ApiResponseError {
   public readonly parseError: unknown;
 
   /**

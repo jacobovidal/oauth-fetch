@@ -22,12 +22,14 @@
 - [Installation](#installation)
 - [Token Provider](#token-provider)
   - [Examples](#examples)
-  - [Configuration Overriders](#configuration-overrides)
+  - [Overrides](#overrides)
 - [Getting Started](#getting-started)
   - [Public (No Authentication)](#public-no-authentication)
   - [Bearer Authentication](#bearer-authentication)
   - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop)
-- [Request Overrides](#request-overrides)
+- [Requests](#requests)
+  - [Error Handling](#error-handling)
+  - [Overrides](#overrides-1)
 - [Utilities](#utilities)
   - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop-1)
   - [Proof Key for Code Exchange (PKCE)](#proof-key-for-code-exchange-pkce)
@@ -270,7 +272,7 @@ await oauthClient.get("/me/profile");
 ```
 </details>
 
-### Configuration Overrides
+### Overrides
 
 The `AbstractTokenProvider` class includes a feature to customize token acquisition on a per-request basis using configuration overrides. This allows you to create a new instance of your token provider with modified `getToken()` options without affecting the global instance or other requests.
 
@@ -370,7 +372,48 @@ await dpopClient.patch('/me/profile', {
 - If the API returns a `DPoP-Nonce` in a `401 Unauthorized` response, `oauth-fetch` retries the request, generating a new proof with the provided nonce.
 - If a `dpopKeyPair` is provided but the `tokenProvider` returns a `Bearer` token, `oauth-fetch` **will not attempt to use DPoP** for that request, falling back to `Bearer` authentication.
 
-## Request Overrides
+## Requests
+
+### Error Handling
+
+When an API responds with a non-successful status code (e.g., 4xx or 5xx), we will throw an instance of `ApiResponseError` error. This error is desigend to:
+- Automatically parse the response body based on its content type (application/json, text/plain, etc.).
+- Expose the original `Response` object for full access to headers, status codes, and raw data if needed.
+
+In this example, the API returns a `400 Bad Request` response with the following JSON error body:
+```json
+{
+  "error_code": "invalid_property",
+  "error_description": "The company_name property doesn't exist"
+}
+```
+
+This error response is automatically parsed, and you can access the JSON properties directly:
+
+```typescript
+import { ApiResponseError } from "oauth-fetch";
+
+try {
+  await dpopClient.patch('/me/profile', {
+    first_name: 'Jacobo',
+    company_name: 'Auth0'
+  });
+} catch (e) {
+  if (e instanceof ApiResponseError) {
+    // Acess to raw response
+    console.error("Request failed with status:", error.response.status);
+    console.error("Status text:", error.response.statusText);
+
+    // Access to parsed body
+    console.error("Error Code:", error.body.error_code);
+    console.error("Error Description:", error.body.error_description);
+  } else {
+    // Handle unexpected error
+  }
+}
+```
+
+### Overrides
 You can override authentication and request settings per request:
 
 ```typescript

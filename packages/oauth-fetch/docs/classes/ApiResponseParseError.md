@@ -1,4 +1,4 @@
-# Class: ApiReponseParseError
+# Class: ApiResponseParseError
 
 Error thrown when there's an issue parsing the API response.
 

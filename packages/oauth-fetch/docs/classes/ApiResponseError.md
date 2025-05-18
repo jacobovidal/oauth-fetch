@@ -4,7 +4,7 @@ Error thrown when non-successful API response is returned.
 
 ## Extended by
 
-- [`ApiReponseParseError`](ApiReponseParseError.md)
+- [`ApiResponseParseError`](ApiResponseParseError.md)
 
 ## Properties
 
