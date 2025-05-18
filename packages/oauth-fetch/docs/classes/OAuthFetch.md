@@ -44,7 +44,7 @@ Initializes a new `OAuthFetch` instance with the provided configuration.
 
 | Parameter | Type |
 | ------ | ------ |
-| `config` | [`OAuthFetchConfig`](../type-aliases/OAuthFetchConfig.md) |
+| `config` | [`OAuthFetchPublicResourceConfig`](../type-aliases/OAuthFetchPublicResourceConfig.md) \| [`OAuthFetchPrivateResourceConfig`](../type-aliases/OAuthFetchPrivateResourceConfig.md) |
 
 #### Returns
 

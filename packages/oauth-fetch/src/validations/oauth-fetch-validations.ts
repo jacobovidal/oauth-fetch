@@ -1,8 +1,8 @@
 import { SUPPORTED_TOKEN_TYPES } from "../constants/index.js";
 import { AbstractTokenProvider } from "../providers/abstract-token-provider.js";
 import type {
-  OAuthFetchConfig,
   OAuthFetchPrivateResourceConfig,
+  OAuthFetchPublicResourceConfig,
 } from "../types/oauth-fetch.types.js";
 import type {
   TokenProviderGetTokenResponse,
@@ -15,7 +15,7 @@ import {
 } from "../errors/errors.js";
 
 export function validateProtectedResourceConfig(
-  config: OAuthFetchConfig,
+  config: OAuthFetchPrivateResourceConfig | OAuthFetchPublicResourceConfig,
 ): asserts config is OAuthFetchPrivateResourceConfig {
   if (
     !("tokenProvider" in config) ||

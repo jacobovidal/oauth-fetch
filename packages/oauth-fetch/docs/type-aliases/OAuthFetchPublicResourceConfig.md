@@ -18,7 +18,13 @@ Base URL for API requests (e.g., 'https://api.example.com')
 
 > **isProtected**: `false`
 
-Must be explicitly set to false for public resources
+Whether the API requires authentication (defaults to true)
+
+#### Default
+
+```ts
+true
+```
 
 ***
 
@@ -27,6 +33,12 @@ Must be explicitly set to false for public resources
 > `optional` **contentType**: [`HttpContentType`](HttpContentType.md)
 
 Content type for requests (defaults to JSON if not specified)
+
+#### Default
+
+```ts
+"json"
+```
 
 ***
 

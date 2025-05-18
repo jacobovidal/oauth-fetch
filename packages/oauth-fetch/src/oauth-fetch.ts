@@ -10,7 +10,8 @@ import { HTTP_CONTENT_TYPE_HEADER } from "./constants/index.internal.js";
 import type { HttpContentType } from "./types/request.types.js";
 import type { DPoPKeyPair } from "./types/dpop.types.js";
 import type {
-  OAuthFetchConfig,
+  OAuthFetchPrivateResourceConfig,
+  OAuthFetchPublicResourceConfig,
   RequestBody,
   RequestOptions,
 } from "./types/oauth-fetch.types.js";
@@ -70,7 +71,9 @@ export class OAuthFetch {
    *
    * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is not provided
    */
-  constructor(config: OAuthFetchConfig) {
+  constructor(
+    config: OAuthFetchPrivateResourceConfig | OAuthFetchPublicResourceConfig,
+  ) {
     this.#baseUrl = config.baseUrl;
     this.#contentType = config.contentType ?? HTTP_CONTENT_TYPE.JSON;
     this.#isProtected = config.isProtected ?? true;

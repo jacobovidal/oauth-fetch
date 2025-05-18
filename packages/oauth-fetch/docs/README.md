@@ -28,7 +28,6 @@
 | [DPoPSupportedCurveOrModulus](type-aliases/DPoPSupportedCurveOrModulus.md) | Supported curves (for ECDSA/EdDSA) or modulus lengths (for RSA) that are valid for the specified algorithm. This type is based on the values associated with each algorithm in `DPOP_SUPPORTED_ALGORITHMS`. |
 | [HttpContentType](type-aliases/HttpContentType.md) | Type representing the available HTTP content types defined in the `HTTP_CONTENT_TYPE` constant. It includes values like 'json', 'text', 'formData', and 'formUrlEncoded'. |
 | [HttpMethod](type-aliases/HttpMethod.md) | Type representing the available HTTP methods defined in the `HTTP_METHOD` constant. It includes methods like 'GET', 'POST', 'PATCH', 'PUT', and 'DELETE'. |
-| [OAuthFetchConfig](type-aliases/OAuthFetchConfig.md) | - |
 | [OAuthFetchPrivateResourceConfig](type-aliases/OAuthFetchPrivateResourceConfig.md) | Configuration for protected (authenticated) resources |
 | [OAuthFetchPublicResourceConfig](type-aliases/OAuthFetchPublicResourceConfig.md) | Configuration for public (non-authenticated) resources |
 | [PKCECodeVerifierConfig](type-aliases/PKCECodeVerifierConfig.md) | Configuration for generating a PKCE code verifier. |

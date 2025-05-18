@@ -8,10 +8,11 @@ import type { DPoPKeyPair } from "./dpop.types.js";
 export type OAuthFetchPublicResourceConfig = {
   /** Base URL for API requests (e.g., 'https://api.example.com') */
   baseUrl: string;
-  /** Content type for requests (defaults to JSON if not specified) */
+  /**
+   * Content type for requests (defaults to JSON if not specified)
+   * @default "json"
+   */
   contentType?: HttpContentType;
-  /** Must be explicitly set to false for public resources */
-  isProtected: false;
   /**
    * Custom fetch implementation
    *
@@ -26,6 +27,10 @@ export type OAuthFetchPublicResourceConfig = {
    * });
    */
   customFetch?: typeof fetch;
+  /** Whether the API requires authentication (defaults to true)
+   * @default true
+   */
+  isProtected: false;
 };
 
 /**
@@ -39,14 +44,6 @@ export type OAuthFetchPrivateResourceConfig = {
    * @default "json"
    */
   contentType?: HttpContentType;
-  /** Whether the API requires authentication (defaults to true)
-   * @default true
-   */
-  isProtected?: true;
-  /** Provider responsible for fetching OAuth tokens */
-  tokenProvider: AbstractTokenProvider;
-  /** Required for DPoP authentication flow */
-  dpopKeyPair?: DPoPKeyPair;
   /**
    * Custom fetch implementation
    *
@@ -61,11 +58,15 @@ export type OAuthFetchPrivateResourceConfig = {
    * });
    */
   customFetch?: typeof fetch;
+  /** Whether the API requires authentication (defaults to true)
+   * @default true
+   */
+  isProtected?: true;
+  /** Provider responsible for fetching OAuth tokens */
+  tokenProvider: AbstractTokenProvider;
+  /** Required for DPoP authentication flow */
+  dpopKeyPair?: DPoPKeyPair;
 };
-
-export type OAuthFetchConfig =
-  | OAuthFetchPublicResourceConfig
-  | OAuthFetchPrivateResourceConfig;
 
 /**
  * Extended request options that support authentication overrides and all standard fetch options
