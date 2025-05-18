@@ -1,8 +1,4 @@
-import {
-  DPOP_ERROR_CODES,
-  DPOP_ERROR_DESCRIPTIONS,
-  DPoPError,
-} from "../errors/dpop.error.js";
+import { ERR_DESCRIPTION, ConfigurationError } from "../errors/errors.js";
 import { DPOP_SUPPORTED_ALGORITHMS } from "../constants/index.js";
 import type {
   DPoPKeyPair,
@@ -14,33 +10,23 @@ export function validateDpopKeyPair(
   dpopKeyPair: DPoPKeyPair | undefined,
 ): asserts dpopKeyPair is DPoPKeyPair {
   if (!dpopKeyPair) {
-    throw new DPoPError(
-      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
-      DPOP_ERROR_DESCRIPTIONS.REQUIRED_DPOP,
-    );
+    throw new ConfigurationError(ERR_DESCRIPTION.DPOP.REQUIRED);
   }
 
   const { publicKey, privateKey } = dpopKeyPair;
 
   if (!(publicKey instanceof CryptoKey) || !(privateKey instanceof CryptoKey)) {
-    throw new DPoPError(
-      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
-      DPOP_ERROR_DESCRIPTIONS.INVALID_DPOP_KEY_PAIR_INSTANCE,
-    );
+    throw new ConfigurationError(ERR_DESCRIPTION.DPOP.INVALID_INSTANCE);
   }
 
   if (privateKey.extractable) {
-    throw new DPoPError(
-      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
-      DPOP_ERROR_DESCRIPTIONS.REQUIRE_PRIVATE_KEY_TO_BE_NON_EXPORTABLE,
+    throw new ConfigurationError(
+      ERR_DESCRIPTION.DPOP.PRIVATE_KEY_NON_EXPORTABLE,
     );
   }
 
   if (!privateKey.usages.includes("sign")) {
-    throw new DPoPError(
-      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
-      DPOP_ERROR_DESCRIPTIONS.REQUIRE_PRIVATE_KEY_SIGN_USAGE,
-    );
+    throw new ConfigurationError(ERR_DESCRIPTION.DPOP.PRIVATE_KEY_SIGN_USAGE);
   }
 }
 
@@ -54,16 +40,14 @@ export function validateGenerateKeyPairAlgorithm({
   const validOptions = DPOP_SUPPORTED_ALGORITHMS[algorithm];
 
   if (!validOptions) {
-    throw new DPoPError(
-      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
-      DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(algorithm),
+    throw new ConfigurationError(
+      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM(algorithm),
     );
   }
 
   if (!validOptions.includes(curveOrModulus as never)) {
-    throw new DPoPError(
-      DPOP_ERROR_CODES.INVALID_CONFIGURATION,
-      DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
+    throw new ConfigurationError(
+      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
     );
   }
 }

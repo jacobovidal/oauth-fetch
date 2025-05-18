@@ -4,7 +4,7 @@ import {
   extractPublicJwk,
   hashToBase64UrlSha256,
 } from "../../utils/crypto-utils.js";
-import { DPOP_ERROR_DESCRIPTIONS } from "../../errors/dpop.error.js";
+import { ERR_DESCRIPTION } from "../../errors/errors.js";
 
 describe("DPoPUtils", () => {
   describe("generateKeyPair", () => {
@@ -44,7 +44,7 @@ describe("DPoPUtils", () => {
           curveOrModulus,
         }),
       ).rejects.toThrowError(
-        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM(algorithm),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM(algorithm),
       );
     });
 
@@ -52,7 +52,7 @@ describe("DPoPUtils", () => {
       const algorithm = "ECDSA";
       const curveOrModulus = "P-999";
 
-      DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm);
+      ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm);
 
       await expect(
         DPoPUtils.generateKeyPair({
@@ -61,7 +61,7 @@ describe("DPoPUtils", () => {
           curveOrModulus,
         }),
       ).rejects.toThrowError(
-        DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
+        ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_CONFIGURATION(algorithm),
       );
     });
   });
@@ -132,7 +132,7 @@ describe("DPoPUtils", () => {
           url,
           method,
         }),
-      ).rejects.toThrowError(DPOP_ERROR_DESCRIPTIONS.REQUIRED_DPOP);
+      ).rejects.toThrowError(ERR_DESCRIPTION.DPOP.REQUIRED);
     });
   });
 

@@ -10,9 +10,9 @@ import type {
 } from "../types/token-provider.types.js";
 import {
   ConfigurationError,
-  OAUTH_FETCH_ERROR_DESCRIPTIONS,
+  ERR_DESCRIPTION,
   TokenProviderError,
-} from "../errors/oauth-fetch.errors.js";
+} from "../errors/errors.js";
 
 export function validateProtectedResourceConfig(
   config: OAuthFetchConfig,
@@ -21,9 +21,7 @@ export function validateProtectedResourceConfig(
     !("tokenProvider" in config) ||
     !(config.tokenProvider instanceof AbstractTokenProvider)
   ) {
-    throw new ConfigurationError(
-      OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUIRED_TOKEN_PROVIDER,
-    );
+    throw new ConfigurationError(ERR_DESCRIPTION.TOKEN_PROVIDER.REQUIRED);
   }
 }
 
@@ -31,9 +29,7 @@ export function validateTokenProvider(
   tokenProvider: AbstractTokenProvider<unknown> | undefined,
 ): asserts tokenProvider is AbstractTokenProvider {
   if (!(tokenProvider instanceof AbstractTokenProvider)) {
-    throw new ConfigurationError(
-      OAUTH_FETCH_ERROR_DESCRIPTIONS.REQUIRED_TOKEN_PROVIDER,
-    );
+    throw new ConfigurationError(ERR_DESCRIPTION.TOKEN_PROVIDER.REQUIRED);
   }
 }
 
@@ -44,13 +40,13 @@ export function validateTokenProviderResponse(
 
   if (!accessToken) {
     throw new TokenProviderError(
-      OAUTH_FETCH_ERROR_DESCRIPTIONS.MISSING_ACCESS_TOKEN,
+      ERR_DESCRIPTION.TOKEN_PROVIDER.MISSING_ACCESS_TOKEN,
     );
   }
 
   if (!tokenType) {
     throw new TokenProviderError(
-      OAUTH_FETCH_ERROR_DESCRIPTIONS.MISSING_TOKEN_TYPE,
+      ERR_DESCRIPTION.TOKEN_PROVIDER.MISSING_TOKEN_TYPE,
     );
   }
 
@@ -60,7 +56,7 @@ export function validateTokenProviderResponse(
 
   if (!isTokenTypeSupported) {
     throw new TokenProviderError(
-      OAUTH_FETCH_ERROR_DESCRIPTIONS.NOT_SUPPORTED_TOKEN_TYPE(tokenType),
+      ERR_DESCRIPTION.TOKEN_PROVIDER.UNSUPPORTED_TOKEN_TYPE(tokenType),
     );
   }
 }

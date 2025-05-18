@@ -1,6 +1,6 @@
 {
   "name": "oauth-fetch",
-  "version": "1.0.31",
+  "version": "1.0.28",
   "description": "A lightweight HTTP client built on top of the native fetch API, designed to simplify making requests to both public and OAuth-protected resources.",
   "author": "Jacobo Vidal",
   "license": "MIT",
@@ -9,7 +9,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "tsup",
+    "build": "tsup --metafile",
     "build:watch": "tsup --watch",
     "clean": "rm -rf ./dist",
     "docs": "typedoc",

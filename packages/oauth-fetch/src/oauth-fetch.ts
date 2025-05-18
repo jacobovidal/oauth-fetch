@@ -24,6 +24,7 @@ import {
   validateTokenProviderResponse,
 } from "./validations/oauth-fetch-validations.js";
 import { validateDpopKeyPair } from "./validations/dpop-validations.js";
+import { ERR_DESCRIPTION, ResponseApiError } from "./errors/errors.js";
 
 /**
  * OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests.
@@ -177,6 +178,7 @@ export class OAuthFetch {
     };
 
     const fetchOptions = await buildFetchOptions();
+
     let response = await fetch(url, fetchOptions);
 
     const nonce = response.headers.get("dpop-nonce");
@@ -195,7 +197,15 @@ export class OAuthFetch {
       return await parseResponseBody(response);
     }
 
-    throw response;
+    throw new ResponseApiError(
+      ERR_DESCRIPTION.RESPONSE.NON_SUCCESSFUL(
+        url,
+        fetchOptions.method,
+        response,
+      ),
+      response,
+      await parseResponseBody(response).catch(() => undefined),
+    );
   }
 
   /**

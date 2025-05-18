@@ -1,10 +1,7 @@
 import { hashToBase64UrlSha256, encodeBase64Url } from "./crypto-utils.js";
 import type { PKCECodeVerifierConfig } from "../types/pkce.types.js";
 import { DEFAULT_PKCE_CODE_VERIFIER_LENGTH } from "../constants/index.internal.js";
-import {
-  PKCE_ERROR_DESCRIPTIONS,
-  ConfigurationError,
-} from "../errors/pkce.errors.js";
+import { ConfigurationError, ERR_DESCRIPTION } from "../errors/errors.js";
 
 /**
  * Utility class for PKCE (Proof Key for Code Exchange) operations.
@@ -73,7 +70,7 @@ export class PKCEUtils {
     // RFC 7636 requires code verifier to be between 43 and 128 characters
     if (length < 43 || length > 128) {
       throw new ConfigurationError(
-        PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER_LENGTH,
+        ERR_DESCRIPTION.PKCE.INVALID_CODE_VERIFIER_LENGTH,
       );
     }
 
@@ -109,9 +106,7 @@ export class PKCEUtils {
    */
   static async generateCodeChallenge(codeVerifier: string): Promise<string> {
     if (!codeVerifier) {
-      throw new ConfigurationError(
-        PKCE_ERROR_DESCRIPTIONS.INVALID_CODE_VERIFIER,
-      );
+      throw new ConfigurationError(ERR_DESCRIPTION.PKCE.INVALID_CODE_VERIFIER);
     }
 
     return hashToBase64UrlSha256(codeVerifier);

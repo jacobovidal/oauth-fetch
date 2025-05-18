@@ -17,10 +17,7 @@ import {
   validateDpopKeyPair,
   validateGenerateKeyPairAlgorithm,
 } from "../validations/dpop-validations.js";
-import {
-  DPOP_ERROR_DESCRIPTIONS,
-  ConfigurationError,
-} from "../errors/dpop.error.js";
+import { ERR_DESCRIPTION, ConfigurationError } from "../errors/errors.js";
 
 /**
  * Utility class for DPoP (Demonstrating Proof-of-Possession) operations.
@@ -88,7 +85,7 @@ export class DPoPUtils {
         return { name: "Ed25519" };
       default:
         throw new ConfigurationError(
-          DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS(
+          ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_ALGORITHM_WITH_CURVE_OR_MODULUS(
             algorithm,
             curveOrModulus,
           ),
@@ -146,9 +143,7 @@ export class DPoPUtils {
         break;
       default:
         throw new ConfigurationError(
-          DPOP_ERROR_DESCRIPTIONS.UNSUPPORTED_PUBLIC_KEY_TYPE(
-            jwk.kty as string,
-          ),
+          ERR_DESCRIPTION.CRYPTO.UNSUPPORTED_PUBLIC_KEY_TYPE(jwk.kty as string),
         );
     }
 

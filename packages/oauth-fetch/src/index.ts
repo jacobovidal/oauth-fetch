@@ -8,3 +8,4 @@ export * from "./types/oauth-fetch.types.js";
 export * from "./types/token-provider.types.js";
 export * from "./types/request.types.js";
 export * from "./constants/index.js";
+export * from "./errors/errors.js";

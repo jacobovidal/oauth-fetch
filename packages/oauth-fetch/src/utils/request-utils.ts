@@ -2,10 +2,7 @@ import { HTTP_CONTENT_TYPE } from "../constants/index.js";
 import type { HttpContentType } from "../types/request.types.js";
 import type { RequestBody } from "../types/oauth-fetch.types.js";
 import { HTTP_CONTENT_TYPE_HEADER } from "../constants/index.internal.js";
-import {
-  OAUTH_FETCH_ERROR_DESCRIPTIONS,
-  ResponseParseError,
-} from "../errors/oauth-fetch.errors.js";
+import { ERR_DESCRIPTION, ResponseParseError } from "../errors/errors.js";
 
 /**
  * Parses an HTTP response based on its content type
@@ -59,14 +56,13 @@ export async function parseResponseBody(
     return await response.text();
   } catch (e) {
     throw new ResponseParseError(
-      OAUTH_FETCH_ERROR_DESCRIPTIONS.FAILED_PARSING__BODY,
-      {
-        cause: e,
-        rawData: await response
-          .clone()
-          .text()
-          .catch(() => undefined),
-      },
+      ERR_DESCRIPTION.RESPONSE.BODY_PARSING_ERROR,
+      response,
+      e,
+      await response
+        .clone()
+        .text()
+        .catch(() => undefined),
     );
   }
 }
