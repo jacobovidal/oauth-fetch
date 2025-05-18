@@ -74,6 +74,18 @@ Makes an HTTP DELETE request.
 
 `Promise`\<`unknown`\>
 
+#### Throws
+
+If API responds with a non-successful status code
+
+#### Throws
+
+If `isProtected` is `true` and `tokenProvider` is missing
+
+#### Throws
+
+If token provider returns a DPoP token type, and `dpopKeyPair` is missing
+
 ***
 
 ### get()
@@ -92,6 +104,18 @@ Makes an HTTP GET request.
 #### Returns
 
 `Promise`\<`unknown`\>
+
+#### Throws
+
+If API responds with a non-successful status code
+
+#### Throws
+
+If `isProtected` is `true` and `tokenProvider` is missing
+
+#### Throws
+
+If token provider returns a DPoP token type, and `dpopKeyPair` is missing
 
 ***
 
@@ -113,6 +137,18 @@ Makes an HTTP PATCH request.
 
 `Promise`\<`unknown`\>
 
+#### Throws
+
+If API responds with a non-successful status code
+
+#### Throws
+
+If `isProtected` is `true` and `tokenProvider` is missing
+
+#### Throws
+
+If token provider returns a DPoP token type, and `dpopKeyPair` is missing
+
 ***
 
 ### post()
@@ -133,6 +169,18 @@ Makes an HTTP POST request.
 
 `Promise`\<`unknown`\>
 
+#### Throws
+
+If API responds with a non-successful status code
+
+#### Throws
+
+If `isProtected` is `true` and `tokenProvider` is missing
+
+#### Throws
+
+If token provider returns a DPoP token type, and `dpopKeyPair` is missing
+
 ***
 
 ### put()
@@ -152,3 +200,15 @@ Makes an HTTP PUT request.
 #### Returns
 
 `Promise`\<`unknown`\>
+
+#### Throws
+
+If API responds with a non-successful status code
+
+#### Throws
+
+If `isProtected` is `true` and `tokenProvider` is missing
+
+#### Throws
+
+If token provider returns a DPoP token type, and `dpopKeyPair` is missing

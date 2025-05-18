@@ -24,7 +24,11 @@ import {
   validateTokenProviderResponse,
 } from "./validations/oauth-fetch-validations.js";
 import { validateDpopKeyPair } from "./validations/dpop-validations.js";
-import { ERR_DESCRIPTION, ApiResponseError } from "./errors/errors.js";
+import {
+  ERR_DESCRIPTION,
+  ApiResponseError,
+  ConfigurationError,
+} from "./errors/errors.js";
 
 /**
  * OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests.
@@ -212,6 +216,10 @@ export class OAuthFetch {
 
   /**
    * Makes an HTTP GET request.
+   *
+   * @throws {ApiResponseError} If API responds with a non-successful status code
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is missing
+   * @throws {ConfigurationError} If token provider returns a DPoP token type, and `dpopKeyPair` is missing
    */
   async get(endpoint: string, options?: RequestOptions) {
     return await this.#executeRequest({
@@ -223,6 +231,10 @@ export class OAuthFetch {
 
   /**
    * Makes an HTTP DELETE request.
+   *
+   * @throws {ApiResponseError} If API responds with a non-successful status code
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is missing
+   * @throws {ConfigurationError} If token provider returns a DPoP token type, and `dpopKeyPair` is missing
    */
   async delete(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
@@ -235,6 +247,10 @@ export class OAuthFetch {
 
   /**
    * Makes an HTTP POST request.
+   *
+   * @throws {ApiResponseError} If API responds with a non-successful status code
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is missing
+   * @throws {ConfigurationError} If token provider returns a DPoP token type, and `dpopKeyPair` is missing
    */
   async post(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
@@ -247,6 +263,10 @@ export class OAuthFetch {
 
   /**
    * Makes an HTTP PATCH request.
+   *
+   * @throws {ApiResponseError} If API responds with a non-successful status code
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is missing
+   * @throws {ConfigurationError} If token provider returns a DPoP token type, and `dpopKeyPair` is missing
    */
   async patch(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({
@@ -259,6 +279,10 @@ export class OAuthFetch {
 
   /**
    * Makes an HTTP PUT request.
+   *
+   * @throws {ApiResponseError} If API responds with a non-successful status code
+   * @throws {ConfigurationError} If `isProtected` is `true` and `tokenProvider` is missing
+   * @throws {ConfigurationError} If token provider returns a DPoP token type, and `dpopKeyPair` is missing
    */
   async put(endpoint: string, body?: RequestBody, options?: RequestOptions) {
     return await this.#executeRequest({

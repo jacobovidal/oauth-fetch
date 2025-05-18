@@ -65,7 +65,7 @@ it as the `dpop_jkt` parameter in authorization requests.
 
 #### Throws
 
-If the key cannot be exported or the JWK thumbprint cannot be calculated
+If the public key uses an unsupported algorithm.
 
 #### Example
 
@@ -161,6 +161,18 @@ Each proof has a unique JTI (JWT ID) and a timestamp to prevent replay attacks.
 #### Throws
 
 If the DPoP key pair is not properly initialized
+
+#### Throws
+
+If the private key's extractable value is `true`
+
+#### Throws
+
+If the private key does not have the `sign` usage permission.
+
+#### Throws
+
+If the public key uses an unsupported algorithm.
 
 #### Example
 

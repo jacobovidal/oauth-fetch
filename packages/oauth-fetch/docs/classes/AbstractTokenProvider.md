@@ -92,7 +92,15 @@ caching tokens and only performing network requests when necessary.
 
 #### Throws
 
-if a valid token cannot be obtained.
+If `access_token` is not returned
+
+#### Throws
+
+If `token_type` is not returned
+
+#### Throws
+
+If `token_type` is not supported
 
 ***
 

@@ -98,7 +98,7 @@ export class DPoPUtils {
    * This can be used to bind an authorization code to a DPoP key pair by including
    * it as the `dpop_jkt` parameter in authorization requests.
    *
-   * @throws {ConfigurationError} If the key cannot be exported or the JWK thumbprint cannot be calculated
+   * @throws {ConfigurationError} If the public key uses an unsupported algorithm.
    *
    * @example
    * ```typescript
@@ -212,6 +212,9 @@ export class DPoPUtils {
    * Each proof has a unique JTI (JWT ID) and a timestamp to prevent replay attacks.
    *
    * @throws {ConfigurationError} If the DPoP key pair is not properly initialized
+   * @throws {ConfigurationError} If the private key's extractable value is `true`
+   * @throws {ConfigurationError} If the private key does not have the `sign` usage permission.
+   * @throws {ConfigurationError} If the public key uses an unsupported algorithm.
    *
    * @example
    * ```typescript

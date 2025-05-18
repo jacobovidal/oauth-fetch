@@ -73,7 +73,9 @@ export abstract class AbstractTokenProvider<
    * Implementations should be designed to minimize overhead by efficiently
    * caching tokens and only performing network requests when necessary.
    *
-   * @throws {TokenProviderError} if a valid token cannot be obtained.
+   * @throws {TokenProviderError} If `access_token` is not returned
+   * @throws {TokenProviderError} If `token_type` is not returned
+   * @throws {TokenProviderError} If `token_type` is not supported
    */
   abstract getToken(): Promise<TokenProviderGetTokenResponse>;
 
