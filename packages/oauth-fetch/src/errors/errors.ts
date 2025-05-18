@@ -65,7 +65,7 @@ export const ERR_DESCRIPTION = {
     UNSUPPORTED_RSA_PSS_HASH_ALGORITHM: (hashName: string) =>
       `Unsupported RSA-PSS hash algorithm: ${hashName}. Supported algorithms are: SHA-256, SHA-384, SHA-512`,
   },
-} as const;
+};
 
 /**
  * @internal
