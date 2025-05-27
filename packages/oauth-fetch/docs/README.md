@@ -7,7 +7,6 @@
 | [AbstractTokenProvider](classes/AbstractTokenProvider.md) | Abstract class representing a Token Provider responsible for managing the lifecycle of access tokens. |
 | [DPoPUtils](classes/DPoPUtils.md) | Utility class for DPoP (Demonstrating Proof-of-Possession) operations. |
 | [OAuthFetch](classes/OAuthFetch.md) | OAuth-compatible HTTP client that supports Bearer and DPoP tokens for secure API requests. |
-| [PKCEUtils](classes/PKCEUtils.md) | Utility class for PKCE (Proof Key for Code Exchange) operations. |
 
 ## Errors
 
@@ -30,7 +29,6 @@
 | [HttpMethod](type-aliases/HttpMethod.md) | Type representing the available HTTP methods defined in the `HTTP_METHOD` constant. It includes methods like 'GET', 'POST', 'PATCH', 'PUT', and 'DELETE'. |
 | [OAuthFetchPrivateResourceConfig](type-aliases/OAuthFetchPrivateResourceConfig.md) | Configuration for protected (authenticated) resources |
 | [OAuthFetchPublicResourceConfig](type-aliases/OAuthFetchPublicResourceConfig.md) | Configuration for public (non-authenticated) resources |
-| [PKCECodeVerifierConfig](type-aliases/PKCECodeVerifierConfig.md) | Configuration for generating a PKCE code verifier. |
 | [RequestBody](type-aliases/RequestBody.md) | - |
 | [RequestOptions](type-aliases/RequestOptions.md) | Extended request options that support authentication overrides and all standard fetch options |
 | [TokenProviderGetTokenResponse](type-aliases/TokenProviderGetTokenResponse.md) | Represents the response from a token acquisition operation. Contains the access token and its type for use in API requests. |

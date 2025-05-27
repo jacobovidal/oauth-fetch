@@ -56,18 +56,6 @@
 
 > **REQUIRED**: `string` = `"dpopKeyPair is required for protected resources with DPoP token type"`
 
-### PKCE
-
-> **PKCE**: `object`
-
-#### PKCE.INVALID\_CODE\_VERIFIER
-
-> **INVALID\_CODE\_VERIFIER**: `string` = `"Code verifier must be a non-empty string"`
-
-#### PKCE.INVALID\_CODE\_VERIFIER\_LENGTH
-
-> **INVALID\_CODE\_VERIFIER\_LENGTH**: `string` = `"Code verifier length must be between 43 and 128 characters as per RFC 7636"`
-
 ### RESPONSE
 
 > **RESPONSE**: `object`

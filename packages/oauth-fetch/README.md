@@ -12,7 +12,7 @@
 - **🔓 Flexible Authentication:** Supports `Bearer`, `DPoP`, and unauthenticated requests out-of-the-box, adapting seamlessly based on the provided token type.
 - **🚀 Intelligent request handling:** Automatically sets headers based on request content type (e.g., `application/json`, `multipart/form-data`) and parses responses accordingly — no manual parsing required.
 - **🎯 Granular request control**: Override global configurations per request with additional headers, query parameters, or different token providers.
-- **🛠️ OAuth utilities**: Provides built-in utilities for DPoP and PKCE.
+- **🛠️ OAuth utilities**: Provides built-in utilities for DPoP.
 - **📦 Zero dependencies**: Built entirely on the native `fetch` API, ensuring minimal bundle size and maximum compatibility.
 - **⚡ Ultra-lightweight**: The minified and gzipped bundle size is only ![Bundle size](https://deno.bundlejs.com/badge?q=oauth-fetch).
 - **💡 Written in TypeScript:** Offering strong types, inline documentation, and an intuitive API to streamline development and prevent common errors.
@@ -32,7 +32,6 @@
   - [Overrides](#overrides-1)
 - [Utilities](#utilities)
   - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop-1)
-  - [Proof Key for Code Exchange (PKCE)](#proof-key-for-code-exchange-pkce)
 - [API Reference](https://github.com/jacobovidal/oauth-fetch/blob/main/packages/oauth-fetch/docs/README.md)
 
 ## Installation
@@ -53,7 +52,7 @@ yarn add oauth-fetch
 
 ```html
 <script type="module">
-  import { OAuthFetch, DPoPUtils, PKCEUtils, AbstractTokenProvider } from "https://esm.sh/oauth-fetch";
+  import { OAuthFetch, DPoPUtils, AbstractTokenProvider } from "https://esm.sh/oauth-fetch";
 </script>
 ```
 
@@ -463,7 +462,7 @@ await oauthClient.post(
 
 ## Utilities
 
-We provide standalone OAuth utilities that you can use directly in your flows. These utilities, such as DPoP proof generation and PKCE handling, are available as separate classes, allowing you to implement OAuth features independently without needing to use `OAuthFetch`.
+We provide standalone OAuth utilities that you can use directly in your flows. These utilities, such as DPoP proof generation, are available as separate classes, allowing you to implement OAuth features independently without needing to use `OAuthFetch`.
 
 ### Demonstrating Proof-of-Possession (DPoP)
 
@@ -500,22 +499,3 @@ const response = await fetch('https://api.example.com/me/profile', {
 
 > [!NOTE]
 > When using `OAuthFetch`, and if the `getToken()` method returns a `DPoP` token type, we will automatically handle the generation of the DPoP proof and its inclusion in the headers.
-
-### Proof Key for Code Exchange (PKCE)
-
-Generate code verifiers and challenges for securely performing the authorization code flow.
-
-```typescript
-import { PKCEUtils } from 'oauth-fetch';
-
-// Generate a code verifier
-const codeVerifier = PKCEUtils.generateCodeVerifier();
-
-// Generate a code challenge
-const codeChallenge = await PKCEUtils.generateCodeChallenge(codeVerifier);
-
-// Use in authorization request
-const authUrl = new URL('https://auth.example.com/oauth/authorize');
-authUrl.searchParams.set('code_challenge', codeChallenge);
-authUrl.searchParams.set('code_challenge_method', 'S256');
-```

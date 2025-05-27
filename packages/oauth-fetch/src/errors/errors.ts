@@ -24,11 +24,6 @@ export const ERR_DESCRIPTION = {
     PRIVATE_KEY_SIGN_USAGE:
       "dpopKeyPair.privateKey must include 'sign' usage permission",
   },
-  PKCE: {
-    INVALID_CODE_VERIFIER_LENGTH:
-      "Code verifier length must be between 43 and 128 characters as per RFC 7636",
-    INVALID_CODE_VERIFIER: "Code verifier must be a non-empty string",
-  },
   CRYPTO: {
     UNSUPPORTED_PUBLIC_KEY_TYPE:
       "Unsupported public key type. Supported public key types are: RSA, EC, OKP",

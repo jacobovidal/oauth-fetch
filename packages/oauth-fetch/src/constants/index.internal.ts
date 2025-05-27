@@ -10,11 +10,3 @@ export const HTTP_CONTENT_TYPE_HEADER = {
   [HTTP_CONTENT_TYPE.FORM_DATA]: "multipart/form-data",
   [HTTP_CONTENT_TYPE.FORM_URL_ENCODED]: "application/x-www-form-urlencoded",
 } as const;
-
-/**
- * Default PKCE code verifier length, recommended by RFC 7636.
- * It provides a good security balance with a length between 43 and 128 characters.
- *
- * @see https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
- */
-export const DEFAULT_PKCE_CODE_VERIFIER_LENGTH = 64;
