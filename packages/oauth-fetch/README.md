@@ -1,6 +1,6 @@
 # oauth-fetch
 
-**oauth-fetch** is a lightweight HTTP client built on top of the native `fetch` API, designed to simplify making requests to both public and OAuth-protected resources. It features a flexible, identity-agnostic design that allows seamless integration with any OAuth-compliant provider and removes the typical boilerplate code required to handle requests and responses.
+**oauth-fetch** is a lightweight HTTP client built on top of the native `fetch` API, designed to simplify making requests to both public and OAuth-protected resources (Bearer and DPoP). It features a flexible, identity-agnostic design that allows seamless integration with any OAuth-compliant provider and removes the typical boilerplate code required to handle requests and responses.
 
 ![Release](https://img.shields.io/npm/v/oauth-fetch)
 ![Downloads](https://img.shields.io/npm/dw/oauth-fetch)
