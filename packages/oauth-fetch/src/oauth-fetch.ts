@@ -116,10 +116,8 @@ export class OAuthFetch {
 
       headers.set("Authorization", `${tokenType} ${accessToken}`);
 
-      const isDPoP = SUPPORTED_TOKEN_TYPES.DPOP.some(
-        (supportedType) =>
-          supportedType.toUpperCase() === tokenType.toUpperCase(),
-      );
+      const isDPoP =
+        tokenType.toUpperCase() === SUPPORTED_TOKEN_TYPES.DPOP.toUpperCase();
 
       if (isDPoP) {
         validateDpopKeyPair(config.dpopKeyPair);

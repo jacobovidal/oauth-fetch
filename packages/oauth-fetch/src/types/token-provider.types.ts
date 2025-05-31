@@ -1,7 +1,7 @@
 import { SUPPORTED_TOKEN_TYPES } from "../constants/index.js";
 
 export type TokenProviderTokenType =
-  (typeof SUPPORTED_TOKEN_TYPES)[keyof typeof SUPPORTED_TOKEN_TYPES][number];
+  (typeof SUPPORTED_TOKEN_TYPES)[keyof typeof SUPPORTED_TOKEN_TYPES];
 
 /**
  * Represents the response from a token acquisition operation.

@@ -4,10 +4,7 @@ import type {
   OAuthFetchPrivateResourceConfig,
   OAuthFetchPublicResourceConfig,
 } from "../types/oauth-fetch.types.js";
-import type {
-  TokenProviderGetTokenResponse,
-  TokenProviderTokenType,
-} from "../types/token-provider.types.js";
+import type { TokenProviderGetTokenResponse } from "../types/token-provider.types.js";
 import {
   ConfigurationError,
   ERR_DESCRIPTION,
@@ -50,8 +47,8 @@ export function validateTokenProviderResponse(
     );
   }
 
-  const isTokenTypeSupported = Object.values(SUPPORTED_TOKEN_TYPES).some(
-    (types: readonly TokenProviderTokenType[]) => types.includes(tokenType),
+  const isTokenTypeSupported = Object.values(SUPPORTED_TOKEN_TYPES).includes(
+    tokenType,
   );
 
   if (!isTokenTypeSupported) {

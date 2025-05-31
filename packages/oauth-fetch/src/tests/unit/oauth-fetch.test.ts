@@ -196,7 +196,7 @@ describe("OAuthFetch", () => {
               const baseUrl = "https://api.example.com";
               const endpoint = "/me/profile";
               const accessToken = "my-mock-access-token";
-              const tokenType = SUPPORTED_TOKEN_TYPES.BEARER[0];
+              const tokenType = SUPPORTED_TOKEN_TYPES.BEARER;
               const overrides = {
                 headers: {
                   "X-Custom-Header": "CustomValue",
@@ -243,7 +243,7 @@ describe("OAuthFetch", () => {
                 const baseUrl = "https://api.example.com";
                 const endpoint = "/me/profile";
                 const accessToken = "my-mock-access-token";
-                const tokenType = SUPPORTED_TOKEN_TYPES.BEARER[0];
+                const tokenType = SUPPORTED_TOKEN_TYPES.BEARER;
                 const overrides = {
                   isProtected: false,
                   headers: {
@@ -290,7 +290,7 @@ describe("OAuthFetch", () => {
               const baseUrl = "https://api.example.com";
               const endpoint = "/me/profile";
               const accessToken = "my-mock-access-token";
-              const tokenType = SUPPORTED_TOKEN_TYPES.DPOP[0];
+              const tokenType = SUPPORTED_TOKEN_TYPES.DPOP;
               const overrides = {
                 headers: {
                   "X-Custom-Header": "CustomValue",
@@ -353,7 +353,7 @@ describe("OAuthFetch", () => {
                 const baseUrl = "https://api.example.com";
                 const endpoint = "/me/profile";
                 const accessToken = "my-mock-access-token";
-                const tokenType = SUPPORTED_TOKEN_TYPES.DPOP[0];
+                const tokenType = SUPPORTED_TOKEN_TYPES.DPOP;
                 const overrides = {
                   isProtected: false,
                   headers: {

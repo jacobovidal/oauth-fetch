@@ -23,8 +23,8 @@ export const HTTP_METHOD = {
  * Supported OAuth token types, including case-insensitive variations for each type.
  */
 export const SUPPORTED_TOKEN_TYPES = {
-  BEARER: ["Bearer", "bearer", "BEARER"] as const,
-  DPOP: ["DPoP", "dpop", "DPOP"] as const,
+  BEARER: "Bearer",
+  DPOP: "DPoP",
 } as const;
 
 /**
@@ -34,7 +34,7 @@ export const SUPPORTED_TOKEN_TYPES = {
  * - EdDSA: Ed25519 curve
  */
 export const DPOP_SUPPORTED_ALGORITHMS = {
-  ECDSA: ["P-256", "P-384", "P-521"] as const,
-  "RSA-PSS": ["2048", "3072", "4096"] as const,
-  EdDSA: ["Ed25519"] as const,
+  ECDSA: ["P-256", "P-384", "P-521"],
+  "RSA-PSS": ["2048", "3072", "4096"],
+  EdDSA: ["Ed25519"],
 } as const;

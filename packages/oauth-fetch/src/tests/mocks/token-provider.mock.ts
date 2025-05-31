@@ -10,7 +10,7 @@ export class MockTokenProvider extends AbstractTokenProvider {
   private accessToken;
 
   constructor({
-    tokenType = SUPPORTED_TOKEN_TYPES.BEARER[0],
+    tokenType = SUPPORTED_TOKEN_TYPES.BEARER,
     accessToken = "my-mock-access-token",
   }: {
     tokenType?: TokenProviderTokenType;

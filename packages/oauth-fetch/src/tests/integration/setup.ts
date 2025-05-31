@@ -47,7 +47,7 @@ export const handlers = [
 
     const tokenType = authorizationHeader.split(" ")[0];
 
-    if (tokenType !== SUPPORTED_TOKEN_TYPES.BEARER[0]) {
+    if (tokenType !== SUPPORTED_TOKEN_TYPES.BEARER) {
       return UnauthorizedError;
     }
 
@@ -78,7 +78,7 @@ export const handlers = [
 
     const tokenType = authorizationHeader.split(" ")[0];
 
-    if (tokenType !== SUPPORTED_TOKEN_TYPES.DPOP[0]) {
+    if (tokenType !== SUPPORTED_TOKEN_TYPES.DPOP) {
       return UnauthorizedError;
     }
 
@@ -109,7 +109,7 @@ export const handlers = [
 
     const tokenType = authorizationHeader.split(" ")[0];
 
-    if (tokenType !== SUPPORTED_TOKEN_TYPES.DPOP[0]) {
+    if (tokenType !== SUPPORTED_TOKEN_TYPES.DPOP) {
       return UnauthorizedError;
     }
 

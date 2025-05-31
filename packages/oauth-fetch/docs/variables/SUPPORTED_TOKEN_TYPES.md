@@ -8,8 +8,8 @@ Supported OAuth token types, including case-insensitive variations for each type
 
 ### BEARER
 
-> `readonly` **BEARER**: readonly \[`"Bearer"`, `"bearer"`, `"BEARER"`\]
+> `readonly` **BEARER**: `"Bearer"` = `"Bearer"`
 
 ### DPOP
 
-> `readonly` **DPOP**: readonly \[`"DPoP"`, `"dpop"`, `"DPOP"`\]
+> `readonly` **DPOP**: `"DPoP"` = `"DPoP"`
