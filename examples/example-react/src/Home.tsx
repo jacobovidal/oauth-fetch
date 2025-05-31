@@ -4,6 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import PublicApiRequest from "@/components/PublicApiRequest/PublicApiRequest";
 import BearerApiRequest from "@/components/BearerApiRequest/BearerApiRequest";
 import DpopApiRequest from "@/components/DpopApiRequest/DpopApiRequest";
+import { Button } from "./components/ui/button";
 
 function Home() {
   return (
@@ -22,6 +23,26 @@ function Home() {
               dynamically manages authentication based on the token type, while
               intelligently handling headers and parsing responses.
             </p>
+          </div>
+          <div className="mt-8 flex justify-center gap-3">
+            <Button asChild>
+              <a
+                href="https://github.com/jacobovidal/oauth-fetch/blob/main/packages/oauth-fetch/README.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Documentation
+              </a>
+            </Button>
+            <Button asChild variant="outline">
+              <a
+                href="https://github.com/jacobovidal/oauth-fetch/blob/main/packages/oauth-fetch/docs/README.md"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                API Reference
+              </a>
+            </Button>
           </div>
         </div>
       </section>

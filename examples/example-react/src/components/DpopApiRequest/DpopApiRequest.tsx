@@ -17,13 +17,13 @@ function DpopApiRequest() {
     const initOauthFetchClient = async () => {
       const keyPair = await DPoPUtils.generateKeyPair();
 
-      const oauthClient = new OAuthFetch({
+      const client = new OAuthFetch({
         baseUrl: "https://demo.duendesoftware.com",
         tokenProvider: new DuendeDPoPTokenProvider(keyPair),
         dpopKeyPair: keyPair,
       });
 
-      setClient(oauthClient);
+      setClient(client);
     };
 
     initOauthFetchClient();

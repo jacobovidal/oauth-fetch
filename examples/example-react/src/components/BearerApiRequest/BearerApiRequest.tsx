@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { OAuthFetch } from "oauth-fetch";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
@@ -6,18 +7,31 @@ import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { bearerClientSnippet } from "@/utils/code-snippets";
-import { useState } from "react";
 import { DuendeBearerTokenProvider } from "@/token-providers/duende-bearer-token-provider";
 
 function BearerApiRequest() {
   const [isLoading, setIsLoading] = useState(false);
+  const [client, setClient] = useState<OAuthFetch | null>(null);
 
-  const client = new OAuthFetch({
-    baseUrl: "https://demo.duendesoftware.com",
-    tokenProvider: new DuendeBearerTokenProvider(),
-  });
+  useEffect(() => {
+    const initOauthFetchClient = async () => {
+      const client = new OAuthFetch({
+        baseUrl: "https://demo.duendesoftware.com",
+        tokenProvider: new DuendeBearerTokenProvider(),
+      });
+
+      setClient(client);
+    };
+
+    initOauthFetchClient();
+  }, []);
 
   const handleRequest = async () => {
+    if (!client) {
+      toast.error("OAuthFetch client is not initialized");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
