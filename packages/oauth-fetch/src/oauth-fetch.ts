@@ -185,14 +185,23 @@ export class OAuthFetch {
     let response = await this.#customFetch(url, fetchOptions);
 
     const nonce = response.headers.get("dpop-nonce");
-    const wwwAuthenticateHeader = response.headers.get("www-authenticate");
 
     if (nonce) {
       this.#cachedNonce = nonce;
 
-      if (wwwAuthenticateHeader?.includes("use_dpop_nonce")) {
-        const fetchOptionsWithNonce = await buildFetchOptions(nonce);
-        response = await this.#customFetch(url, fetchOptionsWithNonce);
+      if (!response.ok) {
+        const wwwAuthenticateHeader = response.headers.get("www-authenticate");
+        const parsedBodyError = (await parseResponseBody(response).catch(
+          () => undefined,
+        )) as { error: string } | undefined;
+
+        if (
+          wwwAuthenticateHeader?.includes("use_dpop_nonce") ||
+          parsedBodyError?.error === "use_dpop_nonce"
+        ) {
+          const fetchOptionsWithNonce = await buildFetchOptions(nonce);
+          response = await this.#customFetch(url, fetchOptionsWithNonce);
+        }
       }
     }
 
