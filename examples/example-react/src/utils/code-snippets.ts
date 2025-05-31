@@ -20,7 +20,7 @@ await client.get("/api/test");`;
 
 export const dpopClientSnippet = `import { OAuthFetch, DPoPUtils } from "oauth-fetch";
 
-import { DuendeTokenProvider } from "@/utils/duende-dpop-token-provider";
+import { DuendeDPoPTokenProvider } from "@/utils/duende-dpop-token-provider";
 
 const keyPair = await DPoPUtils.generateKeyPair();
 
