@@ -1,39 +1,32 @@
 export const publicClientSnippet = `import { OAuthFetch } from "oauth-fetch";
 
-const publicClient = new OAuthFetch({
+const client = new OAuthFetch({
   baseUrl: "https://jsonplaceholder.typicode.com",
   isProtected: false,
 });
 
-await publicClient.get("/post/1");`;
+await client.get("/post/1");`;
 
 export const bearerClientSnippet = `import { OAuthFetch } from "oauth-fetch";
-import { useAuth0 } from "@auth0/auth0-react";
+import { DuendeBearerTokenProvider } from "@/utils/duende-bearer-token-provider";
 
-import { Auth0TokenProvider } from "@/utils/auth0-token-provider";
-
-const auth0 = useAuth0();
-
-const bearerClient = new OAuthFetch({
-  baseUrl: "https://auth0.oauthlabs.com",
-  tokenProvider: new Auth0TokenProvider(auth0),
+const client = new OAuthFetch({
+  baseUrl: "https://demo.duendesoftware.com",
+  tokenProvider: new DuendeBearerTokenProvider(),
 });
 
-await bearerClient.get("/userinfo");`;
+await client.get("/api/test");`;
 
 export const dpopClientSnippet = `import { OAuthFetch, DPoPUtils } from "oauth-fetch";
 
-import { DuendeTokenProvider } from "@/utils/duende-token-provider";
+import { DuendeTokenProvider } from "@/utils/duende-dpop-token-provider";
 
-const dpopKeyPair = await DPoPUtils.generateKeyPair({
-  algorithm: "ECDSA",
-  curveOrModulus: "P-384",
+const keyPair = await DPoPUtils.generateKeyPair();
+
+const client = new OAuthFetch({
+  baseUrl: "https://demo.duendesoftware.com",
+  tokenProvider: new DuendeDPoPTokenProvider(keyPair),
+  dpopKeyPair: keyPair,
 });
 
-const dpopClient = new OAuthFetch({
-  baseUrl: "https://dpoptestapi.azurewebsites.net",
-  tokenProvider: new DuendeTokenProvider(dpopKeyPair),
-  dpopKeyPair,
-});
-
-await dpopClient.get("/DPoP");`;
+await client.get("/api/dpop/test");`;

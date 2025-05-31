@@ -3,10 +3,11 @@ import {
   DPoPUtils,
   HTTP_CONTENT_TYPE,
   OAuthFetch,
+  SUPPORTED_TOKEN_TYPES,
 } from "oauth-fetch";
 import type { DPoPKeyPair, TokenProviderGetTokenResponse } from "oauth-fetch";
 
-export class DuendeTokenProvider extends AbstractTokenProvider {
+export class DuendeDPoPTokenProvider extends AbstractTokenProvider {
   private tokenSet?: TokenProviderGetTokenResponse;
   private client: OAuthFetch;
   private dpopKeyPair: DPoPKeyPair;
@@ -15,7 +16,7 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
     super();
     this.dpopKeyPair = dpopKeyPair;
     this.client = new OAuthFetch({
-      baseUrl: "https://dpopidentityserver.azurewebsites.net",
+      baseUrl: "https://demo.duendesoftware.com",
       isProtected: false,
       contentType: HTTP_CONTENT_TYPE.FORM_URL_ENCODED,
     });
@@ -27,9 +28,7 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
     }
 
     const dpopProof = await DPoPUtils.generateProof({
-      url: new URL(
-        "https://dpopidentityserver.azurewebsites.net/connect/token"
-      ),
+      url: new URL("https://demo.duendesoftware.com/connect/token"),
       method: "POST",
       dpopKeyPair: this.dpopKeyPair,
     });
@@ -38,8 +37,9 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
       const { access_token } = (await this.client.post(
         "/connect/token",
         {
-          client_id: "client",
+          client_id: "m2m.dpop",
           grant_type: "client_credentials",
+          client_secret: "secret",
         },
         {
           headers: {
@@ -48,15 +48,14 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
         }
       )) as TokenProviderGetTokenResponse;
 
-      this.tokenSet = { access_token, token_type: "DPoP" };
+      this.tokenSet = {
+        access_token,
+        token_type: SUPPORTED_TOKEN_TYPES.DPOP,
+      };
 
       return this.tokenSet;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw new Error(`Failed to retrieve token: ${error.message}`);
-      }
-
-      throw new Error(`Failed to retrieve token: ${String(error)}`);
+    } catch {
+      throw new Error(`Failed to retrieve token the access token'`);
     }
   }
 }

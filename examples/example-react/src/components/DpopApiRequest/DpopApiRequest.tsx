@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { dpopClientSnippet } from "@/utils/code-snippets";
-import { DuendeTokenProvider } from "@/token-providers/duende-token-provider";
+import { DuendeDPoPTokenProvider } from "@/token-providers/duende-dpop-token-provider";
 
 function DpopApiRequest() {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,14 +15,11 @@ function DpopApiRequest() {
 
   useEffect(() => {
     const initOauthFetchClient = async () => {
-      const keyPair = await DPoPUtils.generateKeyPair({
-        algorithm: "ECDSA",
-        curveOrModulus: "P-384",
-      });
+      const keyPair = await DPoPUtils.generateKeyPair();
 
       const oauthClient = new OAuthFetch({
-        baseUrl: "https://dpoptestapi.azurewebsites.net",
-        tokenProvider: new DuendeTokenProvider(keyPair),
+        baseUrl: "https://demo.duendesoftware.com",
+        tokenProvider: new DuendeDPoPTokenProvider(keyPair),
         dpopKeyPair: keyPair,
       });
 
@@ -41,7 +38,7 @@ function DpopApiRequest() {
     setIsLoading(true);
 
     try {
-      await client.get("/DPoP");
+      await client.get("/api/dpop/test");
       toast.success("Private resource (DPoP) fetched successfully");
       setIsLoading(false);
     } catch {

@@ -1,7 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
-
 import Logo from "@/assets/oauthlabs-logo.svg";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import PublicApiRequest from "@/components/PublicApiRequest/PublicApiRequest";
@@ -9,24 +6,6 @@ import BearerApiRequest from "@/components/BearerApiRequest/BearerApiRequest";
 import DpopApiRequest from "@/components/DpopApiRequest/DpopApiRequest";
 
 function Home() {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
-
-  const handleLogin = async () => {
-    await loginWithRedirect();
-  };
-
-  const handleSignup = async () => {
-    await loginWithRedirect({
-      authorizationParams: {
-        screen_hint: "signup",
-      },
-    });
-  };
-
-  const handleLogout = async () => {
-    await logout({ logoutParams: { returnTo: window.location.origin } });
-  };
-
   return (
     <>
       <section className="py-12 px-6">
@@ -43,21 +22,6 @@ function Home() {
               dynamically manages authentication based on the token type, while
               intelligently handling headers and parsing responses.
             </p>
-          </div>
-          <div className="mt-8 flex justify-center gap-3">
-            {!isAuthenticated && (
-              <>
-                <Button onClick={handleLogin}>Log in</Button>
-                <Button variant="outline" onClick={handleSignup}>
-                  Sign up
-                </Button>
-              </>
-            )}
-            {isAuthenticated && (
-              <Button variant="destructive" onClick={handleLogout}>
-                Log out
-              </Button>
-            )}
           </div>
         </div>
       </section>
