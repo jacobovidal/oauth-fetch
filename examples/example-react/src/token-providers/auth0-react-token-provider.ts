@@ -1,11 +1,9 @@
-import {
-  type Auth0ContextInterface,
-  type GetTokenSilentlyOptions,
+import { AbstractTokenProvider, SUPPORTED_TOKEN_TYPES } from "oauth-fetch";
+import type {
+  Auth0ContextInterface,
+  GetTokenSilentlyOptions,
 } from "@auth0/auth0-react";
-import {
-  AbstractTokenProvider,
-  type TokenProviderGetTokenResponse,
-} from "oauth-fetch";
+import type { TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class Auth0TokenProvider extends AbstractTokenProvider<GetTokenSilentlyOptions> {
   private auth0: Auth0ContextInterface;
@@ -21,7 +19,7 @@ export class Auth0TokenProvider extends AbstractTokenProvider<GetTokenSilentlyOp
 
       return {
         access_token: accessToken,
-        token_type: "Bearer",
+        token_type: SUPPORTED_TOKEN_TYPES.BEARER,
       };
     } catch {
       throw new Error("Failed to retrieve access token.");

@@ -1,11 +1,6 @@
-import {
-  type Auth0Client,
-  type GetTokenSilentlyOptions,
-} from "@auth0/auth0-spa-js";
-import {
-  AbstractTokenProvider,
-  type TokenProviderGetTokenResponse,
-} from "oauth-fetch";
+import { AbstractTokenProvider, SUPPORTED_TOKEN_TYPES } from "oauth-fetch";
+import type { Auth0Client, GetTokenSilentlyOptions } from "@auth0/auth0-spa-js";
+import type { TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class Auth0TokenProvider extends AbstractTokenProvider<GetTokenSilentlyOptions> {
   private auth0;
@@ -21,7 +16,7 @@ export class Auth0TokenProvider extends AbstractTokenProvider<GetTokenSilentlyOp
 
       return {
         access_token: accessToken,
-        token_type: "Bearer",
+        token_type: SUPPORTED_TOKEN_TYPES.BEARER,
       };
     } catch {
       throw new Error("Failed to retrieve access token.");

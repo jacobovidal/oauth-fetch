@@ -1,8 +1,6 @@
-import {
-  AbstractTokenProvider,
-  type TokenProviderGetTokenResponse,
-} from "oauth-fetch";
-import { type GetTokenOptions, type UseAuthReturn } from "@clerk/types";
+import { AbstractTokenProvider, SUPPORTED_TOKEN_TYPES } from "oauth-fetch";
+import type { TokenProviderGetTokenResponse } from "oauth-fetch";
+import type { GetTokenOptions, UseAuthReturn } from "@clerk/types";
 
 export class ClerkTokenProvider extends AbstractTokenProvider<GetTokenOptions> {
   private clerk;
@@ -22,7 +20,7 @@ export class ClerkTokenProvider extends AbstractTokenProvider<GetTokenOptions> {
 
       return {
         access_token: accessToken,
-        token_type: "Bearer",
+        token_type: SUPPORTED_TOKEN_TYPES.BEARER,
       };
     } catch {
       throw new Error("Failed to retrieve access token.");

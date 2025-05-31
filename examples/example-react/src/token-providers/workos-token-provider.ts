@@ -1,8 +1,6 @@
-import {
-  AbstractTokenProvider,
-  type TokenProviderGetTokenResponse,
-} from "oauth-fetch";
+import { AbstractTokenProvider, SUPPORTED_TOKEN_TYPES } from "oauth-fetch";
 import { useAuth } from "@workos-inc/authkit-react";
+import type { TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class WorkOSTokenProvider extends AbstractTokenProvider {
   private workos;
@@ -18,7 +16,7 @@ export class WorkOSTokenProvider extends AbstractTokenProvider {
 
       return {
         access_token: accessToken,
-        token_type: "Bearer",
+        token_type: SUPPORTED_TOKEN_TYPES.BEARER,
       };
     } catch {
       throw new Error("Failed to retrieve access token.");

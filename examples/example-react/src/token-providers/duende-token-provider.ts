@@ -1,10 +1,10 @@
 import {
   AbstractTokenProvider,
   DPoPUtils,
+  HTTP_CONTENT_TYPE,
   OAuthFetch,
-  type DPoPKeyPair,
-  type TokenProviderGetTokenResponse,
 } from "oauth-fetch";
+import type { DPoPKeyPair, TokenProviderGetTokenResponse } from "oauth-fetch";
 
 export class DuendeTokenProvider extends AbstractTokenProvider {
   private tokenSet?: TokenProviderGetTokenResponse;
@@ -17,7 +17,7 @@ export class DuendeTokenProvider extends AbstractTokenProvider {
     this.client = new OAuthFetch({
       baseUrl: "https://dpopidentityserver.azurewebsites.net",
       isProtected: false,
-      contentType: "formUrlEncoded",
+      contentType: HTTP_CONTENT_TYPE.FORM_URL_ENCODED,
     });
   }
 
