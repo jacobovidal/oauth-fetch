@@ -52,24 +52,24 @@ function Home() {
             Use cases
           </h1>
           <div className="mx-auto mt-8 max-w-3xl text-left">
-            <Tabs defaultValue="public">
+            <Tabs defaultValue="bearer">
               <TabsList className="grid grid-cols-1 h-auto md:grid-cols-3 mb-12 w-full max-w-2xl mx-auto">
-                <TabsTrigger value="public">Call public API</TabsTrigger>
                 <TabsTrigger value="bearer">
                   Call protected API (Bearer)
                 </TabsTrigger>
                 <TabsTrigger value="dpop">
                   Call protected API (DPoP)
                 </TabsTrigger>
+                <TabsTrigger value="public">Call public API</TabsTrigger>
               </TabsList>
-              <TabsContent value="public" className="w-full mx-auto">
-                <PublicApiRequest />
-              </TabsContent>
               <TabsContent value="bearer" className="w-full mx-auto">
                 <BearerApiRequest />
               </TabsContent>
               <TabsContent value="dpop" className="w-full mx-auto">
                 <DpopApiRequest />
+              </TabsContent>
+              <TabsContent value="public" className="w-full mx-auto">
+                <PublicApiRequest />
               </TabsContent>
             </Tabs>
           </div>
