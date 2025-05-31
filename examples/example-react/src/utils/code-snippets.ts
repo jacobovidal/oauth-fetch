@@ -8,6 +8,7 @@ const client = new OAuthFetch({
 await client.get("/post/1");`;
 
 export const bearerClientSnippet = `import { OAuthFetch } from "oauth-fetch";
+
 import { DuendeBearerTokenProvider } from "@/utils/duende-bearer-token-provider";
 
 const client = new OAuthFetch({
