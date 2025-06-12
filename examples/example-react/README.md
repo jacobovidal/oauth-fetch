@@ -2,7 +2,7 @@
 
 This example demonstrates how to use the `oauth-fech` package to make requests to both public and OAuth-protected resources in a React application.
 
-## 🚀 Live Demo
+## 🚀 Live Demo
 
 👉 Check our live demo: [`oauth-fetch` Playground](https://oauth-fetch.oauthlabs.com/)
 
