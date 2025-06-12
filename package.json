@@ -12,9 +12,9 @@
     "lint": "turbo run lint",
     "docs": "typedoc"
   },
-  "author": "",
+  "author": "Jacobo Vidal",
   "license": "MIT",
-  "description": "",
+  "description": "A monorepo containing the oauth-fetch library and example applications.",
   "packageManager": "npm@10.1.0",
   "devDependencies": {
     "turbo": "^2.4.4",

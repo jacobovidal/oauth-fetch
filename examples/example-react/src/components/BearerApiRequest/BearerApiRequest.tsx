@@ -16,7 +16,7 @@ function BearerApiRequest() {
   useEffect(() => {
     const initOauthFetchClient = async () => {
       const client = new OAuthFetch({
-        baseUrl: "https://demo.duendesoftware.com",
+        baseUrl: "https://api.playground.oauthlabs.com",
         tokenProvider: new DuendeBearerTokenProvider(),
       });
 
@@ -35,7 +35,7 @@ function BearerApiRequest() {
     setIsLoading(true);
 
     try {
-      await client.get("/api/test");
+      await client.get("/private/bearer");
 
       toast.success("Private resource (Bearer) fetched successfully");
 

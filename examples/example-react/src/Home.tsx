@@ -19,9 +19,25 @@ function Home() {
           </div>
           <div className="mx-auto mt-5 max-w-3xl text-center">
             <p className="text-muted-foreground text-xl max-w-150 mx-auto">
-              Test public and protected APIs with oauth-fetch and see how it
-              dynamically manages authentication based on the token type, while
-              intelligently handling headers and parsing responses.
+              Test public and protected APIs (
+              <a
+                className="underline hover:text-primary"
+                rel="noopener noreferrer"
+                href="https://www.npmjs.com/package/express-oauth2-dpop"
+              >
+                express-oauth2-dpop
+              </a>
+              ) using{" "}
+              <a
+                className="underline hover:text-primary"
+                rel="noopener noreferrer"
+                href="https://www.npmjs.com/package/oauth-fetch"
+              >
+                oauth-fetch
+              </a>{" "}
+              and see how it dynamically manages authentication based on the
+              token type, while intelligently handling headers and parsing
+              responses.
             </p>
           </div>
           <div className="mt-8 flex justify-center gap-3">
@@ -52,23 +68,41 @@ function Home() {
             Use cases
           </h1>
           <div className="mx-auto mt-8 max-w-3xl text-left">
-            <Tabs defaultValue="bearer">
-              <TabsList className="grid grid-cols-1 h-auto md:grid-cols-3 mb-12 w-full max-w-2xl mx-auto">
-                <TabsTrigger value="bearer">
-                  Call protected API (Bearer)
-                </TabsTrigger>
+            <Tabs defaultValue="dpop">
+              <TabsList className="grid grid-cols-1 h-auto md:grid-cols-3 mb-6 w-full max-w-2xl mx-auto">
                 <TabsTrigger value="dpop">
                   Call protected API (DPoP)
                 </TabsTrigger>
+                <TabsTrigger value="bearer">
+                  Call protected API (Bearer)
+                </TabsTrigger>
                 <TabsTrigger value="public">Call public API</TabsTrigger>
               </TabsList>
-              <TabsContent value="bearer" className="w-full mx-auto">
-                <BearerApiRequest />
-              </TabsContent>
               <TabsContent value="dpop" className="w-full mx-auto">
+                <p className="mb-6 text-muted-foreground">
+                  oauth-fetch automatically creates a cryptographic key pair and
+                  obtains a DPoP-bound access token for you. It handles the
+                  generation of the proof header and manages DPoP nonces, so you
+                  can seamlessly call protected APIs that require
+                  proof-of-possession tokens.
+                </p>
                 <DpopApiRequest />
               </TabsContent>
+              <TabsContent value="bearer" className="w-full mx-auto">
+                <p className="mb-6 text-muted-foreground">
+                  oauth-fetch automatically fetches a Bearer access token and
+                  includes it in your request to the protected API. This lets
+                  you easily call OAuth-secured endpoints that accept standard
+                  Bearer tokens without extra setup.
+                </p>
+                <BearerApiRequest />
+              </TabsContent>
               <TabsContent value="public" className="w-full mx-auto">
+                <p className="mb-6 text-muted-foreground">
+                  This option lets you make requests to public APIs that don't
+                  require any authentication. Just send the request and get the
+                  data automatically based on the response content type.
+                </p>
                 <PublicApiRequest />
               </TabsContent>
             </Tabs>

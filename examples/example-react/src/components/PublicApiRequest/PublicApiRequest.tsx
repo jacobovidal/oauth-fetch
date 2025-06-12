@@ -15,7 +15,7 @@ function PublicApiRequest() {
   useEffect(() => {
     const initOauthFetchClient = async () => {
       const client = new OAuthFetch({
-        baseUrl: "https://jsonplaceholder.typicode.com",
+        baseUrl: "https://api.playground.oauthlabs.com",
         isProtected: false,
       });
 
@@ -34,7 +34,7 @@ function PublicApiRequest() {
     setIsLoading(true);
 
     try {
-      await client.get("/posts/1");
+      await client.get("/public/hello");
 
       toast.success("Public resource fetched successfully");
 

@@ -18,7 +18,7 @@ function DpopApiRequest() {
       const keyPair = await DPoPUtils.generateKeyPair();
 
       const client = new OAuthFetch({
-        baseUrl: "https://demo.duendesoftware.com",
+        baseUrl: "https://api.playground.oauthlabs.com",
         tokenProvider: new DuendeDPoPTokenProvider(keyPair),
         dpopKeyPair: keyPair,
       });
@@ -38,7 +38,7 @@ function DpopApiRequest() {
     setIsLoading(true);
 
     try {
-      await client.get("/api/dpop/test");
+      await client.get("/private/dpop");
       toast.success("Private resource (DPoP) fetched successfully");
       setIsLoading(false);
     } catch {
