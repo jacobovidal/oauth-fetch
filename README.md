@@ -20,7 +20,7 @@ Before running the examples, you need to install the dependencies for the monore
 $ npm install
 ```
 
-1. Build all packages
+2. Build all packages
 ```bash
 $ npm run build
 ```
