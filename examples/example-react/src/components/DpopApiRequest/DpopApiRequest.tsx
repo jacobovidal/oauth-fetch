@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { dpopClientSnippet } from "@/utils/code-snippets";
-import { DuendeDPoPTokenProvider } from "@/token-providers/duende-dpop-token-provider";
+import { MockJwtIssuer } from "@/token-providers/mock-jwt-issuer-provider";
 
 function DpopApiRequest() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ function DpopApiRequest() {
 
       const client = new OAuthFetch({
         baseUrl: "https://api.playground.oauthlabs.com",
-        tokenProvider: new DuendeDPoPTokenProvider(keyPair),
+        tokenProvider: new MockJwtIssuer(keyPair),
         dpopKeyPair: keyPair,
       });
 

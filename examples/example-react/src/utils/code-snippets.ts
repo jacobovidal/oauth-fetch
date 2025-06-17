@@ -9,24 +9,24 @@ await client.get("/public/hello");`;
 
 export const bearerClientSnippet = `import { OAuthFetch } from "oauth-fetch";
 
-import { DuendeBearerTokenProvider } from "@/utils/duende-bearer-token-provider";
+import { MockJwtIssuer } from "@/token-providers/mock-jwt-issuer-provider";
 
 const client = new OAuthFetch({
   baseUrl: "https://api.playground.oauthlabs.com",
-  tokenProvider: new DuendeBearerTokenProvider(),
+  tokenProvider: new MockJwtIssuer(),
 });
 
 await client.get("/private/bearer");`;
 
 export const dpopClientSnippet = `import { OAuthFetch, DPoPUtils } from "oauth-fetch";
 
-import { DuendeDPoPTokenProvider } from "@/utils/duende-dpop-token-provider";
+import { MockJwtIssuer } from "@/token-providers/mock-jwt-issuer-provider";
 
 const keyPair = await DPoPUtils.generateKeyPair();
 
 const client = new OAuthFetch({
   baseUrl: "https://api.playground.oauthlabs.com",
-  tokenProvider: new DuendeDPoPTokenProvider(keyPair),
+  tokenProvider: new MockJwtIssuer(keyPair),
   dpopKeyPair: keyPair,
 });
 

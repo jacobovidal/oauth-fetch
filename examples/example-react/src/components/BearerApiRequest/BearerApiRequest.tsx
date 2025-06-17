@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import CodeBlock from "@/components/CodeBlock/CodeBlock";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { bearerClientSnippet } from "@/utils/code-snippets";
-import { DuendeBearerTokenProvider } from "@/token-providers/duende-bearer-token-provider";
+import { MockJwtIssuer } from "@/token-providers/mock-jwt-issuer-provider";
 
 function BearerApiRequest() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,7 @@ function BearerApiRequest() {
     const initOauthFetchClient = async () => {
       const client = new OAuthFetch({
         baseUrl: "https://api.playground.oauthlabs.com",
-        tokenProvider: new DuendeBearerTokenProvider(),
+        tokenProvider: new MockJwtIssuer(),
       });
 
       setClient(client);
