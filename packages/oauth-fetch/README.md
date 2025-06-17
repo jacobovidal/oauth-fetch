@@ -33,7 +33,7 @@
 - [Utilities](#utilities)
   - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop-1)
 - [API Reference](https://github.com/jacobovidal/oauth-fetch/blob/main/packages/oauth-fetch/docs/README.md)
-- [Live demo](https://oauth-fetch.oauthlabs.com/)
+- [Live Demo](https://oauth-fetch.oauthlabs.com/)
 
 ## Installation
 
