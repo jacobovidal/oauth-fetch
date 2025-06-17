@@ -12,6 +12,8 @@ export class MockJwtIssuer extends AbstractTokenProvider {
     isProtected: false,
   });
   private dpopKeyPair?: DPoPKeyPair;
+  private bearerTokenSet?: TokenProviderGetTokenResponse;
+  private dpopTokenSet?: TokenProviderGetTokenResponse;
 
   constructor(dpopKeyPair?: DPoPKeyPair) {
     super();
@@ -21,6 +23,10 @@ export class MockJwtIssuer extends AbstractTokenProvider {
   async getToken(): Promise<TokenProviderGetTokenResponse> {
     try {
       if (this.dpopKeyPair) {
+        if (this.dpopTokenSet) {
+          return this.dpopTokenSet;
+        }
+
         const { publicKey } = this.dpopKeyPair;
         const jwkThumbprint = await DPoPUtils.calculateJwkThumbprint(publicKey);
 
@@ -30,11 +36,19 @@ export class MockJwtIssuer extends AbstractTokenProvider {
           },
         });
 
-        return response as TokenProviderGetTokenResponse;
+        this.dpopTokenSet = response as TokenProviderGetTokenResponse;
+
+        return this.dpopTokenSet;
       } else {
+        if (this.bearerTokenSet) {
+          return this.bearerTokenSet;
+        }
+
         const response = await this.client.post("/jwt/sign");
 
-        return response as TokenProviderGetTokenResponse;
+        this.bearerTokenSet = response as TokenProviderGetTokenResponse;
+
+        return this.bearerTokenSet;
       }
     } catch {
       throw new Error("Failed to retrieve access token.");
