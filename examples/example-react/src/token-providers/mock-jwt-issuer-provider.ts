@@ -26,7 +26,7 @@ export class MockJwtIssuer extends AbstractTokenProvider {
 
         const response = await this.client.post("/jwt/sign", {
           cnf: {
-            jwk: jwkThumbprint,
+            jkt: jwkThumbprint,
           },
         });
 
