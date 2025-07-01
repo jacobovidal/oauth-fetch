@@ -30,6 +30,7 @@
 - [Requests](#requests)
   - [Error Handling](#error-handling)
   - [Overrides](#overrides-1)
+- [Custom Fetch](#custom-fetch)
 - [Utilities](#utilities)
   - [Demonstrating Proof-of-Possession (DPoP)](#demonstrating-proof-of-possession-dpop-1)
 - [API Reference](https://github.com/jacobovidal/oauth-fetch/blob/main/packages/oauth-fetch/docs/README.md)
@@ -461,6 +462,20 @@ await oauthClient.post(
 );
 ```
 
+## Custom Fetch
+
+By default, we use `globalThis.fetch`, but you can provide your own `fetch` implementation, whether it's a customized version, a polyfill, or even a wrapper around another HTTP client.
+
+```typescript
+const client = new OAuthFetch({
+  baseUrl: 'https://api.example.com',
+  isProtected: false,
+  customFetch: async (url, options) => {
+    // Custom fetch logic
+  }
+});
+```
+
 ## Utilities
 
 We provide standalone OAuth utilities that you can use directly in your flows. These utilities, such as DPoP proof generation, are available as separate classes, allowing you to implement OAuth features independently without needing to use `OAuthFetch`.
@@ -476,7 +491,7 @@ import { DPoPUtils } from 'oauth-fetch';
 const keyPair = await DPoPUtils.generateKeyPair();
 
 // Calculate JWK Thumbprint
-const jkt = await DPoPUtils.calculateJwkThumbprint(keyPair.publicKey);
+const jwkThumbprint = await DPoPUtils.calculateJwkThumbprint(keyPair.publicKey);
 
 // Generate a DPoP proof for a request
 const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5...';
